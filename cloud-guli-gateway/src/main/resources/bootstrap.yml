@@ -1,0 +1,17 @@
+spring:
+  cloud:
+    nacos:
+      config:
+        server-addr: localhost:9948
+        namespace: 10086006
+        file-extension: yaml
+        ext-config:
+          -
+            data-id: registry.yaml
+            group: dev
+            refresh: true
+
+          -
+            data-id: gateway.yaml
+            group: dev
+            refresh: true

@@ -1,0 +1,11 @@
+#server:
+#  port: 6000
+#spring:
+#  application:
+#    name: cloud-guli-gateway
+#  cloud:
+#    nacos:
+#      discovery:
+#        server-addr: localhost:9948
+#      config:
+#        server-addr: localhost:9948

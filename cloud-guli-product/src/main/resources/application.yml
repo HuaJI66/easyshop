@@ -1,0 +1,20 @@
+server:
+  port: 5000
+#数据源
+spring:
+  application:
+    name: gstore-product
+  datasource:
+    username: root
+    password: root
+    url: jdbc:mysql://machine111:13306/gulimall_pms
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:9948
+mybatis-plus:
+  mapper-locations: classpath:/mapper/**/*.xml
+  global-config:
+    db-config:
+      id-type: auto

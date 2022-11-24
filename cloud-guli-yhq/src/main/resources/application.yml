@@ -1,0 +1,19 @@
+server:
+  port: 3000
+spring:
+  application:
+    name: cloud-guli-yhq
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:9948
+  datasource:
+    username: root
+    password: root
+    url: jdbc:mysql://machine111:13306/gulimall_sms
+    driver-class-name: com.mysql.cj.jdbc.Driver
+mybatis-plus:
+  mapper-locations: classpath:/mapper/**/*.xml
+  global-config:
+    db-config:
+      id-type: auto

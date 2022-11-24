@@ -1,0 +1,23 @@
+spring:
+  cloud:
+    nacos:
+      config:
+        server-addr: localhost:9948
+        file-extension: yaml
+        namespace: 10086001
+        ext-config:
+          -
+            data-id: mybatis-plus.yaml
+            group: dev
+            refresh: true
+
+          -
+            data-id: datasource.yaml
+            group: dev
+            refresh: true
+
+          -
+            data-id: registry.yaml
+            group: dev
+            refresh: true
+
