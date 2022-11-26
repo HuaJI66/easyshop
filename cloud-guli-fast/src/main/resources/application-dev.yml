@@ -32,6 +32,15 @@ spring:
         wall:
           config:
             multi-statement-allow: true
+  application:
+    name: cloud-guli-fast
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:9948
+      config:
+        server-addr: localhost:9948
+
 
 
 ##多数据源的配置
