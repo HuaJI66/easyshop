@@ -1,7 +1,10 @@
 package com.pika.gstore.product.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import org.springframework.stereotype.Service;
+
 import java.util.Map;
+
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -11,6 +14,7 @@ import com.pika.gstore.common.utils.Query;
 import com.pika.gstore.product.dao.AttrDao;
 import com.pika.gstore.product.entity.AttrEntity;
 import com.pika.gstore.product.service.AttrService;
+import org.springframework.util.StringUtils;
 
 
 @Service("attrService")
@@ -25,5 +29,4 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
 
         return new PageUtils(page);
     }
-
 }

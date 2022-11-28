@@ -1,9 +1,6 @@
 package com.pika.gstore;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.toolkit.LambdaUtils;
-import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
-import com.mysql.cj.log.Log;
 import com.pika.gstore.product.dao.CategoryDao;
 import com.pika.gstore.product.entity.BrandEntity;
 import com.pika.gstore.product.entity.CategoryEntity;
@@ -14,7 +11,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.annotation.Resource;
-import javax.annotation.Resources;
 
 @SpringBootTest(classes = ProductMain5000.class)
 @Slf4j
@@ -49,10 +45,22 @@ class ProductMain5000Tests {
     public void test2() {
         categoryService.listTree().forEach(System.out::println);
     }
+
     @Test
-    public void test3(){
+    public void test3() {
         LambdaQueryWrapper<CategoryEntity> wrapper = new LambdaQueryWrapper<>();
         wrapper.isNull(CategoryEntity::getSort);
         categoryService.list(wrapper).forEach(System.out::println);
+    }
+
+    @Test
+    public void test4() {
+
+    }
+
+
+    @Test
+    public void test5() {
+        // download file to local
     }
 }

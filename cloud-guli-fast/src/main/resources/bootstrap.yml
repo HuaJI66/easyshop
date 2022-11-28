@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: cloud-guli-fast
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:9948
+      config:
+        server-addr: localhost:9948
+        namespace: 10086007
+        file-extension: yaml
+

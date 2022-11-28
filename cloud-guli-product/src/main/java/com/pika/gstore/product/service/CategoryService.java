@@ -2,6 +2,7 @@ package com.pika.gstore.product.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.pika.gstore.common.utils.PageUtils;
+import com.pika.gstore.product.entity.AttrGroupEntity;
 import com.pika.gstore.product.entity.CategoryEntity;
 
 import java.util.List;
@@ -21,5 +22,7 @@ public interface CategoryService extends IService<CategoryEntity> {
     List<CategoryEntity> listTree();
 
     void removeMenus(Long[] catIds);
+
+    Long[] findCatelogIdPath(AttrGroupEntity attrGroup);
 }
 

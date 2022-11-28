@@ -6,15 +6,21 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.pika.gstore.common.utils.PageUtils;
 import com.pika.gstore.common.utils.Query;
 import com.pika.gstore.product.dao.CategoryDao;
+import com.pika.gstore.product.entity.AttrGroupEntity;
 import com.pika.gstore.product.entity.CategoryEntity;
 import com.pika.gstore.product.service.CategoryService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
 
+/**
+ * @author pi'ka'chu
+ */
 @Service("categoryService")
+@Slf4j
 public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity> implements CategoryService {
 
     @Override
@@ -41,6 +47,20 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
     public void removeMenus(Long[] catIds) {
         // TODO: 2022/11/25 删除菜单前需要检查是否被引用
         baseMapper.deleteBatchIds(Arrays.asList(catIds));
+    }
+
+    @Override
+    public Long[] findCatelogIdPath(AttrGroupEntity attrGroup) {
+        Long pCid = attrGroup.getCatelogId();
+        CategoryEntity categoryEntity;
+        ArrayList<Long> result = new ArrayList<>();
+        do {
+            result.add(pCid);
+            categoryEntity = baseMapper.selectById(pCid);
+            pCid = categoryEntity.getParentCid();
+        } while (pCid != 0);
+        Collections.reverse(result);
+        return result.toArray(new Long[0]);
     }
 
     private List<CategoryEntity> getChildren(Long parentId, List<CategoryEntity> all) {

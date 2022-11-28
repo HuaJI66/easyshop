@@ -5,7 +5,7 @@ spring:
         server-addr: localhost:9948
         namespace: 10086006
         file-extension: yaml
-        ext-config:
+        extension-configs:
           - data-id: registry.yaml
             group: dev
             refresh: true
@@ -13,24 +13,25 @@ spring:
           - data-id: gateway.yaml
             group: dev
             refresh: true
-    gateway:
-      routes:
-        - id: product_route
-          uri: lb://cloud-guli-product
-          predicates:
-            - Path=/admin/product/**
-          filters:
-            - RewritePath=/admin/(?<segment>.*), /$\{segment}
 
-          # http://localhost:6000/admin/product/category/list/tree
-          # http://localhost:5000/product/category/list/tree
-
-        - id: admin_route
-          uri: lb://cloud-guli-fast
-          predicates:
-            - Path=/admin/**
-          filters:
-            - RewritePath=/admin/(?<segment>.*), /renren-fast/$\{segment}
+#    gateway:
+#      routes:
+#        - id: product_route
+#          uri: lb://cloud-guli-product
+#          predicates:
+#            - Path=/admin/product/**
+#          filters:
+#            - RewritePath=/admin/(?<segment>.*), /$\{segment}
+#
+#          # http://localhost:6000/admin/product/category/list/tree
+#          # http://localhost:5000/product/category/list/tree
+#
+#        - id: admin_route
+#          uri: lb://cloud-guli-fast
+#          predicates:
+#            - Path=/admin/**
+#          filters:
+#            - RewritePath=/admin/(?<segment>.*), /renren-fast/$\{segment}
 
           # http://localhost:6000/admin/captcha.jpg?uuid=9ca0d34a-64c9-4d0f-89cd-348bdb9fa3cf
           # http://localhost:8080/renren-fast/captcha.jpg?uuid=9ca0d34a-64c9-4d0f-89cd-348bdb9fa3cf

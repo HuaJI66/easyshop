@@ -15,6 +15,10 @@ spring:
         server-addr: localhost:9948
       config:
         server-addr: localhost:9948
+        file-extension: yaml
+        namespace: 10086002
+        extension-configs:
+
 mybatis-plus:
   mapper-locations: classpath:/mapper/**/*.xml
   global-config:
