@@ -55,7 +55,7 @@ public class AttrGroupController {
         AttrGroupEntity attrGroup = attrGroupService.getById(attrGroupId);
         // 进一步回显分类路径
         Long[] catelogIdPath = categoryService.findCatelogIdPath(attrGroup);
-        attrGroup.setCatelogIdPath(catelogIdPath);
+        attrGroup.setCatelogPath(catelogIdPath);
         return R.ok().put("attrGroup", attrGroup);
     }
 

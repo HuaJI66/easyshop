@@ -1,15 +1,12 @@
 package com.pika.gstore.product.controller;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Map;
 
 import com.pika.gstore.common.validator.AddGroup;
 import com.pika.gstore.common.validator.UpdateGroup;
 import com.pika.gstore.common.validator.UpdateStatusGroup;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,8 +18,6 @@ import com.pika.gstore.product.entity.BrandEntity;
 import com.pika.gstore.product.service.BrandService;
 import com.pika.gstore.common.utils.PageUtils;
 import com.pika.gstore.common.utils.R;
-
-import javax.validation.Valid;
 
 
 /**
@@ -44,8 +39,8 @@ public class BrandController {
     @RequestMapping("/list")
     //@RequiresPermissions("product:brand:list")
     public R list(@RequestParam Map<String, Object> params) {
-        PageUtils page = brandService.queryPage(params);
 
+        PageUtils page = brandService.queryPage(params);
         return R.ok().put("page", page);
     }
 
@@ -78,7 +73,7 @@ public class BrandController {
     @RequestMapping("/update")
     //@RequiresPermissions("product:brand:update")
     public R update(@Validated(value = UpdateGroup.class) @RequestBody BrandEntity brand) {
-        brandService.updateById(brand);
+        brandService.updateCascade(brand);
         return R.ok();
     }
     @RequestMapping("/update/status")
