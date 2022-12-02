@@ -2,8 +2,10 @@ package com.pika.gstore;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.pika.gstore.product.dao.CategoryDao;
+import com.pika.gstore.product.entity.AttrEntity;
 import com.pika.gstore.product.entity.BrandEntity;
 import com.pika.gstore.product.entity.CategoryEntity;
+import com.pika.gstore.product.service.AttrService;
 import com.pika.gstore.product.service.BrandService;
 import com.pika.gstore.product.service.CategoryService;
 import lombok.extern.slf4j.Slf4j;
@@ -11,6 +13,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 
 @SpringBootTest(classes = ProductMain5000.class)
 @Slf4j
@@ -21,6 +27,8 @@ class ProductMain5000Tests {
     private CategoryDao categoryDao;
     @Resource
     private CategoryService categoryService;
+    @Resource
+    private AttrService attrService;
 
     @Test
     void contextLoads() {
@@ -55,7 +63,12 @@ class ProductMain5000Tests {
 
     @Test
     public void test4() {
-
+        LambdaQueryWrapper<AttrEntity> wrapper = new LambdaQueryWrapper<>();
+        Collection<Integer> integers = new ArrayList<>();
+        integers.add(1);
+        integers.add(2);
+        wrapper.in(AttrEntity::getAttrId, integers);
+        attrService.list(wrapper).forEach(System.out::println);
     }
 
 

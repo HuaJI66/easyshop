@@ -52,4 +52,8 @@ public class AttrVo {
      * 分类组id
      */
     private Long attrGroupId;
+    /**
+     * 值属性[0-单个;1-多个]
+     */
+    private Integer valueType;
 }

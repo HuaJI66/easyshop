@@ -12,6 +12,8 @@ spring:
   cloud:
     nacos:
       discovery:
+        ip: 127.0.0.1
+#        network-interface: eth0
         server-addr: localhost:9948
       config:
         server-addr: localhost:9948
@@ -29,6 +31,6 @@ mybatis-plus:
       logic-not-delete-value: 1 # 逻辑未删除值(默认为 0)
 #  configuration:
 #    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-#logging:
-#  level:
-#    com.pika.gstore: debug
+logging:
+  level:
+    com.pika.gstore: debug

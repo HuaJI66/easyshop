@@ -40,8 +40,8 @@ public class ExceptionController {
     public R test2(Exception e) {
         String name = e.getClass().getName();
         log.error(name);
-        log.error(e.getMessage());
-        return R.error(BaseException.UNKOWN_EXCEPTION.getCode(), BaseException.UNKOWN_EXCEPTION.getMsg());
+        e.printStackTrace();
+        return R.error(BaseException.UNKOWN_EXCEPTION.getCode(), e.getMessage());
     }
 }
 

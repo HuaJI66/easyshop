@@ -5,7 +5,7 @@ spring:
         server-addr: localhost:9948
         file-extension: yaml
         namespace: 10086001
-        ext-config:
+        extension-configs:
           -
             data-id: mybatis-plus.yaml
             group: dev
@@ -20,4 +20,5 @@ spring:
             data-id: registry.yaml
             group: dev
             refresh: true
+
 

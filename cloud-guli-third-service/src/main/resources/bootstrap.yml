@@ -1,6 +1,10 @@
 spring:
   cloud:
     nacos:
+      discovery:
+#        ip: 10.2.11.11
+        ip: 127.0.0.1
+#        network-interface: eth0
       config:
         server-addr: localhost:9948
         namespace: 10086008
@@ -14,4 +18,3 @@ spring:
             data-id: oss.yaml
             group: dev
             refresh: true
-

@@ -1,6 +1,9 @@
 spring:
   cloud:
     nacos:
+      discovery:
+        ip: 127.0.0.1
+#        ip: 10.2.11.11
       config:
         server-addr: localhost:9948
         namespace: 10086006
@@ -13,5 +16,4 @@ spring:
           - data-id: gateway.yaml
             group: dev
             refresh: true
-
 

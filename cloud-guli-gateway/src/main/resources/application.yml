@@ -4,3 +4,5 @@ spring:
       httpclient:
         pool:
           maxIdleTime: 10000
+        connect-timeout: 5000
+        response-timeout: 8000
