@@ -8,6 +8,7 @@ import com.pika.gstore.product.entity.AttrEntity;
 import com.pika.gstore.product.service.AttrService;
 import com.pika.gstore.product.service.CategoryService;
 import com.pika.gstore.product.vo.AttrGroupVo;
+import com.pika.gstore.product.vo.AttrGroupWithAttrVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,6 +36,12 @@ public class AttrGroupController {
     private CategoryService categoryService;
     @Resource
     private AttrService attrService;
+
+    @GetMapping("/{catelogId}/withattr")
+    public R getWithAttr(@PathVariable("catelogId") Long catelogId) {
+        List<AttrGroupWithAttrVo> groupWithAttrVo= attrGroupService.getWithAttr(catelogId);
+        return R.ok().put("data", groupWithAttrVo);
+    }
 
     @PostMapping("/attr/relation")
     public R relate(@RequestBody List<AttrGroupVo> attrGroupVos) {

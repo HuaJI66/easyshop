@@ -1,6 +1,7 @@
 package com.pika.gstore.coupon.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.pika.gstore.common.to.SkuReductionTo;
 import com.pika.gstore.common.utils.PageUtils;
 import com.pika.gstore.coupon.entity.SmsSkuFullReductionEntity;
 
@@ -16,5 +17,7 @@ import java.util.Map;
 public interface SmsSkuFullReductionService extends IService<SmsSkuFullReductionEntity> {
 
     PageUtils queryPage(Map<String, Object> params);
+
+    void saveReductionInfo(SkuReductionTo reduction);
 }
 

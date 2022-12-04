@@ -5,8 +5,9 @@ spring:
     name: cloud-guli-yhq
   cloud:
     nacos:
+      server-addr: localhost:9948
       discovery:
-        server-addr: localhost:9948
+        ip: 127.0.0.1
   datasource:
     username: root
     password: root

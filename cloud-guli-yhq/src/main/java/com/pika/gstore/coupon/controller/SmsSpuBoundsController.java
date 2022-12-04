@@ -4,11 +4,7 @@ import java.util.Arrays;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.pika.gstore.coupon.entity.SmsSpuBoundsEntity;
 import com.pika.gstore.coupon.service.SmsSpuBoundsService;
@@ -25,7 +21,7 @@ import com.pika.gstore.common.utils.R;
  * @date 2022-11-21 21:05:13
  */
 @RestController
-@RequestMapping("coupon/smsspubounds")
+@RequestMapping("coupon/spubounds")
 public class SmsSpuBoundsController {
     @Autowired
     private SmsSpuBoundsService smsSpuBoundsService;
@@ -56,7 +52,7 @@ public class SmsSpuBoundsController {
     /**
      * 保存
      */
-    @RequestMapping("/save")
+    @PostMapping("/save")
     //@RequiresPermissions("coupon:smsspubounds:save")
     public R save(@RequestBody SmsSpuBoundsEntity smsSpuBounds){
 		smsSpuBoundsService.save(smsSpuBounds);

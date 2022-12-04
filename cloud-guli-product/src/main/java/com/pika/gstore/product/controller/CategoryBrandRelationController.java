@@ -3,6 +3,7 @@ package com.pika.gstore.product.controller;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
@@ -10,6 +11,7 @@ import com.pika.gstore.product.entity.BrandEntity;
 import com.pika.gstore.product.entity.CategoryEntity;
 import com.pika.gstore.product.service.BrandService;
 import com.pika.gstore.product.service.CategoryService;
+import com.pika.gstore.product.vo.BrandVo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -40,6 +42,20 @@ public class CategoryBrandRelationController {
     private BrandService brandService;
     @Resource
     private CategoryService categoryService;
+
+    // http://localhost:6000/admin/product/categorybrandrelation/brands/list?t=1669993563013&catId=225
+    @GetMapping("brands/list")
+    public R getBrandsList(@RequestParam(value = "catId") Long catId) {
+        List<BrandEntity> vos = categoryBrandRelationService.getBrands(catId);
+        List<BrandVo> collect = vos.stream().map(o -> {
+            BrandVo brandVo = new BrandVo();
+            brandVo.setBrandId(o.getBrandId());
+            brandVo.setBrandName(o.getName());
+            return brandVo;
+        }).collect(Collectors.toList());
+        return R.ok().put("data", collect);
+    }
+
 
     /**
      * 列表
