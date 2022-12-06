@@ -2,6 +2,7 @@ package com.pika;
 
 import cn.hutool.extra.mail.MailAccount;
 import cn.hutool.extra.mail.MailUtil;
+import cn.hutool.json.JSONUtil;
 
 /**
  * Desc:
@@ -45,7 +46,13 @@ public class Test {
         MailUtil.send(account, "pikachu_plus@foxmail.com", "com.pika.Test", "com.pika.Test", false);
     }
 
+    @org.junit.jupiter.api.Test
     public void test4() {
-
+        String json ="{skuId=1, spuId=1, skuName=Apple iPhone 14 Pro 暗紫色 8+128, skuDesc=null, catalogId=225, brandId=5, skuDefaultImg=https://gstore-piks.oss-cn-hangzhou.aliyuncs.com/2022/12/04/a90228bf-ba23-4dbb-8b20-b750f86d04d5_Snipaste_2022-12-04_19-21-57.png, skuTitle=Apple iPhone 14 Pro 暗紫色 8+128, skuSubtitle=支持移动联通电信5G 双卡双待手机, price=9429.0, saleCount=0}";
+        SkuInfoVo skuInfoVo = JSONUtil.toBean(json, SkuInfoVo.class);
+        System.out.println("skuInfoVo = " + skuInfoVo);
+    }
+    @org.junit.jupiter.api.Test
+    public void test5(){
     }
 }

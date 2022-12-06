@@ -3,20 +3,15 @@ package com.pika.gstore.product.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
+import com.baomidou.mybatisplus.core.injector.methods.DeleteBatchByIds;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.pika.gstore.common.constant.ProductConstant;
 import com.pika.gstore.common.utils.PageUtils;
 import com.pika.gstore.common.utils.Query;
 import com.pika.gstore.product.dao.AttrDao;
-import com.pika.gstore.product.entity.AttrAttrgroupRelationEntity;
-import com.pika.gstore.product.entity.AttrEntity;
-import com.pika.gstore.product.entity.AttrGroupEntity;
-import com.pika.gstore.product.entity.CategoryEntity;
-import com.pika.gstore.product.service.AttrAttrgroupRelationService;
-import com.pika.gstore.product.service.AttrGroupService;
-import com.pika.gstore.product.service.AttrService;
-import com.pika.gstore.product.service.CategoryService;
+import com.pika.gstore.product.entity.*;
+import com.pika.gstore.product.service.*;
 import com.pika.gstore.product.vo.AttrGroupVo;
 import com.pika.gstore.product.vo.AttrRespVo;
 import com.pika.gstore.product.vo.AttrVo;
@@ -43,6 +38,8 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
     private AttrGroupService attrGroupService;
     @Resource
     private CategoryService categoryService;
+    @Resource
+    private ProductAttrValueService productAttrValueService;
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {

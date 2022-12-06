@@ -1,7 +1,10 @@
 server:
-  port: 6000
+  port: 8000
 #数据源
 spring:
+  jackson:
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss
   application:
     name: cloud-guli-ware
   datasource:
@@ -11,10 +14,14 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
   cloud:
     nacos:
+      server-addr: localhost:9948
       discovery:
-        server-addr: localhost:9948
+        ip: 127.0.0.1
 mybatis-plus:
   mapper-locations: classpath:/mapper/**/*.xml
   global-config:
     db-config:
       id-type: auto
+logging:
+  level:
+    com.pika.gstore: debug

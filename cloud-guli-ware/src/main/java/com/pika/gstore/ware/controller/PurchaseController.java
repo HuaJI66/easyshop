@@ -1,19 +1,19 @@
 package com.pika.gstore.ware.controller;
 
-import java.util.Arrays;
-import java.util.Map;
+import java.util.*;
 
+import com.pika.gstore.ware.vo.MergeVo;
+import com.pika.gstore.ware.vo.PurchaseDoneVo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.*;
 
 import com.pika.gstore.ware.entity.PurchaseEntity;
 import com.pika.gstore.ware.service.PurchaseService;
 import com.pika.gstore.common.utils.PageUtils;
 import com.pika.gstore.common.utils.R;
+
+import javax.validation.Valid;
 
 
 /**
@@ -30,8 +30,52 @@ public class PurchaseController {
     private PurchaseService purchaseService;
 
     /**
+     * Desc:
+     * 领取采购单
+     *
+     * @param ids
+     * @return {@link R}
+     */
+    @PostMapping("/done")
+    @Transactional
+    public R received(@RequestBody @Valid PurchaseDoneVo purchaseDoneVo) {
+        purchaseService.done(purchaseDoneVo);
+        return R.ok();
+    }
+
+    @PostMapping("/received")
+    @Transactional
+    public R received(@RequestBody Long[] ids) {
+        if (ids != null && ids.length > 0) {
+            purchaseService.received(ids);
+        }
+        return R.ok();
+    }
+
+    /**
+     * Desc:
+     * 合并采购项
+     *
+     * @param mergeVo
+     * @return {@link R}
+     */
+    @PostMapping("merge")
+    @Transactional
+    public R merge(@RequestBody MergeVo mergeVo) {
+        purchaseService.merge(mergeVo);
+        return R.ok();
+    }
+
+    /**
      * 列表
      */
+    @RequestMapping("/unreceive/list")
+    public R unReceiveList(@RequestParam Map<String, Object> params) {
+        PageUtils page = purchaseService.queryUnReceive(params);
+
+        return R.ok().put("page", page);
+    }
+
     @RequestMapping("/list")
     //@RequiresPermissions("ware:purchase:list")
     public R list(@RequestParam Map<String, Object> params) {
@@ -58,6 +102,8 @@ public class PurchaseController {
     @RequestMapping("/save")
     //@RequiresPermissions("ware:purchase:save")
     public R save(@RequestBody PurchaseEntity purchase) {
+        purchase.setCreateTime(new Date());
+        purchase.setUpdateTime(new Date());
         purchaseService.save(purchase);
 
         return R.ok();

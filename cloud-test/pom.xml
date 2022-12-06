@@ -18,6 +18,12 @@
     </properties>
 
     <dependencies>
+        <!--        lombok      -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.24</version>
+        </dependency>
         <!--   邮件发送     -->
         <dependency>
             <groupId>cn.hutool</groupId>

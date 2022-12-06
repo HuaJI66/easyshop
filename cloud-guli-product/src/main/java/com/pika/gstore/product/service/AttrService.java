@@ -3,6 +3,7 @@ package com.pika.gstore.product.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.pika.gstore.common.utils.PageUtils;
 import com.pika.gstore.product.entity.AttrEntity;
+import com.pika.gstore.product.entity.ProductAttrValueEntity;
 import com.pika.gstore.product.vo.AttrGroupVo;
 import com.pika.gstore.product.vo.AttrRespVo;
 import com.pika.gstore.product.vo.AttrVo;
@@ -34,5 +35,6 @@ public interface AttrService extends IService<AttrEntity> {
     void deleteRelation(AttrGroupVo[] attrGroupVos);
 
     PageUtils getNoRelation(Map<String, Object> params, String attrgroupId);
+
 }
 

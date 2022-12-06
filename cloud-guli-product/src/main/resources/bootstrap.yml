@@ -21,6 +21,7 @@ spring:
         namespace: 10086002
         extension-configs:
   jackson:
+    time-zone: GMT+8
     date-format: yyyy-MM-dd HH:mm:ss
 
 mybatis-plus:

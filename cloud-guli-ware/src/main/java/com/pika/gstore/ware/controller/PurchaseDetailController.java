@@ -3,6 +3,7 @@ package com.pika.gstore.ware.controller;
 import java.util.Arrays;
 import java.util.Map;
 
+import com.pika.gstore.common.constant.WareConstant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,7 +19,7 @@ import com.pika.gstore.common.utils.R;
 
 
 /**
- * 
+ *
  *
  * @author pikachu
  * @email pikachu@pikachu.com
@@ -59,6 +60,7 @@ public class PurchaseDetailController {
     @RequestMapping("/save")
     //@RequiresPermissions("ware:purchasedetail:save")
     public R save(@RequestBody PurchaseDetailEntity purchaseDetail){
+        purchaseDetail.setStatus(WareConstant.PurchaseDetailEnum.CREATED.getCode());
 		purchaseDetailService.save(purchaseDetail);
 
         return R.ok();

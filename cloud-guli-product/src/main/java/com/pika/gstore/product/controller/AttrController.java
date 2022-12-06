@@ -1,23 +1,24 @@
 package com.pika.gstore.product.controller;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 import com.pika.gstore.common.constant.ProductConstant;
+import com.pika.gstore.product.entity.ProductAttrValueEntity;
+import com.pika.gstore.product.service.ProductAttrValueService;
 import com.pika.gstore.product.vo.AttrRespVo;
 import com.pika.gstore.product.vo.AttrVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.pika.gstore.product.entity.AttrEntity;
 import com.pika.gstore.product.service.AttrService;
 import com.pika.gstore.common.utils.PageUtils;
 import com.pika.gstore.common.utils.R;
+
+import javax.annotation.Resource;
 
 
 /**
@@ -32,6 +33,14 @@ import com.pika.gstore.common.utils.R;
 public class AttrController {
     @Autowired
     private AttrService attrService;
+    @Resource
+    private ProductAttrValueService productAttrValueService;
+
+    @GetMapping("/base/listforspu/{spuId}")
+    public R listForSpu(@PathVariable("spuId") String spuId) {
+        List<ProductAttrValueEntity> attrEntities = productAttrValueService.listForSpu(spuId);
+        return R.ok().put("data", attrEntities);
+    }
 
     /**
      * 列表
@@ -89,6 +98,15 @@ public class AttrController {
     public R update(@RequestBody AttrVo attr) {
 
         attrService.updateVo(attr);
+
+        return R.ok();
+    }
+
+    @RequestMapping("/update/{spuId}")
+    @Transactional
+    public R updateBySpuId(@RequestBody List<ProductAttrValueEntity> attrValueEntities, @PathVariable String spuId) {
+
+        productAttrValueService.updateBySpuId(spuId,attrValueEntities);
 
         return R.ok();
     }

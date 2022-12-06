@@ -1,6 +1,7 @@
 package com.pika.gstore.product.entity;
 
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
 
 import java.io.Serializable;
@@ -9,7 +10,7 @@ import lombok.Data;
 
 /**
  * sku图片
- * 
+ *
  * @author pikachu
  * @email pikachu@pikachu.com
  * @date 2022-11-21 19:35:09
