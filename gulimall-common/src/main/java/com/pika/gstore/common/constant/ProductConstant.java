@@ -28,4 +28,24 @@ public class ProductConstant {
             this.desc = desc;
         }
     }
+    @Getter
+    public enum StatusEnum {
+        /**
+         * 基本属性
+         */
+        CREATED(0, "新建"),
+        UP(1, "上架"),
+        /**
+         * 销售属性
+         */
+        DOWN(2, "下架"),
+        ;
+        private final int type;
+        private final String desc;
+
+        StatusEnum(int type, String desc) {
+            this.type = type;
+            this.desc = desc;
+        }
+    }
 }

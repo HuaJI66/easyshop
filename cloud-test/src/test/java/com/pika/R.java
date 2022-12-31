@@ -1,12 +1,4 @@
-/**
- * Copyright (c) 2016-2019 人人开源 All rights reserved.
- * <p>
- * https://www.renren.io
- * <p>
- * 版权所有，侵权必究！
- */
-
-package com.pika.gstore.common.utils;
+package com.pika;
 
 import cn.hutool.core.lang.TypeReference;
 import cn.hutool.json.JSONUtil;
@@ -15,23 +7,18 @@ import org.apache.http.HttpStatus;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * 返回数据
- *
- * @author Mark sunlightcs@gmail.com
- */
 public class R extends HashMap<String, Object> {
     private static final long serialVersionUID = 1L;
 
     public <T> T getData(TypeReference<T> typeReference) {
         Object data = this.get("data");
         String jsonStr = JSONUtil.toJsonStr(data);
-        return JSONUtil.toBean(jsonStr, typeReference, false);
+        T bean = JSONUtil.toBean(jsonStr, typeReference, false);
+        return bean;
     }
 
-    public R setData(Object data) {
+    public void setData(Object data) {
         this.put("data", data);
-        return this;
     }
 
     public R() {

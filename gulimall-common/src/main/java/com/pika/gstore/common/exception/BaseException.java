@@ -4,6 +4,7 @@ import lombok.Getter;
 
 /**
  * 10: product
+ *
  * @author pi'ka'chu
  */
 
@@ -21,10 +22,14 @@ public enum BaseException {
      * 未知异常
      */
     UNKOWN_EXCEPTION(10404, "未知异常"),
-    ;
+    /*
+    商品上架异常
+     */
+    PRODUCT_UP_EXCEPTION(10501, "商品上架异常"),
     /**
      * 错误码
      */
+    ;
     private final int code;
     /**
      * 错误消息
