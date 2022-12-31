@@ -1,10 +1,14 @@
 package com.pika.gstore;
 
+import cn.hutool.core.lang.TypeReference;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.pika.gstore.common.to.SkuHasStockVo;
+import com.pika.gstore.common.utils.R;
 import com.pika.gstore.product.dao.CategoryDao;
 import com.pika.gstore.product.entity.AttrEntity;
 import com.pika.gstore.product.entity.BrandEntity;
 import com.pika.gstore.product.entity.CategoryEntity;
+import com.pika.gstore.product.feign.WareFeignService;
 import com.pika.gstore.product.service.AttrService;
 import com.pika.gstore.product.service.BrandService;
 import com.pika.gstore.product.service.CategoryService;
@@ -13,10 +17,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
+import java.util.*;
 
 @SpringBootTest(classes = ProductMain5000.class)
 @Slf4j
@@ -29,6 +30,8 @@ class ProductMain5000Tests {
     private CategoryService categoryService;
     @Resource
     private AttrService attrService;
+    @Resource
+    private WareFeignService wareFeignService;
 
     @Test
     void contextLoads() {
@@ -75,5 +78,13 @@ class ProductMain5000Tests {
     @Test
     public void test5() {
         // download file to local
+        R skuHasStock = wareFeignService.getSkuHasStock(Arrays.asList(1L, 2L));
+        System.out.println("skuHasStock = " + skuHasStock);
+        List<SkuHasStockVo> data = skuHasStock.getData(new TypeReference<List<SkuHasStockVo>>() {
+        });
+        System.out.println("data = " + data);
+        for (SkuHasStockVo vo : data) {
+            System.out.println("vo = " + vo);
+        }
     }
 }

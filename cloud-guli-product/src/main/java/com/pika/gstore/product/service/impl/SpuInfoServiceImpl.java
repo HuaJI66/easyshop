@@ -1,33 +1,34 @@
 package com.pika.gstore.product.service.impl;
 
+import cn.hutool.core.lang.TypeReference;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.pika.gstore.common.constant.ProductConstant;
+import com.pika.gstore.common.to.SkuHasStockVo;
 import com.pika.gstore.common.to.SkuReductionTo;
 import com.pika.gstore.common.to.SpuBoundTo;
+import com.pika.gstore.common.to.es.SkuEsModel;
+import com.pika.gstore.common.utils.PageUtils;
+import com.pika.gstore.common.utils.Query;
 import com.pika.gstore.common.utils.R;
+import com.pika.gstore.product.dao.SpuInfoDao;
 import com.pika.gstore.product.entity.*;
+import com.pika.gstore.product.feign.EsFeignService;
+import com.pika.gstore.product.feign.WareFeignService;
 import com.pika.gstore.product.feign.YhqFeignService;
 import com.pika.gstore.product.service.*;
 import com.pika.gstore.product.vo.*;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
-
-import java.math.BigDecimal;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.pika.gstore.common.utils.PageUtils;
-import com.pika.gstore.common.utils.Query;
-
-import com.pika.gstore.product.dao.SpuInfoDao;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
+import java.math.BigDecimal;
+import java.util.*;
+import java.util.stream.Collectors;
 
 
 /**
@@ -51,6 +52,14 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
     private SkuSaleAttrValueService skuSaleAttrValueService;
     @Resource
     private YhqFeignService yhqFeignService;
+    @Resource
+    private BrandService brandService;
+    @Resource
+    private CategoryService categoryService;
+    @Resource
+    private WareFeignService wareFeignService;
+    @Resource
+    private EsFeignService esFeignService;
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
@@ -200,6 +209,75 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
         }
         IPage<SpuInfoEntity> page = this.page(new Query<SpuInfoEntity>().getPage(params), wrapper);
         return new PageUtils(page);
+    }
+
+    @Override
+    public void up(Long spuId) {
+        List<SkuInfoEntity> skus = skuInfoService.list(new LambdaQueryWrapper<SkuInfoEntity>()
+                .eq(SkuInfoEntity::getSpuId, spuId));
+
+        // TODO: 2022/12/29 4.查询当前sku所有可检索属性
+        List<ProductAttrValueEntity> productAttrValueEntities = productAttrValueService.listForSpu(spuId);
+        List<Long> attrIds = productAttrValueEntities.stream().map(ProductAttrValueEntity::getAttrId).collect(Collectors.toList());
+
+        HashSet<Long> attrSet = attrService.list(new LambdaQueryWrapper<AttrEntity>()
+                        .select(AttrEntity::getAttrId).in(AttrEntity::getAttrId, attrIds).eq(AttrEntity::getSearchType, 1))
+                .stream().map(AttrEntity::getAttrId).collect(Collectors.toCollection(HashSet::new));
+
+        List<SkuEsModel.Attrs> attrsCollect = productAttrValueEntities.stream()
+                .filter(productAttrValueEntity -> attrSet.contains(productAttrValueEntity.getAttrId()))
+                .map(productAttrValueEntity -> {
+                    SkuEsModel.Attrs attrs = new SkuEsModel.Attrs();
+                    BeanUtils.copyProperties(productAttrValueEntity, attrs);
+                    return attrs;
+                }).collect(Collectors.toList());
+
+        // TODO: 2022/12/29 1. 远程调用库存系统,查询是否有库存
+        Map<Long, Boolean> map = null;
+        try {
+            R skuHasStock = wareFeignService.getSkuHasStock(skus.stream().map(SkuInfoEntity::getSkuId).collect(Collectors.toList()));
+            map = skuHasStock.getData(new TypeReference<List<SkuHasStockVo>>() {
+            }).stream().collect(Collectors.toMap(SkuHasStockVo::getSkuId, SkuHasStockVo::getHasStock));
+        } catch (Exception e) {
+            log.error("远程查询库存出现异常: {}", e.getCause());
+        }
+
+
+        Map<Long, Boolean> finalMap = map;
+        List<SkuEsModel> collect = skus.stream().map(sku -> {
+            SkuEsModel skuEsModel = new SkuEsModel();
+            BeanUtils.copyProperties(sku, skuEsModel);
+            skuEsModel.setSkuImg(sku.getSkuDefaultImg());
+            skuEsModel.setSkuPrice(sku.getPrice());
+
+            //设置是否有库存,默认有
+            skuEsModel.setHasStock(finalMap == null ? Boolean.TRUE : finalMap.get(sku.getSkuId()));
+
+            // TODO: 2022/12/29 2. 默认热度评分 0
+            skuEsModel.setHotScore(0L);
+
+            // TODO: 2022/12/29 查询品牌和分类的名字
+            BrandEntity brand = brandService.getById(sku.getBrandId());
+            skuEsModel.setBrandName(brand.getName());
+            skuEsModel.setBrandImg(brand.getLogo());
+            CategoryEntity category = categoryService.getById(sku.getCatalogId());
+            skuEsModel.setCatalogName(skuEsModel.getCatalogName());
+            //设置检索属性
+            skuEsModel.setAttrs(attrsCollect);
+            return skuEsModel;
+        }).collect(Collectors.toList());
+
+        // TODO: 2022/12/29 5. 将数据保存到es
+        R r = esFeignService.saveEs(collect);
+        if (r.getCode() == 0) {
+            // TODO: 2022/12/30 6. 修改商品商家状态
+            update(new LambdaUpdateWrapper<SpuInfoEntity>()
+                    .set(SpuInfoEntity::getPublishStatus, ProductConstant.StatusEnum.UP.getType())
+                    .set(SpuInfoEntity::getUpdateTime, new Date())
+                    .eq(SpuInfoEntity::getId, spuId));
+        } else {
+            // TODO: 2022/12/30 重复调用问题 ,接口幂等性?重试机制
+        }
     }
 
 }

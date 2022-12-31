@@ -1,0 +1,23 @@
+server:
+  port: 9000
+#数据源
+spring:
+  application:
+    name: cloud-guli-search
+  cloud:
+    nacos:
+      discovery:
+        ip: 127.0.0.1
+        #        network-interface: eth0
+        server-addr: localhost:9948
+      config:
+        server-addr: localhost:9948
+        file-extension: yaml
+#        namespace: 10086002
+#        extension-configs:
+  jackson:
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss
+logging:
+  level:
+    com.pika.gstore: debug

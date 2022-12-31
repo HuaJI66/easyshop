@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.pika.gstore.common.to.SkuHasStockVo;
 import com.pika.gstore.common.utils.PageUtils;
 import com.pika.gstore.common.utils.Query;
 import com.pika.gstore.common.utils.R;
@@ -17,7 +18,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 
 /**
@@ -73,6 +76,17 @@ public class WareSkuServiceImpl extends ServiceImpl<WareSkuDao, WareSkuEntity> i
                 .eq(WareSkuEntity::getWareId, wareId)
                 .eq(WareSkuEntity::getSkuId, skuId);
         saveOrUpdate(wareSku, wrapper);
+    }
+
+    @Override
+    public List<SkuHasStockVo> getSkuHasStock(List<Long> skuIds) {
+        return skuIds.stream().map(skuId -> {
+            Long count = baseMapper.getSkuStock(skuId);
+            SkuHasStockVo stockVo = new SkuHasStockVo();
+            stockVo.setSkuId(skuId);
+            stockVo.setHasStock(count != null ? count > 0 : Boolean.FALSE);
+            return stockVo;
+        }).collect(Collectors.toList());
     }
 
 }

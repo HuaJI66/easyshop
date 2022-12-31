@@ -10,8 +10,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @since 2022/11/23 12:47
  */
 @SpringBootApplication
-public class Main {
+public class TestMain {
     public static void main(String[] args) {
-        SpringApplication.run(Main.class, args);
+        SpringApplication.run(TestMain.class, args);
     }
 }
