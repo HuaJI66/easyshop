@@ -25,6 +25,9 @@ spring:
     date-format: yyyy-MM-dd HH:mm:ss
   thymeleaf:
     cache: false
+  redis:
+    host: machine111
+    port: 6379
 
 mybatis-plus:
   mapper-locations: classpath:/mapper/**/*.xml
@@ -36,8 +39,8 @@ mybatis-plus:
       logic-not-delete-value: 1 # 逻辑未删除值(默认为 0)
   configuration:
     cache-enabled: true
-#  configuration:
-#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+
 logging:
   level:
     com.pika.gstore: info

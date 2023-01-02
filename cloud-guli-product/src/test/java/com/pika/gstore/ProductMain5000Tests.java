@@ -14,7 +14,9 @@ import com.pika.gstore.product.service.BrandService;
 import com.pika.gstore.product.service.CategoryService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
+import org.redisson.api.RedissonClient;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.redis.core.StringRedisTemplate;
 
 import javax.annotation.Resource;
 import java.util.*;
@@ -32,6 +34,10 @@ class ProductMain5000Tests {
     private AttrService attrService;
     @Resource
     private WareFeignService wareFeignService;
+    @Resource
+    private StringRedisTemplate stringRedisTemplate;
+    @Resource
+    private RedissonClient redissonClient;
 
     @Test
     void contextLoads() {
@@ -86,5 +92,15 @@ class ProductMain5000Tests {
         for (SkuHasStockVo vo : data) {
             System.out.println("vo = " + vo);
         }
+    }
+    @Test
+    public void test6(){
+        stringRedisTemplate.opsForValue().set("hello", "world");
+        String hello = stringRedisTemplate.opsForValue().get("hello");
+        System.out.println("hello = " + hello);
+    }
+    @Test
+    public void test7(){
+        System.out.println("redissonClient = " + redissonClient);
     }
 }
