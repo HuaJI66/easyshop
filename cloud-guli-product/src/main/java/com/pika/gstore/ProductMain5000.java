@@ -7,7 +7,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 
 @SpringBootApplication
-@MapperScan("com.pika.gstore.product.dao")
+@MapperScan(basePackages ={ "com.pika.gstore.product.dao"})
 @EnableDiscoveryClient
 @EnableFeignClients(basePackages = "com.pika.gstore.product.feign")
 public class ProductMain5000 {

@@ -17,6 +17,10 @@ import com.pika.gstore.product.service.CategoryBrandRelationService;
 import com.pika.gstore.product.service.CategoryService;
 import com.pika.gstore.product.vo.Category2Vo;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.data.redis.core.script.DefaultRedisScript;
@@ -72,6 +76,12 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
     }
 
     @Override
+//    @Caching(evict = {
+//            @CacheEvict(cacheNames = "category", key = "'getFirstLevel'"),
+//            @CacheEvict(cacheNames = "category", key = "'getCatalogJson'"),
+//    })
+    //@CacheEvict(cacheNames = "category", key = "'getFirstLevel'")
+    @CacheEvict(cacheNames = "category",allEntries = true)
     public void updateCascade(CategoryEntity category) {
         // 更新本表数据
         updateById(category);
@@ -85,17 +95,20 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
     }
 
     @Override
+    @Cacheable(cacheNames = {"category"}, key = "#root.methodName")
     public List<CategoryEntity> getFirstLevel() {
+        log.info("getFirstLevel");
         return list(new LambdaUpdateWrapper<CategoryEntity>().eq(CategoryEntity::getParentCid, 0));
     }
 
     @Override
+    @Cacheable(cacheNames = "category",key = "#root.methodName")
     public String getCatalogJson() {
         ValueOperations<String, String> ops = stringRedisTemplate.opsForValue();
         String catalogJson = ops.get("catalogJson");
         if (StringUtils.isEmpty(catalogJson)) {
             log.info("缓存未命中------");
-            catalogJson = getCatalogJsonDBRedisDistLock();
+            catalogJson = JSONUtil.toJsonStr(getDataFromDB());
         }
         return catalogJson;
     }
