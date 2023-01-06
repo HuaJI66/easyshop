@@ -3,6 +3,7 @@ package com.pika.gstore.product.vo;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.util.List;
 
@@ -15,6 +16,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class Category2Vo {
     private String id;
     private String name;
@@ -24,6 +26,7 @@ public class Category2Vo {
     @Data
     @NoArgsConstructor
     @AllArgsConstructor
+    @ToString
     public static class Category3Vo {
         private String id;
         private String name;

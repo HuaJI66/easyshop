@@ -35,7 +35,7 @@ spring:
       #过期时间 ms
       time-to-live: 3600000 #60*60*1000=1h
       cache-null-values: true #是否缓存空值
-      key-prefix: 'cache::product::'  #use-key-prefix=true时作为键前缀,此项为配置时使用缓存名作为前缀
+      key-prefix: 'cache:product:'  #use-key-prefix=true时作为键前缀,此项为配置时使用缓存名作为前缀
       use-key-prefix: true  #是否使用指定前缀
 
 mybatis-plus:

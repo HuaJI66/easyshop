@@ -1,5 +1,6 @@
 package com.pika.gstore.product.controller;
 
+import com.pika.gstore.common.to.es.CategoryVo;
 import com.pika.gstore.common.utils.R;
 import com.pika.gstore.product.entity.CategoryEntity;
 import com.pika.gstore.product.service.CategoryService;
@@ -44,7 +45,11 @@ public class CategoryController {
     //@RequiresPermissions("product:category:info")
     public R info(@PathVariable("catId") Long catId) {
         CategoryEntity category = categoryService.getById(catId);
-
+        return R.ok().put("data", category);
+    }
+    @RequestMapping("/getName/{catId}")
+    public R getName(@PathVariable("catId") Long catId) {
+        CategoryVo category = categoryService.getName(catId);
         return R.ok().put("data", category);
     }
 

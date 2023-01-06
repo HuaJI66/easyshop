@@ -3,6 +3,7 @@ package com.pika.gstore.product.web;
 import cn.hutool.core.util.IdUtil;
 import com.pika.gstore.product.entity.CategoryEntity;
 import com.pika.gstore.product.service.CategoryService;
+import com.pika.gstore.product.vo.Category2Vo;
 import lombok.extern.slf4j.Slf4j;
 import org.redisson.api.*;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.annotation.Resource;
 import java.time.Duration;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -44,7 +46,7 @@ public class IndexController {
 
     @GetMapping("index/catalog.json")
     @ResponseBody
-    public String getCatalogJson() {
+    public Map<String, List<Category2Vo>> getCatalogJson() {
         return categoryService.getCatalogJson();
     }
 

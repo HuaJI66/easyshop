@@ -4,6 +4,9 @@ import cn.hutool.extra.mail.MailAccount;
 import cn.hutool.extra.mail.MailUtil;
 import cn.hutool.json.JSONUtil;
 
+import java.util.Random;
+import java.util.Stack;
+
 /**
  * Desc:
  *
@@ -52,8 +55,22 @@ public class Test {
         SkuInfoVo skuInfoVo = JSONUtil.toBean(json, SkuInfoVo.class);
         System.out.println("skuInfoVo = " + skuInfoVo);
     }
+   private static Stack<Boolean> stack = new Stack<>();
+    static {
+        stack.push(Boolean.FALSE);
+        stack.push(Boolean.TRUE);
+    }
+    public  boolean test5() {
+        Boolean pop = stack.pop();
+        System.out.println(pop);
+        return pop;
+    }
 
-    public void test5(){
-        System.out.println("Success");
+
+    @org.junit.Test
+    public void test6(){
+        if (test5()) {
+            test5();
+        }
     }
 }

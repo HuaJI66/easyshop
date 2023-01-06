@@ -1,0 +1,40 @@
+{
+  "buckets": [
+    {
+      "key": 5,
+      "docCountError": 0,
+      "aggregations": [
+        {
+          "buckets": [
+            {
+              "key": "https://gstore-piks.oss-cn-hangzhou.aliyuncs.com/2022/12/03/33432de1-7378-48f1-8676-2efee9c9e9ec_apple.png",
+              "docCountError": 0,
+              "aggregations": [],
+              "keyAsString": "https://gstore-piks.oss-cn-hangzhou.aliyuncs.com/2022/12/03/33432de1-7378-48f1-8676-2efee9c9e9ec_apple.png",
+              "docCount": 6,
+              "keyed": false
+            }
+          ],
+          "name": "brand_sub_img_agg"
+        },
+        {
+          "buckets": [
+            {
+              "key": "苹果",
+              "docCountError": 0,
+              "aggregations": [],
+              "keyAsString": "苹果",
+              "docCount": 6,
+              "keyed": false
+            }
+          ],
+          "name": "brand_sub_name_agg"
+        }
+      ],
+      "keyAsString": "5",
+      "docCount": 6,
+      "keyed": false
+    }
+  ],
+  "name": "brand_agg"
+}

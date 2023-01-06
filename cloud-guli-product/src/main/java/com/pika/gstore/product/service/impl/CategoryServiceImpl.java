@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.pika.gstore.common.to.es.CategoryVo;
 import com.pika.gstore.common.utils.PageUtils;
 import com.pika.gstore.common.utils.Query;
 import com.pika.gstore.product.dao.CategoryDao;
@@ -17,10 +18,11 @@ import com.pika.gstore.product.service.CategoryBrandRelationService;
 import com.pika.gstore.product.service.CategoryService;
 import com.pika.gstore.product.vo.Category2Vo;
 import lombok.extern.slf4j.Slf4j;
+import org.redisson.api.RLock;
+import org.redisson.api.RedissonClient;
+import org.springframework.beans.BeanUtils;
 import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.cache.annotation.Caching;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.data.redis.core.script.DefaultRedisScript;
@@ -30,6 +32,7 @@ import org.springframework.util.StringUtils;
 import javax.annotation.Resource;
 import java.time.Duration;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 
@@ -81,7 +84,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
 //            @CacheEvict(cacheNames = "category", key = "'getCatalogJson'"),
 //    })
     //@CacheEvict(cacheNames = "category", key = "'getFirstLevel'")
-    @CacheEvict(cacheNames = "category",allEntries = true)
+    @CacheEvict(cacheNames = "category", allEntries = true)
     public void updateCascade(CategoryEntity category) {
         // 更新本表数据
         updateById(category);
@@ -95,22 +98,24 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
     }
 
     @Override
-    @Cacheable(cacheNames = {"category"}, key = "#root.methodName")
+    @Cacheable(cacheNames = {"category"}, key = "#root.methodName", sync = true)
     public List<CategoryEntity> getFirstLevel() {
         log.info("getFirstLevel");
         return list(new LambdaUpdateWrapper<CategoryEntity>().eq(CategoryEntity::getParentCid, 0));
     }
 
     @Override
-    @Cacheable(cacheNames = "category",key = "#root.methodName")
-    public String getCatalogJson() {
-        ValueOperations<String, String> ops = stringRedisTemplate.opsForValue();
-        String catalogJson = ops.get("catalogJson");
-        if (StringUtils.isEmpty(catalogJson)) {
-            log.info("缓存未命中------");
-            catalogJson = JSONUtil.toJsonStr(getDataFromDB());
-        }
-        return catalogJson;
+    @Cacheable(cacheNames = "category", key = "#root.methodName", sync = true)
+    public Map<String, List<Category2Vo>> getCatalogJson() {
+        return getDataFromDB();
+    }
+
+    @Override
+    public CategoryVo getName(Long catId) {
+        CategoryEntity category = getOne(new LambdaQueryWrapper<CategoryEntity>().select(CategoryEntity::getName).eq(CategoryEntity::getCatId, catId));
+        CategoryVo categoryVo = new CategoryVo();
+        BeanUtils.copyProperties(category, categoryVo);
+        return categoryVo;
     }
 
     private String getCatalogJsonDBRedisDistLock() {

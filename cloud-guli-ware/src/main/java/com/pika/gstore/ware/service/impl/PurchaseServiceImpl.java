@@ -127,7 +127,7 @@ public class PurchaseServiceImpl extends ServiceImpl<PurchaseDao, PurchaseEntity
             detail.setId(item.getItemId());
             int status = item.getStatus();
             if (status < WareConstant.PurchaseDetailEnum.FINISHED.getCode()) {
-                detail.setStatus(status);
+                detail.setStatus(WareConstant.PurchaseDetailEnum.FINISHED.getCode());
                 PurchaseDetailEntity purchaseDetail = purchaseDetailService.getById(item.getItemId());
                 wareSkuService.addStock(purchaseDetail.getSkuId(), purchaseDetail.getWareId(), purchaseDetail.getSkuNum());
             } else {

@@ -16,6 +16,7 @@ import com.pika.gstore.product.vo.AttrGroupVo;
 import com.pika.gstore.product.vo.AttrRespVo;
 import com.pika.gstore.product.vo.AttrVo;
 import org.springframework.beans.BeanUtils;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -121,6 +122,7 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
     }
 
     @Override
+    @Cacheable(cacheNames = "attr",key = "#root.methodName+':'+#root.args[0]")
     public AttrRespVo getAttrVo(Long attrId) {
         AttrRespVo attrRespVo = new AttrRespVo();
         AttrEntity attr = getById(attrId);

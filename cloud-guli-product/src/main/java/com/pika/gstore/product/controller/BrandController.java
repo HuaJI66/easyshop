@@ -1,11 +1,13 @@
 package com.pika.gstore.product.controller;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 import com.pika.gstore.common.validator.AddGroup;
 import com.pika.gstore.common.validator.UpdateGroup;
 import com.pika.gstore.common.validator.UpdateStatusGroup;
+import com.pika.gstore.product.vo.BrandVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -54,6 +56,11 @@ public class BrandController {
         BrandEntity brand = brandService.getById(brandId);
 
         return R.ok().put("brand", brand);
+    }
+    @RequestMapping("/infos")
+    public R info(@RequestParam List<Long> brandIds) {
+        List<BrandVo> list = brandService.infos(brandIds);
+        return R.ok().put("brands", list);
     }
 
     /**

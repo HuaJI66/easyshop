@@ -4,9 +4,14 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.pika.gstore.product.entity.CategoryBrandRelationEntity;
 import com.pika.gstore.product.service.CategoryBrandRelationService;
+import com.pika.gstore.product.vo.BrandVo;
+import org.springframework.beans.BeanUtils;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -51,4 +56,15 @@ public class BrandServiceImpl extends ServiceImpl<BrandDao, BrandEntity> impleme
         // TODO: 2022/11/28 更新其它冗余表数据
     }
 
+    @Override
+    @Cacheable(cacheNames = "brand",key = "#root.methodName+':'+#root.args[0]")
+    public List<BrandVo> infos(List<Long> brandIds) {
+        return list(new LambdaQueryWrapper<BrandEntity>().select(BrandEntity::getBrandId, BrandEntity::getName)
+                .in(BrandEntity::getBrandId, brandIds)).stream().map(item -> {
+            BrandVo brandVo = new BrandVo();
+            BeanUtils.copyProperties(item, brandVo);
+            brandVo.setBrandName(item.getName());
+            return brandVo;
+        }).collect(Collectors.toList());
+    }
 }

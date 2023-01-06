@@ -1,7 +1,11 @@
 package com.pika.gstore;
 
+import cn.hutool.json.JSONUtil;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pika.gstore.product.entity.AttrEntity;
+import com.pika.gstore.product.vo.Attr;
 import org.junit.jupiter.api.Test;
+import org.springframework.data.redis.serializer.RedisSerializer;
 
 import java.util.Optional;
 
@@ -31,5 +35,24 @@ public class OptionalTest {
 //        attr.setAttrId(1L);
         Optional<Long> attrId = Optional.ofNullable(attr.getAttrId());
         System.out.println("attrId.isPresent() = " + attrId.isPresent());
+    }
+    @Test
+    public void test4(){
+        AttrEntity attr = new AttrEntity();
+        attr.setAttrId(0L);
+        attr.setAttrName("123");
+        attr.setSearchType(0);
+        attr.setValueType(0);
+        attr.setIcon("14321");
+        attr.setValueSelect("3123");
+        attr.setAttrType(0);
+        attr.setEnable(0L);
+        attr.setCatelogId(0L);
+        attr.setShowDesc(0);
+
+        byte[] bytes = RedisSerializer.json().serialize(attr);
+        System.out.println("bytes = " + new String(bytes));
+        AttrEntity o = (AttrEntity) RedisSerializer.json().deserialize(bytes);
+        System.out.println("o = " + o);
     }
 }

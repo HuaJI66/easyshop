@@ -1,0 +1,210 @@
+{
+  "took": 12,
+  "timed_out": false,
+  "_shards": {
+    "total": 1,
+    "successful": 1,
+    "skipped": 0,
+    "failed": 0
+  },
+  "hits": {
+    "total": {
+      "value": 6,
+      "relation": "eq"
+    },
+    "max_score": null,
+    "hits": [
+      {
+        "_index": "new_product",
+        "_type": "_doc",
+        "_id": "2",
+        "_score": null,
+        "_source": {
+          "skuId": 2,
+          "spuId": 1,
+          "brandId": 5,
+          "catalogId": 225,
+          "skuImg": "https://gstore-piks.oss-cn-hangzhou.aliyuncs.com/2022/12/04/a90228bf-ba23-4dbb-8b20-b750f86d04d5_Snipaste_2022-12-04_19-21-57.png",
+          "catalogName": "手机",
+          "attrs": [
+            {
+              "attrName": "CPU品牌",
+              "attrValue": "Apple",
+              "attrId": 16
+            },
+            {
+              "attrName": "CPU型号",
+              "attrValue": "a14",
+              "attrId": 17
+            }
+          ],
+          "skuPrice": 11549,
+          "saleCount": 0,
+          "hotScore": 0,
+          "brandName": "苹果",
+          "skuTitle": "苹果Apple iPhone 14 Pro 暗紫色 12+256",
+          "brandImg": "https://gstore-piks.oss-cn-hangzhou.aliyuncs.com/2022/12/03/33432de1-7378-48f1-8676-2efee9c9e9ec_apple.png",
+          "hasStock": true
+        },
+        "highlight": {
+          "skuTitle": [
+            "<b style='color:red'>苹果</b>Apple iPhone 14 Pro 暗紫色 12+256"
+          ]
+        },
+        "sort": [
+          11549
+        ]
+      },
+      {
+        "_index": "new_product",
+        "_type": "_doc",
+        "_id": "4",
+        "_score": null,
+        "_source": {
+          "skuId": 4,
+          "spuId": 1,
+          "brandId": 5,
+          "catalogId": 225,
+          "skuImg": "https://gstore-piks.oss-cn-hangzhou.aliyuncs.com/2022/12/04/1d2b2ab0-48b4-4108-8614-7c4dc588d9f7_Snipaste_2022-12-04_19-25-18.png",
+          "catalogName": "手机",
+          "attrs": [
+            {
+              "attrName": "CPU品牌",
+              "attrValue": "Apple",
+              "attrId": 16
+            },
+            {
+              "attrName": "CPU型号",
+              "attrValue": "a14",
+              "attrId": 17
+            }
+          ],
+          "skuPrice": 11549,
+          "saleCount": 0,
+          "hotScore": 0,
+          "brandName": "苹果",
+          "skuTitle": "苹果Apple iPhone 14 Pro 银色 12+256",
+          "brandImg": "https://gstore-piks.oss-cn-hangzhou.aliyuncs.com/2022/12/03/33432de1-7378-48f1-8676-2efee9c9e9ec_apple.png",
+          "hasStock": true
+        },
+        "highlight": {
+          "skuTitle": [
+            "<b style='color:red'>苹果</b>Apple iPhone 14 Pro 银色 12+256"
+          ]
+        },
+        "sort": [
+          11549
+        ]
+      }
+    ]
+  },
+  "aggregations": {
+    "lterms#catalog_agg": {
+      "doc_count_error_upper_bound": 0,
+      "sum_other_doc_count": 0,
+      "buckets": [
+        {
+          "key": 225,
+          "doc_count": 6,
+          "sterms#catalog_sub_names_agg": {
+            "doc_count_error_upper_bound": 0,
+            "sum_other_doc_count": 0,
+            "buckets": [
+              {
+                "key": "手机",
+                "doc_count": 6
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "nested#attr_agg": {
+      "doc_count": 12,
+      "lterms#attr_sub_attrId_agg": {
+        "doc_count_error_upper_bound": 0,
+        "sum_other_doc_count": 0,
+        "buckets": [
+          {
+            "key": 16,
+            "doc_count": 6,
+            "sterms#attrId_sub_attrName_agg": {
+              "doc_count_error_upper_bound": 0,
+              "sum_other_doc_count": 0,
+              "buckets": [
+                {
+                  "key": "CPU品牌",
+                  "doc_count": 6
+                }
+              ]
+            },
+            "sterms#attrId_sub_value_agg": {
+              "doc_count_error_upper_bound": 0,
+              "sum_other_doc_count": 0,
+              "buckets": [
+                {
+                  "key": "Apple",
+                  "doc_count": 6
+                }
+              ]
+            }
+          },
+          {
+            "key": 17,
+            "doc_count": 6,
+            "sterms#attrId_sub_attrName_agg": {
+              "doc_count_error_upper_bound": 0,
+              "sum_other_doc_count": 0,
+              "buckets": [
+                {
+                  "key": "CPU型号",
+                  "doc_count": 6
+                }
+              ]
+            },
+            "sterms#attrId_sub_value_agg": {
+              "doc_count_error_upper_bound": 0,
+              "sum_other_doc_count": 0,
+              "buckets": [
+                {
+                  "key": "a14",
+                  "doc_count": 6
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "lterms#brand_agg": {
+      "doc_count_error_upper_bound": 0,
+      "sum_other_doc_count": 0,
+      "buckets": [
+        {
+          "key": 5,
+          "doc_count": 6,
+          "sterms#brand_sub_names_agg": {
+            "doc_count_error_upper_bound": 0,
+            "sum_other_doc_count": 0,
+            "buckets": [
+              {
+                "key": "苹果",
+                "doc_count": 6
+              }
+            ]
+          },
+          "sterms#brand_sub_img_agg": {
+            "doc_count_error_upper_bound": 0,
+            "sum_other_doc_count": 0,
+            "buckets": [
+              {
+                "key": "https://gstore-piks.oss-cn-hangzhou.aliyuncs.com/2022/12/03/33432de1-7378-48f1-8676-2efee9c9e9ec_apple.png",
+                "doc_count": 6
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}
