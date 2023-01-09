@@ -1,4 +1,4 @@
-package com.pika.gstore.product.controller;
+package com.pika.gstore.product.app;
 
 import java.util.Arrays;
 import java.util.List;

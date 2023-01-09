@@ -5,6 +5,7 @@ import com.pika.gstore.common.utils.PageUtils;
 import com.pika.gstore.product.entity.AttrGroupEntity;
 import com.pika.gstore.product.vo.AttrGroupVo;
 import com.pika.gstore.product.vo.AttrGroupWithAttrVo;
+import com.pika.gstore.product.vo.SpuItemAttrGroupVo;
 
 import java.util.List;
 import java.util.Map;
@@ -25,5 +26,7 @@ public interface AttrGroupService extends IService<AttrGroupEntity> {
     void relate(List<AttrGroupVo> attrGroupVos);
 
     List<AttrGroupWithAttrVo> getWithAttr(Long catelogId);
+
+    List<SpuItemAttrGroupVo> getWithSpuIdCatalogId(Long spuId, Long catalogId);
 }
 

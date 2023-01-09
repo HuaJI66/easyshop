@@ -1,4 +1,4 @@
-package com.pika.gstore.product.controller;
+package com.pika.gstore.product.app;
 
 import com.pika.gstore.common.to.es.CategoryVo;
 import com.pika.gstore.common.utils.R;

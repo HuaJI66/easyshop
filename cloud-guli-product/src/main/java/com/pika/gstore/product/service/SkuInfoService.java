@@ -3,6 +3,7 @@ package com.pika.gstore.product.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.pika.gstore.common.utils.PageUtils;
 import com.pika.gstore.product.entity.SkuInfoEntity;
+import com.pika.gstore.product.vo.SkuItemVo;
 
 import java.util.Map;
 
@@ -18,5 +19,8 @@ public interface SkuInfoService extends IService<SkuInfoEntity> {
     PageUtils queryPage(Map<String, Object> params);
 
     PageUtils queryByCondition(Map<String, Object> params);
+
+
+    SkuItemVo itemInfo(Long skuId);
 }
 

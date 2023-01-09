@@ -53,3 +53,10 @@ mybatis-plus:
 logging:
   level:
     com.pika.gstore: info
+#线程池配置
+gulimall:
+  thread:
+    core-pool-size: 20
+    maximum-pool-size: 200
+    keep-alive-time: 10
+    unit: seconds

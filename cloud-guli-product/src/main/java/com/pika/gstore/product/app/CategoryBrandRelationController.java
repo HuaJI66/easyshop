@@ -1,4 +1,4 @@
-package com.pika.gstore.product.controller;
+package com.pika.gstore.product.app;
 
 import java.util.Arrays;
 import java.util.List;
@@ -6,7 +6,6 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
 import com.pika.gstore.product.entity.BrandEntity;
 import com.pika.gstore.product.entity.CategoryEntity;
 import com.pika.gstore.product.service.BrandService;

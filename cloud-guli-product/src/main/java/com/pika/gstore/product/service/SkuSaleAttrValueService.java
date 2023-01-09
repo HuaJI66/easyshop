@@ -3,7 +3,9 @@ package com.pika.gstore.product.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.pika.gstore.common.utils.PageUtils;
 import com.pika.gstore.product.entity.SkuSaleAttrValueEntity;
+import com.pika.gstore.product.vo.SkuItemSaleAttrVo;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -16,5 +18,7 @@ import java.util.Map;
 public interface SkuSaleAttrValueService extends IService<SkuSaleAttrValueEntity> {
 
     PageUtils queryPage(Map<String, Object> params);
+
+    List<SkuItemSaleAttrVo> getSaleAttrBySpuId(Long spuId);
 }
 

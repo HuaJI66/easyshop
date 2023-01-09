@@ -3,7 +3,7 @@
 
 <mapper namespace="com.pika.gstore.product.dao.AttrGroupDao">
 
-	<!-- 可根据自己的需求，是否要使用 -->
+    <!-- 可根据自己的需求，是否要使用 -->
     <resultMap type="com.pika.gstore.product.entity.AttrGroupEntity" id="attrGroupMap">
         <result property="attrGroupId" column="attr_group_id"/>
         <result property="attrGroupName" column="attr_group_name"/>
@@ -12,6 +12,25 @@
         <result property="icon" column="icon"/>
         <result property="catelogId" column="catelog_id"/>
     </resultMap>
-
+    <resultMap id="spuItemAttrGroupVo" type="com.pika.gstore.product.vo.SpuItemAttrGroupVo">
+        <result property="groupName" column="attr_group_name"/>
+        <collection property="attrs" ofType="com.pika.gstore.product.vo.Attr">
+            <result property="attrValue" column="attr_value"/>
+            <result property="attrName" column="attr_name"/>
+            <result property="attrId" column="attr_id"/>
+        </collection>
+    </resultMap>
+    <select id="getWithSpuIdCatalogId" resultMap="spuItemAttrGroupVo">
+        SELECT ag.attr_group_name,
+               agr.attr_id,
+               attr.attr_name,
+               av.attr_value
+        FROM `pms_attr_group` ag
+                 LEFT JOIN pms_attr_attrgroup_relation agr ON ag.attr_group_id = agr.attr_group_id
+                 LEFT JOIN pms_attr attr ON agr.attr_id = attr.attr_id
+                 LEFT JOIN pms_product_attr_value av ON agr.attr_id = av.attr_id
+        WHERE ag.catelog_id = #{catalogId}
+          AND av.spu_id = #{spuId}
+    </select>
 
 </mapper>

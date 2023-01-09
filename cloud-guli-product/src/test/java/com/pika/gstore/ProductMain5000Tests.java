@@ -4,6 +4,7 @@ import cn.hutool.core.lang.TypeReference;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.pika.gstore.common.to.SkuHasStockVo;
 import com.pika.gstore.common.utils.R;
+import com.pika.gstore.product.dao.AttrGroupDao;
 import com.pika.gstore.product.dao.CategoryDao;
 import com.pika.gstore.product.entity.AttrEntity;
 import com.pika.gstore.product.entity.BrandEntity;
@@ -38,6 +39,8 @@ class ProductMain5000Tests {
     private StringRedisTemplate stringRedisTemplate;
     @Resource
     private RedissonClient redissonClient;
+    @Resource
+    private AttrGroupDao attrGroupDao;
 
     @Test
     void contextLoads() {
@@ -99,8 +102,13 @@ class ProductMain5000Tests {
         String hello = stringRedisTemplate.opsForValue().get("hello");
         System.out.println("hello = " + hello);
     }
+
     @Test
-    public void test7(){
+    public void test7() {
         System.out.println("redissonClient = " + redissonClient);
+    }
+    @Test
+    public void test8(){
+        attrGroupDao.getWithSpuIdCatalogId(1L, 225L).forEach(System.out::println);
     }
 }

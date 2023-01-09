@@ -7,6 +7,7 @@ import com.pika.gstore.product.service.AttrAttrgroupRelationService;
 import com.pika.gstore.product.service.AttrService;
 import com.pika.gstore.product.vo.AttrGroupVo;
 import com.pika.gstore.product.vo.AttrGroupWithAttrVo;
+import com.pika.gstore.product.vo.SpuItemAttrGroupVo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
@@ -90,6 +91,11 @@ public class AttrGroupServiceImpl extends ServiceImpl<AttrGroupDao, AttrGroupEnt
             groupWithAttrVo.setAttrs(attrs);
             return groupWithAttrVo;
         }).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<SpuItemAttrGroupVo> getWithSpuIdCatalogId(Long spuId, Long catalogId) {
+        return baseMapper.getWithSpuIdCatalogId(spuId,catalogId);
     }
 
 }

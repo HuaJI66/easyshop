@@ -1,4 +1,4 @@
-package com.pika.gstore.product.controller;
+package com.pika.gstore.product.app;
 
 import java.util.Arrays;
 import java.util.List;
@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
-import com.pika.gstore.product.entity.AttrEntity;
 import com.pika.gstore.product.service.AttrService;
 import com.pika.gstore.common.utils.PageUtils;
 import com.pika.gstore.common.utils.R;
