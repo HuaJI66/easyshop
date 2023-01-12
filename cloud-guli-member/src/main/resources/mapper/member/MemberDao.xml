@@ -24,8 +24,6 @@
         <result property="status" column="status"/>
         <result property="createTime" column="create_time"/>
         <result property="socialId" column="social_id"/>
-        <result property="socialAccessToken" column="social_ access_token"/>
+        <result property="socialAccessToken" column="social_access_token"/>
     </resultMap>
-
-
 </mapper>

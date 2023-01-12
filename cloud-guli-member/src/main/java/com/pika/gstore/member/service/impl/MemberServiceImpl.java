@@ -101,7 +101,7 @@ public class MemberServiceImpl extends ServiceImpl<MemberDao, MemberEntity> impl
         wrapper.eq(MemberEntity::getSourceType, 1)
                 .eq(MemberEntity::getSocialId, giteeUserInfoTo.getId())
                 .last("limit 1");
-        MemberEntity member = null;
+        MemberEntity member;
         member = getOne(wrapper);
 
         if (member != null) {
