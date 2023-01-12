@@ -28,10 +28,14 @@ public class R extends HashMap<String, Object> {
         String jsonStr = JSONUtil.toJsonStr(data);
         return JSONUtil.toBean(jsonStr, typeReference, false);
     }
-    public <T> T getData(String key,TypeReference<T> typeReference) {
+
+    public <T> T getData(String key, TypeReference<T> typeReference) {
         Object data = this.get(key);
         String jsonStr = JSONUtil.toJsonStr(data);
         return JSONUtil.toBean(jsonStr, typeReference, false);
+    }
+    public String getMsg(){
+        return (String) this.get("msg");
     }
 
     public R setData(Object data) {
@@ -81,6 +85,6 @@ public class R extends HashMap<String, Object> {
     }
 
     public Integer getCode() {
-        return (Integer) get("code");
+        return Integer.parseInt(get("code").toString());
     }
 }

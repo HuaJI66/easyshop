@@ -7,21 +7,21 @@ spring:
     date-format: yyyy-MM-dd HH:mm:ss
   application:
     name: cloud-guli-ware
-  datasource:
-    username: root
-    password: root
-    url: jdbc:mysql://machine111:13306/gulimall_wms
-    driver-class-name: com.mysql.cj.jdbc.Driver
   cloud:
     nacos:
       server-addr: localhost:9948
       discovery:
         ip: 127.0.0.1
-mybatis-plus:
-  mapper-locations: classpath:/mapper/**/*.xml
-  global-config:
-    db-config:
-      id-type: auto
+      config:
+        file-extension: yaml
+        namespace: 10086004
+        extension-configs:
+          - data-id: mybatis-plus.yaml
+            group: dev
+            refresh: true
+          - data-id: datasource.yaml
+            group: dev
+            refresh: true
 logging:
   level:
     com.pika.gstore: debug

@@ -8,7 +8,6 @@ spring:
     nacos:
       discovery:
         ip: 127.0.0.1
-        #        network-interface: eth0
         server-addr: localhost:9948
       config:
         server-addr: localhost:9948
@@ -21,3 +20,6 @@ spring:
 logging:
   level:
     com.pika.gstore: debug
+elasticsearch:
+  host: localhost
+  port: 9200

@@ -24,6 +24,7 @@
         <module>renren-generator</module>
         <module>cloud-guli-third-service</module>
         <module>cloud-guli-search</module>
+        <module>cloud-guli-auth</module>
     </modules>
 
     <!--统一管理jar包版本-->

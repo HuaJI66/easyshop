@@ -1,18 +1,17 @@
+server:
+  port: 6000
 spring:
+  application:
+    name: cloud-guli-gateway
   cloud:
     nacos:
+      server-addr: localhost:9948
       discovery:
         ip: 127.0.0.1
-#        ip: 10.2.11.11
       config:
-        server-addr: localhost:9948
         namespace: 10086006
         file-extension: yaml
         extension-configs:
-          - data-id: registry.yaml
-            group: dev
-            refresh: true
-
           - data-id: gateway.yaml
             group: dev
             refresh: true

@@ -22,6 +22,25 @@
                 </exclusion>
             </exclusions>
         </dependency>
+        <!--    注解驱动    -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <!--        短信验证码       -->
+        <!-- 异步-->
+        <dependency>
+            <groupId>com.aliyun</groupId>
+            <artifactId>alibabacloud-dysmsapi20170525</artifactId>
+            <version>2.0.22</version>
+        </dependency>
+        <!--同步-->
+        <dependency>
+            <groupId>com.aliyun</groupId>
+            <artifactId>dysmsapi20170525</artifactId>
+            <version>2.0.23</version>
+        </dependency>
         <!--   OSS     -->
         <dependency>
             <groupId>com.aliyun.oss</groupId>

@@ -1,0 +1,27 @@
+server:
+  port: 10000
+spring:
+  application:
+    name: cloud-guli-auth
+  cloud:
+    nacos:
+      server-addr: localhost:9948
+      discovery:
+        ip: 127.0.0.1
+      config:
+        file-extension: yaml
+        refresh-enabled: true
+        namespace: 10086009
+        extension-configs:
+          - data-id: auth.yaml
+            group: dev
+            refresh: true
+  redis:
+    host: localhost
+    port: 6379
+ribbon:
+  ReadTimeout: 60000
+  ConnectTimeout: 60000
+logging:
+  level:
+    com.pika.gstore: debug

@@ -4,29 +4,29 @@ server:
 spring:
   application:
     name: cloud-guli-product
-  datasource:
-    username: root
-    password: root
-    url: jdbc:mysql://machine111:13306/gulimall_pms
-    driver-class-name: com.mysql.cj.jdbc.Driver
   cloud:
     nacos:
+      server-addr: localhost:9948
       discovery:
         ip: 127.0.0.1
-#        network-interface: eth0
-        server-addr: localhost:9948
       config:
-        server-addr: localhost:9948
         file-extension: yaml
         namespace: 10086002
         extension-configs:
+          - data-id: mybatis-plus.yaml
+            group: dev
+            refresh: true
+
+          - data-id: datasource.yaml
+            group: dev
+            refresh: true
   jackson:
     time-zone: GMT+8
     date-format: yyyy-MM-dd HH:mm:ss
   thymeleaf:
     cache: false
   redis:
-    host: machine111
+    host: localhost
     port: 6379
   #缓存
   cache:
@@ -37,19 +37,6 @@ spring:
       cache-null-values: true #是否缓存空值
       key-prefix: 'cache:product:'  #use-key-prefix=true时作为键前缀,此项为配置时使用缓存名作为前缀
       use-key-prefix: true  #是否使用指定前缀
-
-mybatis-plus:
-  mapper-locations: classpath:/mapper/**/*.xml
-  global-config:
-    db-config:
-      id-type: auto
-      #      logic-delete-field: show_status # 全局逻辑删除的实体字段名(since 3.3.0,配置后可以忽略不配置步骤2)
-      logic-delete-value: 0 # 逻辑已删除值(默认为 1)
-      logic-not-delete-value: 1 # 逻辑未删除值(默认为 0)
-  configuration:
-    cache-enabled: true
-
-
 logging:
   level:
     com.pika.gstore: info

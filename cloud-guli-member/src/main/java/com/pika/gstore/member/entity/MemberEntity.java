@@ -9,7 +9,7 @@ import lombok.Data;
 
 /**
  * 会员
- * 
+ *
  * @author pikachu
  * @email pikachu@pikachu.com
  * @date 2022-11-21 21:24:18
@@ -73,7 +73,7 @@ public class MemberEntity implements Serializable {
 	 */
 	private String sign;
 	/**
-	 * 用户来源
+	 * 用户来源:0->本地用户,1->gitee
 	 */
 	private Integer sourceType;
 	/**
@@ -92,5 +92,7 @@ public class MemberEntity implements Serializable {
 	 * 注册时间
 	 */
 	private Date createTime;
+	private Integer socialId;
+	private String socialAccessToken;
 
 }

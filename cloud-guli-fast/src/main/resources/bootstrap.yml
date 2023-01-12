@@ -4,7 +4,6 @@ spring:
   cloud:
     nacos:
       discovery:
-#        ip: 10.2.11.11
         ip: 127.0.0.1
         server-addr: localhost:9948
       config:

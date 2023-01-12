@@ -1,24 +1,24 @@
+server:
+  port: 2000
 spring:
+  application:
+    name: cloud-guli-member
   cloud:
     nacos:
+      server-addr: localhost:9948
+      discovery:
+        ip: 127.0.0.1
       config:
-        server-addr: localhost:9948
         file-extension: yaml
         namespace: 10086001
         extension-configs:
-          -
-            data-id: mybatis-plus.yaml
+          - data-id: mybatis-plus.yaml
             group: dev
             refresh: true
 
-          -
-            data-id: datasource.yaml
+          - data-id: datasource.yaml
             group: dev
             refresh: true
-
-          -
-            data-id: registry.yaml
-            group: dev
-            refresh: true
-
-
+logging:
+  level:
+    com.pika.gstore: debug
