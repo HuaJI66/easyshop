@@ -19,6 +19,9 @@ spring:
   redis:
     host: localhost
     port: 6379
+  session:
+    store-type: redis
+    timeout: 30m
 ribbon:
   ReadTimeout: 60000
   ConnectTimeout: 60000

@@ -2,6 +2,12 @@ server:
   port: 9000
 #数据源
 spring:
+  redis:
+    host: localhost
+    port: 6379
+  session:
+    store-type: redis
+    timeout: 30m
   application:
     name: cloud-guli-search
   cloud:

@@ -39,14 +39,23 @@ public class UserLoginRegistryController {
         }
         return R.ok();
     }
+
     @PostMapping("/login/get")
     public R getMember(@RequestBody UserLoginTo userLoginTo) {
-        MemberEntity user= memberService.login(userLoginTo);
+        MemberEntity user = memberService.login(userLoginTo);
         return user != null ? R.ok().setData(user) : R.error(BaseException.LOGIN_INVALID_ERROR.getCode(), BaseException.LOGIN_INVALID_ERROR.getMsg());
     }
+
     @PostMapping("/oauth/gitee/login")
-    public R loginOrRegistry(GiteeUserInfoTo giteeUserInfoTo) {
-        MemberEntity member= memberService.loginOrRegistry(giteeUserInfoTo);
-        return R.ok().setData(member);
+    public R loginOrRegistry(@RequestBody GiteeUserInfoTo giteeUserInfoTo) {
+        try {
+            MemberEntity member = memberService.loginOrRegistry(giteeUserInfoTo);
+            if (member != null) {
+                return R.ok().setData(member);
+            }
+            return R.error(BaseException.USER_INFO_INVALID_EXCEPTION.getCode(), BaseException.USER_INFO_INVALID_EXCEPTION.getMsg());
+        } catch (Exception e) {
+            return R.error(e.getMessage());
+        }
     }
 }

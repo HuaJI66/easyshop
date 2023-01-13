@@ -95,32 +95,35 @@ public class MemberServiceImpl extends ServiceImpl<MemberDao, MemberEntity> impl
     }
 
     @Override
-    public MemberEntity loginOrRegistry(GiteeUserInfoTo giteeUserInfoTo) {
-        //需要判断是登录还是注册
-        LambdaQueryWrapper<MemberEntity> wrapper = new LambdaQueryWrapper<>();
-        wrapper.eq(MemberEntity::getSourceType, 1)
-                .eq(MemberEntity::getSocialId, giteeUserInfoTo.getId())
-                .last("limit 1");
-        MemberEntity member;
-        member = getOne(wrapper);
+    public MemberEntity loginOrRegistry(GiteeUserInfoTo userInfoTo) {
+        MemberEntity member = null;
+        if (userInfoTo.getId() != null) {
+            //需要判断是登录还是注册
+            LambdaQueryWrapper<MemberEntity> wrapper = new LambdaQueryWrapper<>();
+            wrapper.eq(MemberEntity::getSourceType, 1)
+                    .eq(MemberEntity::getSocialId, userInfoTo.getId())
+                    .last("limit 1");
 
-        if (member != null) {
-            //登录
-            member.setSocialAccessToken(giteeUserInfoTo.getAccess_token());
-        } else {
-            //注册
-            member = new MemberEntity();
-            member.setSocialAccessToken(giteeUserInfoTo.getAccess_token());
-            member.setSourceType(1);
-            member.setSocialId(giteeUserInfoTo.getId());
-            member.setHeader(giteeUserInfoTo.getAvatar_url());
-            member.setUsername(giteeUserInfoTo.getLogin());
-            member.setNickname(giteeUserInfoTo.getName());
-            member.setEmail(giteeUserInfoTo.getEmail());
-            member.setLevelId(memberLevelService.getDefaultLevel());
-            member.setCreateTime(new Date());
+            member = getOne(wrapper);
+            if (member != null) {
+                //登录
+                member.setSocialAccessToken(userInfoTo.getAccess_token());
+                updateById(member);
+            } else {
+                //注册
+                member = new MemberEntity();
+                member.setSocialAccessToken(userInfoTo.getAccess_token());
+                member.setSourceType(1);
+                member.setSocialId(userInfoTo.getId());
+                member.setHeader(userInfoTo.getAvatar_url());
+                member.setUsername(userInfoTo.getLogin());
+                member.setNickname(userInfoTo.getName());
+                member.setEmail(userInfoTo.getEmail());
+                member.setLevelId(memberLevelService.getDefaultLevel());
+                member.setCreateTime(new Date());
+                save(member);
+            }
         }
-        updateById(member);
         return member;
     }
 

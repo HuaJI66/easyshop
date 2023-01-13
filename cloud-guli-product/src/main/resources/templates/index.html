@@ -93,19 +93,17 @@
                     <a href="/static/#">海外</a>
                 </div>
             </b>
-            <ul>
+            <ul th:with="loginUser=${session.get('login_user')}">
                 <li>
-                    <a href="http://auth.gulimall.com/login.html">你好，请登录</a>
+                    <a href="http://auth.gulimall.com/login.html" th:text="'你好，'+${loginUser!=null?loginUser.username:'请登录'}"></a>
                 </li>
                 <li>
-                    <a href="http://auth.gulimall.com/reg.html" class="li_2">免费注册</a>
+                    <a href="http://auth.gulimall.com/reg.html" class="li_2" th:if="${loginUser==null}">免费注册</a>
                 </li>
                 <span>|</span>
                 <li>
                     <a href="/static/#">我的订单</a>
                 </li>
-
-
             </ul>
         </div>
     </div>

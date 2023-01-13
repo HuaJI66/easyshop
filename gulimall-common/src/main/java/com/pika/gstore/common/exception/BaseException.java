@@ -26,6 +26,7 @@ public enum BaseException {
      * 商品上架异常
      */
     PRODUCT_UP_EXCEPTION(10501, "商品上架异常"),
+    USER_INFO_INVALID_EXCEPTION(2000403, "用户信息错误"),
 
     /**
      * 未携带手机号或验证码

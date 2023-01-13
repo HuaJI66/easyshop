@@ -11,6 +11,11 @@
     <artifactId>cloud-guli-product</artifactId>
 
     <dependencies>
+        <!--   spring-session共享    -->
+        <dependency>
+            <groupId>org.springframework.session</groupId>
+            <artifactId>spring-session-data-redis</artifactId>
+        </dependency>
         <!--    注解驱动    -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

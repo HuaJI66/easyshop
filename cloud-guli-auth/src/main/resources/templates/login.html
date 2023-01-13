@@ -30,9 +30,9 @@
         <img src="/static/login/JD_img/5731485aN1134b4f0.png"/>
     </div>
     <div id="sign">
-        <div class="si_top">
+        <div class="si_top" th:if="${errors!=null}">
             <p>
-                <span>谷粒商城不会以任何理由要求您转账汇款，谨防诈骗。</span>
+                <span th:text="${errors.get('msg')}">谷粒商城不会以任何理由要求您转账汇款，谨防诈骗。</span>
             </p>
         </div>
         <div class="si_cen">

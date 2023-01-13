@@ -2,6 +2,9 @@ server:
   port: 5000
 #数据源
 spring:
+  session:
+    store-type: redis
+    timeout: 30m
   application:
     name: cloud-guli-product
   cloud:

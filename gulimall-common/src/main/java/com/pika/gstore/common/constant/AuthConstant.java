@@ -22,4 +22,8 @@ public class AuthConstant {
      * 手机号码校验规则
      */
     public static final String VALID_PHONE = "^1(3\\d|4[5-9]|5[0-35-9]|6[567]|7[0-8]|8\\d|9[0-35-9])\\d{8}$";
+    /**
+     * 登录用户存放在session中的key
+     */
+    public static final String SESSION_LOGIN_USER = "login_user";
 }

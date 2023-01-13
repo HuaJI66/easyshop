@@ -11,7 +11,7 @@
     <script src="/static/search/js/jquery-1.12.4.js"></script>
     <title>Document</title>
 </head>
-<body>
+<body th:with="loginUser=${session.get('login_user')}">
 <!--头部-->
 <div class="header_head">
     <div class="header_head_box">
@@ -62,17 +62,17 @@
         </b>
         <ul>
             <li>
-                <a href="#" class="li_2">你好，请登录</a>
+                <a th:text="'你好，'+${loginUser!=null?loginUser.username:'请登录'}" href="#" class="li_2"></a>
             </li>
-            <li>
+            <li th:if="${loginUser==null}">
                 <a href="#">免费注册</a>
             </li>
             <span>|</span>
-            <li>
+            <li th:if="${loginUser!=null}">
                 <a href="#">我的订单</a>
             </li>
             <span>|</span>
-            <li class="header_wdjd" style="width:80px;">
+            <li th:if="${loginUser!=null}" class="header_wdjd" style="width:80px;">
                 <a href="#">我的谷粒商城</a>
                 <img src="/static/search/img/down-@1x.png"/>
                 <!--<b class="glyphicon glyphicon-menu-down"></b>-->
