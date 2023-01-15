@@ -25,6 +25,8 @@
         <module>cloud-guli-third-service</module>
         <module>cloud-guli-search</module>
         <module>cloud-guli-auth</module>
+        <module>cloud-guli-cart</module>
+        <module>cloud-sso-server</module>
     </modules>
 
     <!--统一管理jar包版本-->

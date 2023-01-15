@@ -1,6 +1,7 @@
 package com.pika.gstore.product.app;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 import com.pika.gstore.product.vo.SpuSaveVo;

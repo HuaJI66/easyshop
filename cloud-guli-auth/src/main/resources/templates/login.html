@@ -59,7 +59,8 @@
                 请输入账户名和密码
             </div>
             <form action="/login" method="post" th:with="hasError=${errors!=null}">
-                <div style="color: red" th:text="${hasError?errors.get('msg'):''}">[[${errors}]]111</div>
+                <input name="redirect_url" type="hidden" th:value="${redirect_url}">
+                <div style="color: red" th:text="${hasError?errors.get('msg'):''}">[[${errors}]]</div>
                 <ul>
                     <li class="top_1">
                         <img src="/static/login/JD_img/user_03.png" class="err_img1"/>

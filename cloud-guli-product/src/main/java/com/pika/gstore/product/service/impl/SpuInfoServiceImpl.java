@@ -279,5 +279,4 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
             // TODO: 2022/12/30 重复调用问题 ,接口幂等性?重试机制
         }
     }
-
 }

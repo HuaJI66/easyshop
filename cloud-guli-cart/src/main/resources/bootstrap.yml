@@ -1,0 +1,35 @@
+server:
+  port: 9900
+#数据源
+spring:
+  session:
+    store-type: redis
+    timeout: 30m
+  application:
+    name: cloud-guli-cart
+  cloud:
+    nacos:
+      server-addr: localhost:9948
+      discovery:
+        ip: 127.0.0.1
+      config:
+        file-extension: yaml
+        namespace: 10086002
+  jackson:
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss
+    serialization:
+      fail-on-empty-beans: false
+  redis:
+    host: localhost
+    port: 6379
+logging:
+  level:
+    com.pika.gstore: info
+#线程池配置
+gulimall:
+  thread:
+    core-pool-size: 20
+    maximum-pool-size: 200
+    keep-alive-time: 10
+    unit: seconds

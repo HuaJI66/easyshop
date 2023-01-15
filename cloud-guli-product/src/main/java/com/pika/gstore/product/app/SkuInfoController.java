@@ -1,14 +1,11 @@
 package com.pika.gstore.product.app;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.pika.gstore.product.entity.SkuInfoEntity;
 import com.pika.gstore.product.service.SkuInfoService;
@@ -29,6 +26,10 @@ import com.pika.gstore.common.utils.R;
 public class SkuInfoController {
     @Autowired
     private SkuInfoService skuInfoService;
+    @GetMapping("getSaleAttrs/{skuId}")
+    public List<String> getSaleAttrs(@PathVariable("skuId") Long skuId) {
+        return skuInfoService.getSaleAttrs(skuId);
+    }
 
     /**
      * 列表

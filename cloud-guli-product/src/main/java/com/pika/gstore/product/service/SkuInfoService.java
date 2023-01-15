@@ -5,6 +5,7 @@ import com.pika.gstore.common.utils.PageUtils;
 import com.pika.gstore.product.entity.SkuInfoEntity;
 import com.pika.gstore.product.vo.SkuItemVo;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -22,5 +23,7 @@ public interface SkuInfoService extends IService<SkuInfoEntity> {
 
 
     SkuItemVo itemInfo(Long skuId);
+
+    List<String> getSaleAttrs(Long skuId);
 }
 

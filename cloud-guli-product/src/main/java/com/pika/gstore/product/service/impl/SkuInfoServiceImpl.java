@@ -97,16 +97,16 @@ public class SkuInfoServiceImpl extends ServiceImpl<SkuInfoDao, SkuInfoEntity> i
     @Override
     public SkuItemVo itemInfo(Long skuId) {
         SkuItemVo skuItemVo = new SkuItemVo();
-        CompletableFuture<SkuInfoEntity> skuInfoFuture = CompletableFuture.supplyAsync(() ->{
+        CompletableFuture<SkuInfoEntity> skuInfoFuture = CompletableFuture.supplyAsync(() -> {
             SkuInfoEntity info = getById(skuId);
             skuItemVo.setInfo(info);
             return info;
-        } , executor);
+        }, executor);
 
         CompletableFuture<Void> saleAttrFuture = skuInfoFuture.thenAcceptAsync(res -> {
             List<SkuItemSaleAttrVo> saleAttrVos = attrValueService.getSaleAttrBySpuId(res.getSpuId());
             skuItemVo.setSaleAttr(saleAttrVos);
-        },executor);
+        }, executor);
 
         CompletableFuture<Void> spuInfoDescFuture = skuInfoFuture.thenAcceptAsync(res -> {
             SpuInfoDescEntity spuInfoDesc = spuInfoDescService.getById(res.getSpuId());
@@ -132,6 +132,11 @@ public class SkuInfoServiceImpl extends ServiceImpl<SkuInfoDao, SkuInfoEntity> i
         }
 
         return skuItemVo;
+    }
+
+    @Override
+    public List<String> getSaleAttrs(Long skuId) {
+        return baseMapper.getSaleAttrs(skuId);
     }
 
 }
