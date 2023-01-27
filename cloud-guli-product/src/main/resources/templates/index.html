@@ -16,7 +16,8 @@
 
 </head>
 
-<body>
+<body th:with="loginUser=${session.get('login_user')},
+base_url=${'http://gulimall.com'+#httpServletRequest.requestURI+(#httpServletRequest.getQueryString()==null?'':'?'+#httpServletRequest.getQueryString())}">
 <div class="top_find">
     <div class="top_find_son">
         <img src="/static/index/img/top_find_logo.png" alt="">
@@ -95,14 +96,14 @@
             </b>
             <ul th:with="loginUser=${session.get('login_user')}">
                 <li>
-                    <a href="http://auth.gulimall.com/login.html" th:text="'你好，'+${loginUser!=null?loginUser.username:'请登录'}"></a>
+                    <a th:href="${'http://auth.gulimall.com/login.html?redirect_url='+base_url}" th:text="'你好，'+${loginUser!=null?loginUser.username:'请登录'}"></a>
                 </li>
                 <li>
                     <a href="http://auth.gulimall.com/reg.html" class="li_2" th:if="${loginUser==null}">免费注册</a>
                 </li>
                 <span>|</span>
                 <li>
-                    <a href="/static/#">我的订单</a>
+                    <a href="http://order.gulimall.com/list.html">我的订单</a>
                 </li>
             </ul>
         </div>

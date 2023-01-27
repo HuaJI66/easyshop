@@ -1,8 +1,14 @@
 package com.pika.gstore.ware.service.impl;
 
+import cn.hutool.core.lang.TypeReference;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.pika.gstore.common.utils.R;
+import com.pika.gstore.ware.feign.MemberFeignService;
+import com.pika.gstore.ware.vo.FareVo;
+import com.pika.gstore.ware.vo.MemberAddressVo;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.Map;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -16,9 +22,13 @@ import com.pika.gstore.ware.entity.WareInfoEntity;
 import com.pika.gstore.ware.service.WareInfoService;
 import org.springframework.util.StringUtils;
 
+import javax.annotation.Resource;
+
 
 @Service("wareInfoService")
 public class WareInfoServiceImpl extends ServiceImpl<WareInfoDao, WareInfoEntity> implements WareInfoService {
+    @Resource
+    private MemberFeignService memberFeignService;
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
@@ -49,4 +59,15 @@ public class WareInfoServiceImpl extends ServiceImpl<WareInfoDao, WareInfoEntity
         return new PageUtils(page);
     }
 
+    @Override
+    public FareVo getFare(Long addrId) {
+        R r = memberFeignService.info(addrId);
+        MemberAddressVo vo = r.getData("memberReceiveAddress",new TypeReference<MemberAddressVo>() {
+        });
+        String phone = vo.getPhone();
+        FareVo fareVo = new FareVo();
+        fareVo.setMemberAddressVo(vo);
+        fareVo.setFare(new BigDecimal(phone.substring(phone.length() - 1)));
+        return fareVo;
+    }
 }

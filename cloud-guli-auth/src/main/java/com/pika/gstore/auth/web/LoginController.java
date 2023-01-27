@@ -2,7 +2,6 @@ package com.pika.gstore.auth.web;
 
 import cn.hutool.core.lang.TypeReference;
 import cn.hutool.core.net.URLEncodeUtil;
-import cn.hutool.core.util.IdUtil;
 import com.pika.gstore.auth.config.GiteeLoginConfigUtil;
 import com.pika.gstore.auth.feign.MemberFeignService;
 import com.pika.gstore.auth.vo.GiteeAccessTokenRepVo;
@@ -24,7 +23,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.annotation.Resource;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -49,10 +47,10 @@ public class LoginController {
     @GetMapping("login.html")
     public String loginByGitee(Model model, HttpSession session, HttpServletRequest request,
                                @CookieValue(value = AuthConstant.AUTH_COOKIE_NAME, required = false) String cookie,
-                               @RequestParam(value = "redirect_url", defaultValue = DomainConstant.MAIN_DOMAIN) String redirectUrl) {
+                               @RequestParam(value = "redirect_url", defaultValue = "http://" + DomainConstant.MAIN_DOMAIN) String redirectUrl) {
         String queryString = request.getQueryString();
-        if ((!StringUtils.isEmpty(queryString)) && queryString.startsWith(DomainConstant.REDIRECT_URLl)) {
-            redirectUrl = queryString.trim().replace(DomainConstant.REDIRECT_URLl + "=", "");
+        if ((!StringUtils.isEmpty(queryString)) && queryString.startsWith(DomainConstant.REDIRECT_URL)) {
+            redirectUrl = queryString.trim().replace(DomainConstant.REDIRECT_URL + "=", "");
         }
         URLEncodeUtil.encodeAll(queryString);
         //todo 校验cookie

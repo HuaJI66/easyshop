@@ -279,4 +279,15 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
             // TODO: 2022/12/30 重复调用问题 ,接口幂等性?重试机制
         }
     }
+
+    @Override
+    public SpuInfoEntity getSpuBySkuId(Long skuId) {
+        SkuInfoEntity skuInfo = skuInfoService.getOne(new LambdaQueryWrapper<SkuInfoEntity>()
+                .select(SkuInfoEntity::getSpuId)
+                .eq(SkuInfoEntity::getSkuId, skuId)
+                .last("limit 1"));
+        return getOne(new LambdaQueryWrapper<SpuInfoEntity>()
+                .eq(SpuInfoEntity::getId,skuInfo.getSpuId())
+                .last("limit 1"));
+    }
 }

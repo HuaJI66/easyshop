@@ -24,7 +24,7 @@ public class CartVo {
     /**
      * 商品类型数量
      */
-    private Integer typeNum=0;
+    private Integer typeNum = 0;
     /**
      * 商品总价
      */
@@ -47,10 +47,12 @@ public class CartVo {
     }
 
     public BigDecimal getTotalAmount() {
-        for (CartItemVo cartItem : cartItems) {
-            totalAmount = totalAmount.add(cartItem.getTotalPrice());
+        if (cartItems != null && cartItems.size() > 0) {
+            cartItems.stream().filter(CartItemVo::getChecked).forEach(i -> totalAmount = totalAmount.add(i.getTotalPrice()));
         }
-        return totalAmount =totalAmount.subtract(getReduce());
+        totalAmount = totalAmount.subtract(getReduce());
+        //防止负数
+        return totalAmount.compareTo(BigDecimal.ZERO) >= 0 ? totalAmount : BigDecimal.ZERO;
     }
 
     public BigDecimal getReduce() {

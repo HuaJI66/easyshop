@@ -4,7 +4,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import com.pika.gstore.common.exception.BaseException;
 import com.pika.gstore.common.to.SkuHasStockVo;
+import com.pika.gstore.common.exception.NoStockException;
+import com.pika.gstore.ware.vo.WareSkuLockVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,6 +29,16 @@ import com.pika.gstore.common.utils.R;
 public class WareSkuController {
     @Autowired
     private WareSkuService wareSkuService;
+
+    @PostMapping("/lock/order")
+    public R lockStock(@RequestBody WareSkuLockVo wareSkuLockVo) {
+        try {
+            boolean res = wareSkuService.lockStock(wareSkuLockVo);
+            return R.ok();
+        } catch (NoStockException e) {
+            return R.error(BaseException.WARE_NOSTOCK_ERROR.getCode(), e.getMessage());
+        }
+    }
 
     /**
      * 查询sku是否有库存

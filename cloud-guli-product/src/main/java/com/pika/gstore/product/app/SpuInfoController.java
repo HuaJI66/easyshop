@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.pika.gstore.product.vo.SpuSaveVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,6 +28,12 @@ import com.pika.gstore.common.utils.R;
 public class SpuInfoController {
     @Autowired
     private SpuInfoService spuInfoService;
+
+    @GetMapping("/skuId/{id}")
+    public R getSpuBySkuId(@PathVariable("id") Long skuId) {
+        SpuInfoEntity spuInfo = spuInfoService.getSpuBySkuId(skuId);
+        return R.ok().setData(spuInfo);
+    }
 
     @PostMapping("{spuId}/up")
     public R spuUp(@PathVariable("spuId") Long spuId) {

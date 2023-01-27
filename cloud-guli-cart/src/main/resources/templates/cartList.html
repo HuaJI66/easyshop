@@ -26,10 +26,10 @@ base_url=${'http://cart.gulimall.com'+#httpServletRequest.requestURI
             </ul>
             <ul class="header-right">
                 <li><a th:href="'http://auth.gulimall.com/login.html?redirect_url='+${base_url}"
-                       th:text="'你好，'+${login_user!=null?login_user.username:'请登录'}"></a></li>
-                <li><a href="http://auth.gulimall.com/reg.html">免费注册</a></li>
+                       th:text="'你好，'+${loginUser!=null?loginUser.username:'请登录'}"></a></li>
+                <li th:if="${loginUser==null}"><a href="http://auth.gulimall.com/reg.html">免费注册</a></li>
                 <li class="spacer"></li>
-                <li th:if="${login_user!=null}"><a href="">我的订单</a></li>
+                <li th:if="${loginUser!=null}"><a href="">我的订单</a></li>
                 <li class="spacer"></li>
             </ul>
             <div style="clear: both;"></div>
@@ -54,7 +54,7 @@ base_url=${'http://cart.gulimall.com'+#httpServletRequest.requestURI
         <div class="one_search_load" th:if="${loginUser}==null">
             <img src="/static/cart//img/shop_07.jpg" class="one_load_wraing">
             <span>您还没有登录！登录后购物车的商品将保存到您账号中</span>
-            <a href="#"><input type="button" onclick="login()" value="立即登录" class="one_load_btn"></a>
+            <a  th:href="${'http://auth.gulimall.com/login.html?redirect_url='+base_url}"><input type="button" value="立即登录" class="one_load_btn"></a>
         </div>
     </div>
 </div>
@@ -224,7 +224,7 @@ base_url=${'http://cart.gulimall.com'+#httpServletRequest.requestURI
 <script src="/static/cart//js/index.js" charset="utf-8"></script>
 <script type="text/javascript">
     function toTrade() {
-        window.location.href = "http://cart.gmall.com:8087/toTrade";
+        window.location.href = "http://order.gulimall.com/toTrade";
     }
 
     function toItem(skuId) {

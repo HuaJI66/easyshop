@@ -3,7 +3,7 @@
 
 <mapper namespace="com.pika.gstore.ware.dao.WareSkuDao">
 
-	<!-- 可根据自己的需求，是否要使用 -->
+    <!-- 可根据自己的需求，是否要使用 -->
     <resultMap type="com.pika.gstore.ware.entity.WareSkuEntity" id="wareSkuMap">
         <result property="id" column="id"/>
         <result property="skuId" column="sku_id"/>
@@ -12,10 +12,26 @@
         <result property="skuName" column="sku_name"/>
         <result property="stockLocked" column="stock_locked"/>
     </resultMap>
+
+    <update id="lockStock">
+        UPDATE `wms_ware_sku`
+        SET stock_locked=stock_locked + #{num}
+        WHERE sku_id = #{skuId}
+          AND ware_id = #{wareId}
+          AND stock - stock_locked >= #{num}
+    </update>
+
     <select id="getSkuStock" resultType="java.lang.Long">
         SELECT SUM(stock - stock_locked) as has_stock
         FROM `wms_ware_sku`
         WHERE sku_id = #{skuId}
+    </select>
+
+    <select id="getSkuWareStock" resultType="java.lang.Long">
+        SELECT ware_id
+        FROM `wms_ware_sku`
+        WHERE sku_id = #{skuId}
+          AND stock - stock_locked > 0
     </select>
 
 

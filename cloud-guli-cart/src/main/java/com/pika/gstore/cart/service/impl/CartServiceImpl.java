@@ -81,7 +81,7 @@ public class CartServiceImpl implements CartService {
             CompletableFuture.allOf(async, async1).get();
             cartItemVo.setTotalPrice(cartItemVo.getTotalPrice());
             cartOps.put(cartItemVo.getSkuId().toString(), JSONUtil.toJsonStr(cartItemVo));
-            cartOps.expire(1, TimeUnit.DAYS);
+            cartOps.expire(CartConstant.CART_ITEM_EXPIRE, TimeUnit.DAYS);
             return cartItemVo;
         } catch (InterruptedException | ExecutionException e) {
             log.error(e.getMessage());
@@ -92,7 +92,7 @@ public class CartServiceImpl implements CartService {
     @Override
     public CartItemVo getCartItem(Long skuId) {
         BoundHashOperations<String, Object, Object> ops = getCartOps();
-        String res = (String) ops.get( skuId.toString());
+        String res = (String) ops.get(skuId.toString());
         String key = ops.getKey();
         log.info("key:{}", key);
         return StringUtils.isEmpty(res) ? null : JSONUtil.toBean(res, new TypeReference<CartItemVo>() {
@@ -134,7 +134,7 @@ public class CartServiceImpl implements CartService {
         String str = (String) ops.get(skuId.toString());
         CartItemVo cartItemVo = JSONUtil.toBean(str, new TypeReference<CartItemVo>() {
         }, false);
-        cartItemVo.setChecked(checkedState==null?cartItemVo.getChecked():checkedState);
+        cartItemVo.setChecked(checkedState == null ? cartItemVo.getChecked() : checkedState);
         ops.put(skuId.toString(), JSONUtil.toJsonStr(cartItemVo));
     }
 
@@ -152,6 +152,24 @@ public class CartServiceImpl implements CartService {
     public void deleteCartItem(Long skuId) {
         BoundHashOperations<String, Object, Object> ops = getCartOps();
         ops.delete(skuId.toString());
+    }
+
+    @Override
+    public List<CartItemVo> getCheckedCartByUserId(String userId) {
+        List<CartItemVo> cartItems = getCartItems(CartConstant.CACHE_CART_PREFIX + userId);
+        return cartItems != null ? cartItems.stream().filter(CartItemVo::getChecked).peek(item -> {
+            //获取最新价格
+            item.setPrice(productFeignService.getSkuPrice(item.getSkuId()));
+        }).collect(Collectors.toList()) : null;
+    }
+
+    @Override
+    public List<CartItemVo> getCurrUserCheckedCart() {
+        List<CartItemVo> cartItems = getCart().getCartItems();
+        return cartItems != null ? cartItems.stream().filter(CartItemVo::getChecked).peek(item -> {
+            //获取最新价格
+            item.setPrice(productFeignService.getSkuPrice(item.getSkuId()));
+        }).collect(Collectors.toList()) : null;
     }
 
     private List<CartItemVo> getCartItems(String cartKey) {

@@ -1,9 +1,11 @@
 package com.pika.gstore.product.app;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,7 +13,6 @@ import com.pika.gstore.product.entity.SkuInfoEntity;
 import com.pika.gstore.product.service.SkuInfoService;
 import com.pika.gstore.common.utils.PageUtils;
 import com.pika.gstore.common.utils.R;
-
 
 
 /**
@@ -26,6 +27,13 @@ import com.pika.gstore.common.utils.R;
 public class SkuInfoController {
     @Autowired
     private SkuInfoService skuInfoService;
+
+    @GetMapping("{skuId}/price")
+    public BigDecimal getSkuPrice(@PathVariable("skuId") Long skuId) {
+        return skuInfoService.getOne(new LambdaQueryWrapper<SkuInfoEntity>()
+                .eq(SkuInfoEntity::getSkuId, skuId).last("limit 1")).getPrice();
+    }
+
     @GetMapping("getSaleAttrs/{skuId}")
     public List<String> getSaleAttrs(@PathVariable("skuId") Long skuId) {
         return skuInfoService.getSaleAttrs(skuId);
@@ -35,7 +43,7 @@ public class SkuInfoController {
      * 列表
      */
     @RequestMapping("/list")
-    public R list(@RequestParam Map<String, Object> params){
+    public R list(@RequestParam Map<String, Object> params) {
         PageUtils page = skuInfoService.queryByCondition(params);
 
         return R.ok().put("page", page);
@@ -46,8 +54,8 @@ public class SkuInfoController {
      * 信息
      */
     @RequestMapping("/info/{skuId}")
-    public R info(@PathVariable("skuId") Long skuId){
-		SkuInfoEntity skuInfo = skuInfoService.getById(skuId);
+    public R info(@PathVariable("skuId") Long skuId) {
+        SkuInfoEntity skuInfo = skuInfoService.getById(skuId);
 
         return R.ok().put("skuInfo", skuInfo);
     }
@@ -57,8 +65,8 @@ public class SkuInfoController {
      */
     @RequestMapping("/save")
     //@RequiresPermissions("product:skuinfo:save")
-    public R save(@RequestBody SkuInfoEntity skuInfo){
-		skuInfoService.save(skuInfo);
+    public R save(@RequestBody SkuInfoEntity skuInfo) {
+        skuInfoService.save(skuInfo);
 
         return R.ok();
     }
@@ -68,8 +76,8 @@ public class SkuInfoController {
      */
     @RequestMapping("/update")
     //@RequiresPermissions("product:skuinfo:update")
-    public R update(@RequestBody SkuInfoEntity skuInfo){
-		skuInfoService.updateById(skuInfo);
+    public R update(@RequestBody SkuInfoEntity skuInfo) {
+        skuInfoService.updateById(skuInfo);
 
         return R.ok();
     }
@@ -79,8 +87,8 @@ public class SkuInfoController {
      */
     @RequestMapping("/delete")
     //@RequiresPermissions("product:skuinfo:delete")
-    public R delete(@RequestBody Long[] skuIds){
-		skuInfoService.removeByIds(Arrays.asList(skuIds));
+    public R delete(@RequestBody Long[] skuIds) {
+        skuInfoService.removeByIds(Arrays.asList(skuIds));
 
         return R.ok();
     }

@@ -13,4 +13,5 @@ public class CartConstant {
     public static final String CART_COOKIE_NAME = "user-key";
     public static final String CACHE_CART_PREFIX = "cache:cart:";
     public static final int CART_COOKIE_MAX_AGE = 60 * 60 * 24 * 30;
+    public static final int CART_ITEM_EXPIRE = 30;
 }

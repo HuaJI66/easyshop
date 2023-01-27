@@ -14,7 +14,7 @@ import java.util.List;
 @Data
 public class CartItemVo {
     private Long skuId;
-    private Boolean checked=true;
+    private Boolean checked = true;
     private String title;
     private String image;
     private List<String> skuAttr;
@@ -23,6 +23,7 @@ public class CartItemVo {
     private BigDecimal totalPrice;
 
     public BigDecimal getTotalPrice() {
-        return price.multiply(BigDecimal.valueOf(count));
+        BigDecimal multiply = price.multiply(BigDecimal.valueOf(count));
+        return multiply.compareTo(BigDecimal.ZERO) >= 0 ? multiply : BigDecimal.ZERO;
     }
 }

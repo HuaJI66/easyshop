@@ -27,6 +27,10 @@ public enum BaseException {
      */
     PRODUCT_UP_EXCEPTION(10501, "商品上架异常"),
     USER_INFO_INVALID_EXCEPTION(2000403, "用户信息错误"),
+    PRICE_COUNT_EXCEPTION(4000501, "价格计算错误"),
+    ORDER_EMPTY_EXCEPTION(4000400, "购物项为空"),
+    ORDER_DEL_TOKEN_EXCEPTION(4000502, "令牌校验或删除失败"),
+    ORDER_COMPUTE_PRICE_EXCEPTION(4000503, "价格校验失败"),
 
     /**
      * 未携带手机号或验证码
@@ -44,6 +48,7 @@ public enum BaseException {
     PHONE_EXIST_ERROR(7000409, "其它错误"),
     LOGIN_INVALID_ERROR(7000410, "用户名或密码错误"),
     SEND_ERROR(7000500, "验证码发送失败"),
+    WARE_NOSTOCK_ERROR(8000501, "库存不足"),
     ;
     /**
      * 错误码

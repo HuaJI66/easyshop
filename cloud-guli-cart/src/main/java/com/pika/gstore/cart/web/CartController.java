@@ -4,16 +4,17 @@ import com.pika.gstore.cart.service.CartService;
 import com.pika.gstore.cart.vo.CartItemVo;
 import com.pika.gstore.cart.vo.CartVo;
 import com.pika.gstore.common.constant.DomainConstant;
-import com.pika.gstore.common.utils.R;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * Desc:
@@ -26,6 +27,18 @@ import javax.annotation.Resource;
 public class CartController {
     @Resource
     private CartService cartService;
+
+    @GetMapping("/{userId}/cart")
+    @ResponseBody
+    public List<CartItemVo> getCartByUserId(@PathVariable("userId") String userId) {
+        return cartService.getCheckedCartByUserId(userId);
+    }
+
+    @ResponseBody
+    @GetMapping("/curr/cart")
+    public List<CartItemVo> getCurrUserCart() {
+        return cartService.getCurrUserCheckedCart();
+    }
 
     @GetMapping("cart.html")
     public String cart(Model model) {
