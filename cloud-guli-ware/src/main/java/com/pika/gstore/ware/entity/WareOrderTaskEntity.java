@@ -9,7 +9,7 @@ import lombok.Data;
 
 /**
  * 库存工作单
- * 
+ *
  * @author pikachu
  * @email pikachu@pikachu.com
  * @date 2022-11-22 08:44:12
@@ -53,7 +53,7 @@ public class WareOrderTaskEntity implements Serializable {
 	 */
 	private Integer paymentWay;
 	/**
-	 * 任务状态
+	 * 任务状态 0-待锁定 1-已锁定 2-已解锁
 	 */
 	private Integer taskStatus;
 	/**

@@ -11,6 +11,23 @@
     <artifactId>cloud-guli-product</artifactId>
 
     <dependencies>
+        <!--seata-->
+        <dependency>
+            <groupId>io.seata</groupId>
+            <artifactId>seata-spring-boot-starter</artifactId>
+            <version>${seata.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-seata</artifactId>
+            <version>2022.0.0.0-RC1</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>io.seata</groupId>
+                    <artifactId>seata-spring-boot-starter</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
         <!--   spring-session共享    -->
         <dependency>
             <groupId>org.springframework.session</groupId>

@@ -20,6 +20,13 @@
           AND ware_id = #{wareId}
           AND stock - stock_locked >= #{num}
     </update>
+    <update id="unlockStock">
+        UPDATE `wms_ware_sku`
+        SET stock_locked=stock_locked - #{skuNum}
+        WHERE sku_id = #{skuId}
+          AND ware_id = #{wareId}
+          AND stock_locked >= 0
+    </update>
 
     <select id="getSkuStock" resultType="java.lang.Long">
         SELECT SUM(stock - stock_locked) as has_stock

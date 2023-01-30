@@ -1,4 +1,4 @@
-package com.pika.gstore.order.enume;
+package com.pika.gstore.common.enume;
 
 
 import lombok.Getter;
@@ -10,11 +10,14 @@ import lombok.Getter;
  * @since 2023/1/25 18:59
  */
 public enum OrderStatusEnum {
+    /**
+     * 待付款
+     */
     CREATE_NEW(0, "待付款"),
     PAYED(1, "已支付"),
-    SENDED(2, "已发货"),
+    SEND(2, "已发货"),
     RECEIVED(3, "已收货"),
-    CANCLED(4, "已取消"),
+    CANCELED(4, "已取消"),
     SERVICING(5, "售后中"),
     SERVICED(6, "售后完成"),
     ;

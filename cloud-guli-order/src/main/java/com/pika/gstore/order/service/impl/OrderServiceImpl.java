@@ -2,15 +2,18 @@ package com.pika.gstore.order.service.impl;
 
 import cn.hutool.core.lang.TypeReference;
 import cn.hutool.core.util.IdUtil;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.IdWorker;
+import com.pika.gstore.common.constant.MqConstant;
 import com.pika.gstore.common.constant.OrderConstant;
 import com.pika.gstore.common.exception.BaseException;
 import com.pika.gstore.common.exception.NoStockException;
 import com.pika.gstore.common.to.MemberInfoTo;
+import com.pika.gstore.common.to.mq.OrderTo;
 import com.pika.gstore.common.to.SkuHasStockVo;
 import com.pika.gstore.common.utils.R;
 import com.pika.gstore.order.entity.OrderItemEntity;
-import com.pika.gstore.order.enume.OrderStatusEnum;
+import com.pika.gstore.common.enume.OrderStatusEnum;
 import com.pika.gstore.order.feign.MemberFeignService;
 import com.pika.gstore.order.feign.CartFeignService;
 import com.pika.gstore.order.feign.ProductFeignService;
@@ -19,6 +22,8 @@ import com.pika.gstore.order.interceptor.LoginInterceptor;
 import com.pika.gstore.order.service.OrderItemService;
 import com.pika.gstore.order.to.OrderCreateTo;
 import com.pika.gstore.order.vo.*;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.script.DefaultRedisScript;
 import org.springframework.stereotype.Service;
@@ -67,6 +72,8 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
     private ProductFeignService productFeignService;
     @Resource
     private OrderItemService orderItemService;
+    @Resource
+    private RabbitTemplate rabbitTemplate;
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
@@ -123,6 +130,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
     }
 
     @Override
+//    @GlobalTransactional(name = "submitOrder",rollbackFor = Exception.class)
     @Transactional
     public OrderSubmitRepVo orderSubmit(OrderSubmitVo vo) {
         MemberInfoTo memberInfoTo = LoginInterceptor.threadLocal.get();
@@ -158,7 +166,9 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
                     //锁定成功
                     repVo.setOrder(order.getOrder());
                     //4.扣减积分(模拟)
-                    int x = 10 / 0;
+//                    int x = 10 / 0;
+                    // TODO: 2023/1/30 订单创建成功,发送消息
+                    rabbitTemplate.convertAndSend(MqConstant.ORDER_EVENT_EXCHANGE, MqConstant.ORDER_CREATE_KEY,order.getOrder());
                 } else {
                     throw new NoStockException(BaseException.WARE_NOSTOCK_ERROR.getCode() + BaseException.WARE_NOSTOCK_ERROR.getMsg());
                 }
@@ -169,6 +179,28 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
             throw new RuntimeException(BaseException.ORDER_DEL_TOKEN_EXCEPTION.getCode() + BaseException.ORDER_DEL_TOKEN_EXCEPTION.getMsg());
         }
         return repVo;
+    }
+
+    @Override
+    public OrderEntity getOrderStatus(String orderSn) {
+        return getOne(new LambdaQueryWrapper<OrderEntity>().eq(OrderEntity::getOrderSn, orderSn).last("limit 1"));
+    }
+
+    @Override
+    public boolean closeOrder(OrderEntity order) {
+        OrderEntity orderDb = getById(order.getId());
+        if (orderDb.getStatus().equals(OrderStatusEnum.CREATE_NEW.getCode())) {
+            order.setStatus(OrderStatusEnum.CANCELED.getCode());
+            OrderEntity entity = new OrderEntity();
+            entity.setId(order.getId());
+            entity.setStatus(OrderStatusEnum.CANCELED.getCode());
+            //发送解锁库存消息
+            OrderTo to = new OrderTo();
+            BeanUtils.copyProperties(order, to);
+            rabbitTemplate.convertAndSend(MqConstant.ORDER_EVENT_EXCHANGE, MqConstant.ORDER_RELEASE_KEY, to);
+            return updateById(entity);
+        }
+        return false;
     }
 
     /**

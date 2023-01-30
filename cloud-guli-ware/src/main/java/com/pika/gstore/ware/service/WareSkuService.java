@@ -2,6 +2,8 @@ package com.pika.gstore.ware.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.pika.gstore.common.to.SkuHasStockVo;
+import com.pika.gstore.common.to.mq.OrderTo;
+import com.pika.gstore.common.to.mq.StockLockedTo;
 import com.pika.gstore.common.utils.PageUtils;
 import com.pika.gstore.ware.entity.WareSkuEntity;
 import com.pika.gstore.ware.vo.WareSkuLockVo;
@@ -25,5 +27,11 @@ public interface WareSkuService extends IService<WareSkuEntity> {
     List<SkuHasStockVo> getSkuHasStock(List<Long> skuIds);
 
     boolean lockStock(WareSkuLockVo wareSkuLockVo);
+
+    Long unlockStock(Long skuId, Long wareId, Integer skuNum, Long detailId, Long taskId);
+
+    void releaseStock(StockLockedTo to);
+
+    void releaseStock(OrderTo vo);
 }
 

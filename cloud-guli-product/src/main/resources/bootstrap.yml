@@ -23,6 +23,10 @@ spring:
           - data-id: datasource.yaml
             group: dev
             refresh: true
+
+          - data-id: seata.yaml
+            group: dev
+            refresh: true
   jackson:
     time-zone: GMT+8
     date-format: yyyy-MM-dd HH:mm:ss

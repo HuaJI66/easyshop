@@ -18,8 +18,8 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <spring-boot.version>2.3.7.RELEASE</spring-boot.version>
+        <seata.version>1.6.1</seata.version>
     </properties>
-
 
     <dependencies>
         <dependency>
@@ -36,7 +36,6 @@
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
         </dependency>
-
         <!--        mybatis-plus        -->
         <dependency>
             <groupId>com.baomidou</groupId>

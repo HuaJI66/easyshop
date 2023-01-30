@@ -13,6 +13,13 @@ spring:
     nacos:
       discovery:
         server-addr: localhost:9948
+      config:
+        file-extension: yaml
+        namespace: 10086005
+        extension-configs:
+          - data-id: seata.yaml
+            group: dev
+            refresh: true
   rabbitmq:
     host: localhost
     port: 5672

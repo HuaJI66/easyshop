@@ -22,6 +22,20 @@ spring:
           - data-id: datasource.yaml
             group: dev
             refresh: true
-logging:
-  level:
-    com.pika.gstore: debug
+          - data-id: seata.yaml
+            group: dev
+            refresh: true
+  rabbitmq:
+    host: localhost
+    port: 5672
+    virtual-host: /
+    listener:
+      simple:
+        acknowledge-mode: manual # 接收消息手动确认
+    publisher-returns: true #开启息成功入队回调
+    publisher-confirm-type: simple
+    template:
+      mandatory: true
+#logging:
+#  level:
+#    com.pika.gstore: info

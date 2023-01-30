@@ -3,6 +3,7 @@ package com.pika.gstore.order.interceptor;
 import com.pika.gstore.common.constant.AuthConstant;
 import com.pika.gstore.common.constant.DomainConstant;
 import com.pika.gstore.common.to.MemberInfoTo;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -19,6 +20,7 @@ import java.util.Collections;
  * @author pikachu
  * @since 2023/1/14 13:57
  */
+@Slf4j
 public class LoginInterceptor implements HandlerInterceptor {
     public static ThreadLocal<MemberInfoTo> threadLocal = new ThreadLocal<>();
 
@@ -27,6 +29,7 @@ public class LoginInterceptor implements HandlerInterceptor {
      */
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+//        log.info("拦截请求:"+request.getRequestURI());
         HttpSession session = request.getSession();
         MemberInfoTo loginUser = (MemberInfoTo) session.getAttribute(AuthConstant.SESSION_LOGIN_USER);
         //1. loginUser==>

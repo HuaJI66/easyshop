@@ -31,6 +31,7 @@ public enum BaseException {
     ORDER_EMPTY_EXCEPTION(4000400, "购物项为空"),
     ORDER_DEL_TOKEN_EXCEPTION(4000502, "令牌校验或删除失败"),
     ORDER_COMPUTE_PRICE_EXCEPTION(4000503, "价格校验失败"),
+    ORDER_NOT_EXISTS_EXCEPTION(4000504, "订单号不存在"),
 
     /**
      * 未携带手机号或验证码

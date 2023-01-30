@@ -8,7 +8,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @SpringBootApplication
 @EnableDiscoveryClient
-@EnableTransactionManagement
 @EnableFeignClients(basePackages = "com.pika.gstore.ware.feign")
 public class WareMain8000 {
 

@@ -1,16 +1,12 @@
-package com.pika.gstore.order.config;
+package com.pika.gstore.ware.config;
 
 import feign.RequestInterceptor;
-import feign.RequestTemplate;
 import io.seata.core.context.RootContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.util.StringUtils;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
-
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import java.util.Enumeration;
 
 /**
  * Desc:
@@ -25,7 +21,9 @@ public class MyFeignConfig {
         return template -> {
             // 解决seata的xid未传递
             String xid = RootContext.getXID();
-            template.header(RootContext.KEY_XID, xid);
+            if (StringUtils.isEmpty(xid)) {
+                template.header(RootContext.KEY_XID, xid);
+            }
 
             ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
             if (attributes != null) {
