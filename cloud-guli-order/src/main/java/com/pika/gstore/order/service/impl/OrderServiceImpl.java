@@ -2,26 +2,36 @@ package com.pika.gstore.order.service.impl;
 
 import cn.hutool.core.lang.TypeReference;
 import cn.hutool.core.util.IdUtil;
+import com.alipay.api.AlipayApiException;
+import com.alipay.api.internal.util.AlipaySignature;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import com.pika.gstore.common.constant.MqConstant;
 import com.pika.gstore.common.constant.OrderConstant;
 import com.pika.gstore.common.exception.BaseException;
 import com.pika.gstore.common.exception.NoStockException;
 import com.pika.gstore.common.to.MemberInfoTo;
-import com.pika.gstore.common.to.mq.OrderTo;
+import com.pika.gstore.common.to.OrderTo;
 import com.pika.gstore.common.to.SkuHasStockVo;
+import com.pika.gstore.common.to.es.SeckillOrderTo;
 import com.pika.gstore.common.utils.R;
+import com.pika.gstore.order.config.AlipayTemplate;
 import com.pika.gstore.order.entity.OrderItemEntity;
 import com.pika.gstore.common.enume.OrderStatusEnum;
+import com.pika.gstore.order.entity.PaymentInfoEntity;
 import com.pika.gstore.order.feign.MemberFeignService;
 import com.pika.gstore.order.feign.CartFeignService;
 import com.pika.gstore.order.feign.ProductFeignService;
 import com.pika.gstore.order.feign.WareFeignService;
 import com.pika.gstore.order.interceptor.LoginInterceptor;
 import com.pika.gstore.order.service.OrderItemService;
+import com.pika.gstore.order.service.PaymentInfoService;
+import com.pika.gstore.order.service.impl.enume.AlipayStatusEnum;
 import com.pika.gstore.order.to.OrderCreateTo;
 import com.pika.gstore.order.vo.*;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -29,11 +39,10 @@ import org.springframework.data.redis.core.script.DefaultRedisScript;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.nio.charset.StandardCharsets;
 import java.time.Duration;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -54,9 +63,11 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 
 @Service("orderService")
+@Slf4j
 public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> implements OrderService {
     @Resource
     private MemberFeignService memberFeignService;
@@ -74,6 +85,10 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
     private OrderItemService orderItemService;
     @Resource
     private RabbitTemplate rabbitTemplate;
+    @Resource
+    private PaymentInfoService paymentInfoService;
+    @Resource
+    private AlipayTemplate alipayTemplate;
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
@@ -168,7 +183,9 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
                     //4.扣减积分(模拟)
 //                    int x = 10 / 0;
                     // TODO: 2023/1/30 订单创建成功,发送消息
-                    rabbitTemplate.convertAndSend(MqConstant.ORDER_EVENT_EXCHANGE, MqConstant.ORDER_CREATE_KEY,order.getOrder());
+                    OrderTo to = new OrderTo();
+                    BeanUtils.copyProperties(order.getOrder(), to);
+                    rabbitTemplate.convertAndSend(MqConstant.ORDER_EVENT_EXCHANGE, MqConstant.ORDER_CREATE_KEY, to);
                 } else {
                     throw new NoStockException(BaseException.WARE_NOSTOCK_ERROR.getCode() + BaseException.WARE_NOSTOCK_ERROR.getMsg());
                 }
@@ -182,12 +199,12 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
     }
 
     @Override
-    public OrderEntity getOrderStatus(String orderSn) {
+    public OrderEntity getOrderByOrderSn(String orderSn) {
         return getOne(new LambdaQueryWrapper<OrderEntity>().eq(OrderEntity::getOrderSn, orderSn).last("limit 1"));
     }
 
     @Override
-    public boolean closeOrder(OrderEntity order) {
+    public boolean closeOrder(OrderTo order) {
         OrderEntity orderDb = getById(order.getId());
         if (orderDb.getStatus().equals(OrderStatusEnum.CREATE_NEW.getCode())) {
             order.setStatus(OrderStatusEnum.CANCELED.getCode());
@@ -201,6 +218,95 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
             return updateById(entity);
         }
         return false;
+    }
+
+    @Override
+    public PayVo getPayVo(String orderSn) {
+        OrderEntity order = getOrderByOrderSn(orderSn);
+        Integer status = order.getStatus();
+        if (status.equals(OrderStatusEnum.CANCELED.getCode())) {
+            throw new RuntimeException("订单已取消");
+        } else if (status.equals(OrderStatusEnum.CREATE_NEW.getCode())) {
+            OrderItemEntity one = orderItemService.getOne(new LambdaQueryWrapper<OrderItemEntity>()
+                    .eq(OrderItemEntity::getOrderSn, orderSn).last("limit 1"));
+            PayVo payVo = new PayVo("", orderSn, one.getSkuName(), order.getPayAmount().setScale(2, RoundingMode.UP).toString(), "");
+            System.out.println("payVo = " + payVo);
+            return payVo;
+        } else {
+            throw new RuntimeException("订单已支付");
+        }
+    }
+
+    @Override
+    public PageUtils currUserOrderItemList(Map<String, Object> params) {
+        MemberInfoTo memberInfoTo = LoginInterceptor.threadLocal.get();
+        IPage<OrderEntity> page = page(new Query<OrderEntity>().getPage(params),
+                new LambdaQueryWrapper<OrderEntity>().eq(OrderEntity::getMemberId, memberInfoTo.getId())
+        );
+        List<OrderEntity> collect = page.getRecords().stream().peek(item -> {
+            item.setItems(orderItemService.list(new LambdaQueryWrapper<OrderItemEntity>()
+                    .eq(OrderItemEntity::getOrderSn, item.getOrderSn())
+                    .orderByDesc(OrderItemEntity::getOrderSn)
+            ));
+        }).collect(Collectors.toList());
+        page.setRecords(collect);
+        return new PageUtils(page);
+    }
+
+    @Override
+    public String handlePaidNotify(HttpServletRequest request, PayAsyncVo response) throws AlipayApiException {
+        boolean signVerified = isSignVerified(request);
+        log.warn("验证签名结果:" + signVerified);
+        if (signVerified) {
+            // TODO 验签成功后，按照支付结果异步通知中的描述，对支付结果中的业务内容进行二次校验，校验成功后在response中返回success并继续商户自身业务处理，校验失败返回failure
+            String tradeStatus = response.getTrade_status();
+            if (AlipayStatusEnum.TRADE_FINISHED.equals(tradeStatus) || AlipayStatusEnum.TRADE_SUCCESS.equals(tradeStatus)) {
+                String outTradeNo = response.getOut_trade_no();
+                //1.保存交易流失水
+                PaymentInfoEntity paymentInfo = new PaymentInfoEntity();
+                paymentInfo.setAlipayTradeNo(response.getTrade_no());
+                paymentInfo.setOrderSn(outTradeNo);
+                paymentInfo.setPaymentStatus(tradeStatus);
+                paymentInfo.setCallbackTime(response.getNotify_time());
+                paymentInfoService.save(paymentInfo);
+                //2.更新订单状态
+                updateOrderStatus(outTradeNo, OrderStatusEnum.PAYED.getCode());
+                log.info(outTradeNo + "订单完成");
+                return "success";
+            }
+        } else {
+            // 验签失败则记录异常日志，并在response中返回failure.
+
+        }
+        return "failure";
+    }
+
+
+    /**
+     * Desc: 支付宝签名验证
+     */
+    private boolean isSignVerified(HttpServletRequest request) throws AlipayApiException {
+        //获取支付宝POST过来反馈信息
+        Map<String, String> params = new HashMap<>();
+        Map requestParams = request.getParameterMap();
+        for (Iterator iter = requestParams.keySet().iterator(); iter.hasNext(); ) {
+            String name = (String) iter.next();
+            String[] values = (String[]) requestParams.get(name);
+            String valueStr = "";
+            for (int i = 0; i < values.length; i++) {
+                valueStr = (i == values.length - 1) ? valueStr + values[i]
+                        : valueStr + values[i] + ",";
+            }
+            //乱码解决，这段代码在出现乱码时使用。如果mysign和sign不相等也可以使用这段代码转化
+//            valueStr = new String(valueStr.getBytes(StandardCharsets.ISO_8859_1), "gbk");
+            params.put(name, valueStr);
+        }
+        //调用SDK验证签名
+        return AlipaySignature.rsaCheckV1(params, alipayTemplate.getAlipayPublicKey(), alipayTemplate.getCharset(), alipayTemplate.getSignType());
+    }
+
+    private void updateOrderStatus(String orderSn, Integer status) {
+        update(new LambdaUpdateWrapper<OrderEntity>().set(OrderEntity::getStatus, status).eq(OrderEntity::getOrderSn, orderSn));
     }
 
     /**
@@ -299,15 +405,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
         OrderItemEntity orderItem = new OrderItemEntity();
         //订单号pass
         //spu
-        R r = productFeignService.getSpuBySkuId(item.getSkuId());
-        if (r.getCode() == 0) {
-            SpuInfoVo data = r.getData(new TypeReference<SpuInfoVo>() {
-            });
-            orderItem.setSpuId(data.getId());
-            orderItem.setSpuBrand(data.getBrandId().toString());
-            orderItem.setSpuName(data.getSpuName());
-            orderItem.setCategoryId(data.getCatalogId());
-        }
+        buildSpuToOrderItem(orderItem, item.getSkuId());
 
         //sku
         orderItem.setSkuId(item.getSkuId());
@@ -330,5 +428,47 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
                 .subtract(orderItem.getIntegrationAmount())
         );
         return orderItem;
+    }
+
+    @Override
+    public Boolean createSeckillOrder(SeckillOrderTo order) {
+        //订单
+        OrderEntity entity = new OrderEntity();
+        entity.setOrderSn(order.getOrderSn());
+        entity.setMemberId(order.getMemberId());
+        BigDecimal multiply = order.getSeckillPrice().multiply(BigDecimal.valueOf(order.getNum()));
+        entity.setTotalAmount(multiply);
+        entity.setPayAmount(multiply);
+        entity.setStatus(OrderStatusEnum.CREATE_NEW.getCode());
+        Date date = new Date();
+        entity.setModifyTime(date);
+        entity.setCreateTime(date);
+        save(entity);
+        //订单项
+        OrderItemEntity orderItem = new OrderItemEntity();
+        orderItem.setRealAmount(multiply);
+        orderItem.setOrderSn(order.getOrderSn());
+        orderItem.setSkuQuantity(order.getNum());
+        orderItem.setSkuPrice(order.getSeckillPrice());
+        orderItem.setSkuId(order.getSkuId());
+        try {
+            buildSpuToOrderItem(orderItem, order.getSkuId());
+        } catch (Exception ignored) {
+
+        }
+        orderItemService.save(orderItem);
+        return Boolean.FALSE;
+    }
+
+    private void buildSpuToOrderItem(OrderItemEntity orderItem, Long skuId) {
+        R r = productFeignService.getSpuBySkuId(skuId);
+        if (r.getCode() == 0) {
+            SpuInfoVo data = r.getData(new TypeReference<SpuInfoVo>() {
+            });
+            orderItem.setSpuId(data.getId());
+            orderItem.setSpuBrand(data.getBrandId().toString());
+            orderItem.setSpuName(data.getSpuName());
+            orderItem.setCategoryId(data.getCatalogId());
+        }
     }
 }

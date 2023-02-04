@@ -4,6 +4,7 @@ package com.pika.gstore.product.vo;
 import com.pika.gstore.product.entity.SkuImagesEntity;
 import com.pika.gstore.product.entity.SkuInfoEntity;
 import com.pika.gstore.product.entity.SpuInfoDescEntity;
+import com.pika.gstore.product.to.SeckillSkuRedisTo;
 import lombok.Data;
 import lombok.ToString;
 
@@ -29,5 +30,6 @@ public class SkuItemVo {
 
     //5、获取spu的规格参数信息
     private List<SpuItemAttrGroupVo> groupAttrs;
+    private List<SeckillSkuRedisTo> skuRedisTo;
 
 }

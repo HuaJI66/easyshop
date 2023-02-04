@@ -1,6 +1,7 @@
 package com.pika.gstore.order.web;
 
 import com.pika.gstore.common.constant.DomainConstant;
+import com.pika.gstore.order.config.AlipayTemplate;
 import com.pika.gstore.order.service.OrderService;
 import com.pika.gstore.order.vo.OrderSubmitRepVo;
 import com.pika.gstore.order.vo.OrderSubmitVo;
@@ -39,6 +40,7 @@ public class OrderWebController {
         }
         return "redirect:http://" + DomainConstant.ORDER_DOMAIN + "/toTrade";
     }
+
 
     @GetMapping("toTrade")
     public String toTrade(Model model) throws ExecutionException, InterruptedException {

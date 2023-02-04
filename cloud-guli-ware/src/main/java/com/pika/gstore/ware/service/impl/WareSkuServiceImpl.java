@@ -10,8 +10,8 @@ import com.pika.gstore.common.constant.MqConstant;
 import com.pika.gstore.common.enume.OrderStatusEnum;
 import com.pika.gstore.common.exception.BaseException;
 import com.pika.gstore.common.to.SkuHasStockVo;
-import com.pika.gstore.common.to.mq.StockLockedTo;
-import com.pika.gstore.common.to.mq.WareOrderTaskDetailTo;
+import com.pika.gstore.common.to.StockLockedTo;
+import com.pika.gstore.common.to.WareOrderTaskDetailTo;
 import com.pika.gstore.common.utils.PageUtils;
 import com.pika.gstore.common.utils.Query;
 import com.pika.gstore.common.utils.R;
@@ -26,7 +26,7 @@ import com.pika.gstore.ware.service.WareOrderTaskDetailService;
 import com.pika.gstore.ware.service.WareOrderTaskService;
 import com.pika.gstore.ware.service.WareSkuService;
 import com.pika.gstore.ware.vo.OrderItemVo;
-import com.pika.gstore.common.to.mq.OrderTo;
+import com.pika.gstore.common.to.OrderTo;
 import com.pika.gstore.ware.vo.SkuInfoVo;
 import com.pika.gstore.ware.vo.WareSkuLockVo;
 import lombok.Data;
@@ -222,15 +222,17 @@ public class WareSkuServiceImpl extends ServiceImpl<WareSkuDao, WareSkuEntity> i
 
     @Override
     public void releaseStock(OrderTo order) {
-        WareOrderTaskEntity task = wareOrderTaskService.getOrderTasksByOrderSn(order.getOrderSn());
-        List<WareOrderTaskDetailEntity> list = wareOrderTaskDetailService.list(new LambdaQueryWrapper<WareOrderTaskDetailEntity>()
-                .eq(WareOrderTaskDetailEntity::getTaskId, task.getId())
-                .eq(WareOrderTaskDetailEntity::getLockStatus, 1)
-        );
-        if (list != null && list.size() > 0) {
-            for (WareOrderTaskDetailEntity detail : list) {
-                Long res = unlockStock(detail.getSkuId(), detail.getWareId(), detail.getSkuNum(), detail.getId(), detail.getTaskId());
-                log.info("解锁库存:" + detail.getSkuId() + " 结果:" + res);
+        if (order.getStatus().equals(OrderStatusEnum.CANCELED.getCode())) {
+            WareOrderTaskEntity task = wareOrderTaskService.getOrderTasksByOrderSn(order.getOrderSn());
+            List<WareOrderTaskDetailEntity> list = wareOrderTaskDetailService.list(new LambdaQueryWrapper<WareOrderTaskDetailEntity>()
+                    .eq(WareOrderTaskDetailEntity::getTaskId, task.getId())
+                    .eq(WareOrderTaskDetailEntity::getLockStatus, 1)
+            );
+            if (list != null && list.size() > 0) {
+                for (WareOrderTaskDetailEntity detail : list) {
+                    Long res = unlockStock(detail.getSkuId(), detail.getWareId(), detail.getSkuNum(), detail.getId(), detail.getTaskId());
+                    log.info("解锁库存:" + detail.getSkuId() + " 结果:" + res);
+                }
             }
         }
     }

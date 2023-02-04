@@ -12,7 +12,6 @@ spring:
         namespace: 10086008
         file-extension: yaml
         extension-configs:
-          -
-            data-id: oss.yaml
+          - data-id: oss.yaml
             group: dev
             refresh: true

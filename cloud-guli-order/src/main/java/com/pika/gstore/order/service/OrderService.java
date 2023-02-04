@@ -1,12 +1,14 @@
 package com.pika.gstore.order.service;
 
+import com.alipay.api.AlipayApiException;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.pika.gstore.common.to.OrderTo;
+import com.pika.gstore.common.to.es.SeckillOrderTo;
 import com.pika.gstore.common.utils.PageUtils;
 import com.pika.gstore.order.entity.OrderEntity;
-import com.pika.gstore.order.vo.OrderConfirmVo;
-import com.pika.gstore.order.vo.OrderSubmitRepVo;
-import com.pika.gstore.order.vo.OrderSubmitVo;
+import com.pika.gstore.order.vo.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
@@ -25,8 +27,17 @@ public interface OrderService extends IService<OrderEntity> {
 
     OrderSubmitRepVo orderSubmit(OrderSubmitVo vo);
 
-    OrderEntity getOrderStatus(String orderSn);
+    OrderEntity getOrderByOrderSn(String orderSn);
 
-    boolean closeOrder(OrderEntity order);
+    boolean closeOrder(OrderTo order);
+
+    PayVo getPayVo(String orderSn);
+
+    PageUtils currUserOrderItemList(Map<String, Object> params);
+
+
+    String handlePaidNotify(HttpServletRequest request, PayAsyncVo response) throws AlipayApiException;
+
+    Boolean createSeckillOrder(SeckillOrderTo order);
 }
 

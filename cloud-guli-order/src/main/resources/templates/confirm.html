@@ -83,7 +83,7 @@ base_url=${'http://order.gulimall.com'+#httpServletRequest.requestURI+(#httpServ
             <li th:if="${loginUser==null}"><a href="http://auth.gulimall.com/reg.html"
                                               style="color: red;">免费注册</a> |
             </li>
-            <li th:if="${loginUser!=null}"><a href="/static/order/confirm/">我的订单</a></li>
+            <li th:if="${loginUser!=null}"><a href="http://member.gulimall.com/memberOrder.html">我的订单</a></li>
             <li class="spacer"></li>
             <li>
                 <a href="/static/order/confirm/">我的谷粒学院</a>

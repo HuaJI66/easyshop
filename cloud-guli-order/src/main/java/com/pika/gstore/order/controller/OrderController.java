@@ -28,7 +28,7 @@ public class OrderController {
 
     @GetMapping("/status")
     public R getOrderStatus(@RequestParam("orderSn") String orderSn) {
-        OrderEntity order = orderService.getOrderStatus(orderSn);
+        OrderEntity order = orderService.getOrderByOrderSn(orderSn);
         return order != null ? R.ok().setData(order) : R.error(BaseException.ORDER_NOT_EXISTS_EXCEPTION.getCode(),BaseException.ORDER_NOT_EXISTS_EXCEPTION.getMsg());
     }
 
@@ -39,6 +39,12 @@ public class OrderController {
     //@RequiresPermissions("order:order:list")
     public R list(@RequestParam Map<String, Object> params) {
         PageUtils page = orderService.queryPage(params);
+
+        return R.ok().put("page", page);
+    }
+    @PostMapping("/currUserOrderList")
+    public R currUserOrderItemList(@RequestBody Map<String, Object> params) {
+        PageUtils page = orderService.currUserOrderItemList(params);
 
         return R.ok().put("page", page);
     }

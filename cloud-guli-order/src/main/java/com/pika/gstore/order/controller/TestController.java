@@ -1,8 +1,11 @@
 package com.pika.gstore.order.controller;
 
+import com.pika.gstore.order.config.AlipayTemplate;
 import com.pika.gstore.order.entity.OrderEntity;
 import com.pika.gstore.order.entity.OrderReturnReasonEntity;
 import com.rabbitmq.client.Channel;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.AmqpAdmin;
 import org.springframework.amqp.core.Message;
@@ -12,9 +15,11 @@ import org.springframework.amqp.rabbit.annotation.RabbitHandler;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.amqp.rabbit.annotation.RabbitListeners;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 
@@ -30,8 +35,6 @@ import javax.annotation.Resource;
         @RabbitListener(queues = {"test.queue1"})
 })
 public class TestController {
-    @Resource
-    private AmqpAdmin amqpAdmin;
     @Resource
     private RabbitTemplate rabbitTemplate;
 

@@ -16,7 +16,6 @@ public class ViewMappingConfig implements WebMvcConfigurer {
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/detail.html").setViewName("detail");
-        registry.addViewController("/list.html").setViewName("list");
         registry.addViewController("/confirm.html").setViewName("confirm");
         WebMvcConfigurer.super.addViewControllers(registry);
     }

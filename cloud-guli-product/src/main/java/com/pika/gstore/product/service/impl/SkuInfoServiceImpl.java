@@ -1,9 +1,13 @@
 package com.pika.gstore.product.service.impl;
 
+import cn.hutool.core.lang.TypeReference;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.pika.gstore.common.utils.R;
 import com.pika.gstore.product.entity.SkuImagesEntity;
 import com.pika.gstore.product.entity.SpuInfoDescEntity;
 import com.pika.gstore.product.service.*;
+import com.pika.gstore.product.feign.SeckillFeignService;
+import com.pika.gstore.product.to.SeckillSkuRedisTo;
 import com.pika.gstore.product.vo.SkuItemSaleAttrVo;
 import com.pika.gstore.product.vo.SkuItemVo;
 import com.pika.gstore.product.vo.SpuItemAttrGroupVo;
@@ -41,6 +45,8 @@ public class SkuInfoServiceImpl extends ServiceImpl<SkuInfoDao, SkuInfoEntity> i
     private SkuSaleAttrValueService attrValueService;
     @Resource
     private ThreadPoolExecutor executor;
+    @Resource
+    private SeckillFeignService seckillFeignService;
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
@@ -123,10 +129,19 @@ public class SkuInfoServiceImpl extends ServiceImpl<SkuInfoDao, SkuInfoEntity> i
                     .eq(SkuImagesEntity::getSkuId, skuId));
             skuItemVo.setImages(images);
         }, executor);
+        //查询商品优惠信息
+        CompletableFuture<Void> seckillFuture = CompletableFuture.runAsync(() -> {
+            R r = seckillFeignService.getSkuSeckillInfo(skuId.toString());
+            if (r.getCode() == 0) {
+                List<SeckillSkuRedisTo> redisTo = r.getData(new TypeReference<List<SeckillSkuRedisTo>>() {
+                });
+                skuItemVo.setSkuRedisTo(redisTo);
+            }
+        }, executor);
 
         //编排
         try {
-            CompletableFuture.allOf(saleAttrFuture, spuItemAttrFuture, spuInfoDescFuture, skuImgFuture).get();
+            CompletableFuture.allOf(saleAttrFuture, spuItemAttrFuture, spuInfoDescFuture, skuImgFuture,seckillFuture).get();
         } catch (InterruptedException | ExecutionException e) {
             log.error(e.getMessage());
         }

@@ -2,6 +2,11 @@ server:
   port: 4010
 #数据源
 spring:
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  mvc:
+    date-format: yyyy-MM-dd HH:mm:ss
   application:
     name: cloud-guli-order
   datasource:
@@ -11,13 +16,18 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
   cloud:
     nacos:
+      server-addr: localhost:9948
       discovery:
-        server-addr: localhost:9948
+        ip: 127.0.0.1
       config:
         file-extension: yaml
         namespace: 10086005
         extension-configs:
           - data-id: seata.yaml
+            group: dev
+            refresh: true
+
+          - data-id: alipay.yaml
             group: dev
             refresh: true
   rabbitmq:

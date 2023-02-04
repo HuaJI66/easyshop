@@ -1,9 +1,9 @@
 package com.pika.gstore.ware.listener;
 
 import com.pika.gstore.common.constant.MqConstant;
-import com.pika.gstore.common.to.mq.StockLockedTo;
+import com.pika.gstore.common.to.StockLockedTo;
 import com.pika.gstore.ware.service.WareSkuService;
-import com.pika.gstore.common.to.mq.OrderTo;
+import com.pika.gstore.common.to.OrderTo;
 import com.rabbitmq.client.Channel;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.Message;

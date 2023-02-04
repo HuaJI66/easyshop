@@ -1,6 +1,9 @@
 server:
   port: 2000
 spring:
+  jackson:
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss
   application:
     name: cloud-guli-member
   cloud:
@@ -24,6 +27,6 @@ spring:
             group: dev
             refresh: true
 
-logging:
-  level:
-    com.pika.gstore: debug
+#logging:
+#  level:
+#    com.pika.gstore: debug

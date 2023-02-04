@@ -2,8 +2,8 @@ package com.pika.gstore.ware.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.pika.gstore.common.to.SkuHasStockVo;
-import com.pika.gstore.common.to.mq.OrderTo;
-import com.pika.gstore.common.to.mq.StockLockedTo;
+import com.pika.gstore.common.to.OrderTo;
+import com.pika.gstore.common.to.StockLockedTo;
 import com.pika.gstore.common.utils.PageUtils;
 import com.pika.gstore.ware.entity.WareSkuEntity;
 import com.pika.gstore.ware.vo.WareSkuLockVo;
