@@ -36,7 +36,7 @@ public class WareSkuController {
             boolean res = wareSkuService.lockStock(wareSkuLockVo);
             return R.ok();
         } catch (NoStockException e) {
-            return R.error(BaseException.WARE_NOSTOCK_ERROR.getCode(), e.getMessage());
+            return R.error(BaseException.WARE_STOCK_ERROR.getCode(), e.getMessage());
         }
     }
 

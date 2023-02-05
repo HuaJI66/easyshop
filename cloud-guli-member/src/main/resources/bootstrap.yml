@@ -27,6 +27,9 @@ spring:
             group: dev
             refresh: true
 
+          - data-id: sentinel.yaml
+            group: dev
+            refresh: true
 #logging:
 #  level:
 #    com.pika.gstore: debug

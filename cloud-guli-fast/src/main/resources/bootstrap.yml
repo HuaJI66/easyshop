@@ -10,4 +10,7 @@ spring:
         server-addr: localhost:9948
         namespace: 10086007
         file-extension: yaml
-
+        extension-configs:
+          - data-id: sentinel.yaml
+            group: dev
+            refresh: true

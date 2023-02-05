@@ -15,3 +15,7 @@ spring:
           - data-id: oss.yaml
             group: dev
             refresh: true
+
+          - data-id: sentinel.yaml
+            group: dev
+            refresh: true

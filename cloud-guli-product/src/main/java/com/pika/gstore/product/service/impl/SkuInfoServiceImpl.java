@@ -1,6 +1,7 @@
 package com.pika.gstore.product.service.impl;
 
 import cn.hutool.core.lang.TypeReference;
+import com.alibaba.csp.sentinel.annotation.SentinelResource;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.pika.gstore.common.utils.R;
 import com.pika.gstore.product.entity.SkuImagesEntity;

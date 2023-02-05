@@ -11,6 +11,10 @@ import lombok.Getter;
 @Getter
 public enum BaseException {
     /**
+     * 请求频繁
+     */
+    TOO_MANY_REQUESTS (10405,"服务器繁忙"),
+    /**
      * 数据转换发生错误,请检查数据是否合法
      */
     CONVERT_ERROR(10500, "数据转换发生错误,请检查数据是否合法"),
@@ -49,8 +53,9 @@ public enum BaseException {
     PHONE_EXIST_ERROR(7000409, "其它错误"),
     LOGIN_INVALID_ERROR(7000410, "用户名或密码错误"),
     SEND_ERROR(7000500, "验证码发送失败"),
-    WARE_NOSTOCK_ERROR(8000501, "库存不足"),
-    ;
+    WARE_STOCK_ERROR(8000501, "库存不足"), ;
+
+
     /**
      * 错误码
      */

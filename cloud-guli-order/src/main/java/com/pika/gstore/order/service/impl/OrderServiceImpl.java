@@ -40,7 +40,6 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
@@ -187,7 +186,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
                     BeanUtils.copyProperties(order.getOrder(), to);
                     rabbitTemplate.convertAndSend(MqConstant.ORDER_EVENT_EXCHANGE, MqConstant.ORDER_CREATE_KEY, to);
                 } else {
-                    throw new NoStockException(BaseException.WARE_NOSTOCK_ERROR.getCode() + BaseException.WARE_NOSTOCK_ERROR.getMsg());
+                    throw new NoStockException(BaseException.WARE_STOCK_ERROR.getCode() + BaseException.WARE_STOCK_ERROR.getMsg());
                 }
             } else {
                 throw new RuntimeException(BaseException.ORDER_COMPUTE_PRICE_EXCEPTION.getCode() + BaseException.ORDER_COMPUTE_PRICE_EXCEPTION.getMsg());

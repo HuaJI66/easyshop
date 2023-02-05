@@ -12,14 +12,16 @@ spring:
     name: cloud-guli-search
   cloud:
     nacos:
+      server-addr: localhost:9948
       discovery:
         ip: 127.0.0.1
-        server-addr: localhost:9948
       config:
-        server-addr: localhost:9948
         file-extension: yaml
-#        namespace: 10086002
-#        extension-configs:
+        namespace: 10086013
+        extension-configs:
+          - data-id: sentinel.yaml
+            group: dev
+            refresh: true
   jackson:
     time-zone: GMT+8
     date-format: yyyy-MM-dd HH:mm:ss

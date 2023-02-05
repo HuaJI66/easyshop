@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * @author pi'ka'chu
  */
-@FeignClient("cloud-guli-search")
+@FeignClient(value = "cloud-guli-search")
 public interface EsFeignService {
     @PostMapping("search/save")
     R saveEs(@RequestBody List<SkuEsModel> skuEsModels);

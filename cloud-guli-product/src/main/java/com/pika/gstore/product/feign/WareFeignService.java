@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * @author pi'ka'chu
  */
-@FeignClient("cloud-guli-ware")
+@FeignClient(value = "cloud-guli-ware")
 public interface WareFeignService {
     @PostMapping("ware/waresku/hasStock")
     R getSkuHasStock(@RequestBody List<Long> skuIds);

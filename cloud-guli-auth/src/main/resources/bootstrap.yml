@@ -16,6 +16,9 @@ spring:
           - data-id: auth.yaml
             group: dev
             refresh: true
+          - data-id: sentinel.yaml
+            group: dev
+            refresh: true
   redis:
     host: localhost
     port: 6379
