@@ -58,6 +58,3 @@ gulimall:
     maximum-pool-size: 200
     keep-alive-time: 10
     unit: seconds
-feign:
-  sentinel:
-    enabled: true
