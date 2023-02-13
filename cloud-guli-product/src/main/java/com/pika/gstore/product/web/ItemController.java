@@ -19,7 +19,7 @@ import javax.annotation.Resource;
 public class ItemController {
     @Resource
     private SkuInfoService skuInfoService;
-    @GetMapping("{skuId}.html")
+    @GetMapping("/{skuId}.html")
     public String itemInfo(Model model, @PathVariable Long skuId) {
         SkuItemVo skuItemVo = skuInfoService.itemInfo(skuId);
         model.addAttribute("item", skuItemVo);

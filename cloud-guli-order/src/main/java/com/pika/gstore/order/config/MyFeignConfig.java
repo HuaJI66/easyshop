@@ -1,5 +1,6 @@
 package com.pika.gstore.order.config;
 
+import feign.Logger;
 import feign.RequestInterceptor;
 import feign.RequestTemplate;
 import io.seata.core.context.RootContext;
@@ -20,6 +21,10 @@ import java.util.Enumeration;
  */
 @Configuration
 public class MyFeignConfig {
+    @Bean
+    public Logger.Level level() {
+        return Logger.Level.BASIC;
+    }
     @Bean
     public RequestInterceptor requestInterceptor() {
         return template -> {

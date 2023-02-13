@@ -1,5 +1,6 @@
 package com.pika.gstore.product.config;
 
+import feign.Logger;
 import feign.RequestInterceptor;
 import io.seata.core.context.RootContext;
 import org.springframework.context.annotation.Bean;
@@ -15,6 +16,10 @@ import org.springframework.web.context.request.ServletRequestAttributes;
  */
 @Configuration
 public class MyFeignConfig {
+    @Bean
+    public Logger.Level level() {
+        return Logger.Level.BASIC;
+    }
     @Bean
     public RequestInterceptor requestInterceptor() {
         return template -> {
