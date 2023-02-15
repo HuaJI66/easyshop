@@ -1,6 +1,7 @@
 package com.pika.gstore.member.service.impl;
 
 import cn.hutool.crypto.digest.BCrypt;
+import cn.hutool.crypto.symmetric.AES;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -16,6 +17,7 @@ import com.pika.gstore.member.exception.UsernameExistException;
 import com.pika.gstore.member.service.MemberLevelService;
 import com.pika.gstore.member.service.MemberService;
 import com.pika.gstore.member.vo.UserRegistryReqVo;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
