@@ -1,0 +1,214 @@
+version: "3"
+
+# 定义服务
+services:
+  # 为project定义服务
+  redis:
+    # 服务的镜像名称或镜像ID。如果镜像在本地不存在，Compose将会尝试拉取镜像
+    image: redis:latest
+    # 配置端口 - "宿主机端口:容器暴露端口"
+    ports:
+      - "6379:6379"
+    # 配置容器连接的网络，引用顶级 networks 下的条目(就是最下面配置的networks(一级目录))
+    networks:
+      server:
+        # 为单redis创建别名, REDIS_URL标记为redis服务的地址. (不配置aliases也可以, 这样就通过定义的服务名: redis链接)
+        aliases:
+          - redis
+    # 挂载
+    volumes:
+      - "/opt/docker/redis/redis.conf:/etc/redis/redis.conf"
+      - "/opt/docker/redis/data:/data"
+    # 容器总是重新启动
+    restart: always
+    # 相当于执行一些命令
+    command:
+      redis-server /etc/redis/redis.conf --appendonly yes
+    # 指定一个自定义容器名称，而不是生成的默认名称。
+    container_name: redis
+    # 使用该参数，container内的root拥有真正的root权限。
+    privileged: true
+
+  mysql:
+    image: mysql:latest
+    ports:
+      - "3306:3306"
+    # 添加环境变量
+    environment:
+      MYSQL_ROOT_PASSWORD: "root"
+    volumes:
+      - "/opt/docker/mysql/data:/var/lib/mysql"
+      - "/opt/docker/mysql/conf:/etc/mysql/conf.d"
+      - "/opt/docker/mysql/log:/var/log/mysql"
+      - "/etc/localtime:/etc/localtime"
+    networks:
+      server:
+        aliases:
+          - mysql
+    restart: always
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --default-authentication-plugin=mysql_native_password
+    container_name: mysql
+    privileged: true
+
+  nacos:
+    image: nacos/nacos-server:v2.2.0
+    ports:
+      - "8848:8848"
+      - "9848:9848"
+      - "9555:9555"
+      - "9849:9849"
+    environment:
+      PREFER_HOST_MODE: ip
+      NACOS_APPLICATION_PORT: 8848
+      MODE: standalone
+      SPRING_DATASOURCE_PLATFORM: mysql
+      MYSQL_SERVICE_HOST: mysql
+      MYSQL_SERVICE_DB_NAME: nacos_config
+      MYSQL_SERVICE_PORT: 3306
+      MYSQL_SERVICE_USER: root
+      MYSQL_SERVICE_PASSWORD: root
+      MYSQL_SERVICE_DB_PARAM: characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true&useSSL=false&allowPublicKeyRetrieval=true
+    networks:
+      server:
+        aliases:
+          - nacos
+    privileged: true
+    restart: always
+    container_name: nacos
+    depends_on:
+      - mysql
+  seata:
+    image: seataio/seata-server:1.6.1
+    ports:
+      - "8091:8091"
+      - "7091:7091"
+    volumes:
+      - "/usr/share/zoneinfo/Asia/Shanghai:/etc/localtime"        #设置系统时区
+      - "/usr/share/zoneinfo/Asia/Shanghai:/etc/timezone"  #设置时区
+      - "/opt/docker/seata/conf:/seata-server/resources"
+    environment:
+      - STORE_MODE=db
+      # 以SEATA_IP作为host注册seata server(docker下不要写localhost/127.0.0.1/seata等容器内部网络ip,可填填写网关地址)
+      - SEATA_IP=192.168.10.1
+      - SEATA_PORT=8091
+    networks:
+      server:
+        aliases:
+          - seata
+    privileged: true
+    restart: always
+    container_name: seata
+    depends_on:
+      - nacos
+  oap:
+    image: apache/skywalking-oap-server:9.3.0
+    ports:
+      - "11800:11800"
+      - "12800:12800"
+      - "1234:1234"
+    volumes:
+      - "/opt/docker/skywalking/ext-config:/skywalking/ext-config"
+      - "/opt/docker/skywalking/ext-libs:/skywalking/ext-libs"
+    networks:
+      server:
+        aliases:
+          - oap
+    privileged: true
+    restart: always
+    container_name: oap
+    depends_on:
+      - mysql
+      - redis
+      - es
+  oap-ui:
+    image: apache/skywalking-ui:9.3.0
+    ports:
+      - "8086:8080"
+    environment:
+      SW_OAP_ADDRESS: "http://oap:12800"
+    networks:
+      server:
+        aliases:
+          - oap-ui
+    privileged: true
+    restart: always
+    container_name: oap-ui
+    depends_on:
+      - oap
+  es:
+    image: elasticsearch:7.4.2
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    volumes:
+      - "/opt/docker/es/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml"
+      - "/opt/docker/es/data:/usr/share/elasticsearch/data"
+      - "/opt/docker/es/plugins:/usr/share/elasticsearch/plugins"
+    environment:
+      discovery.type: "single-node"
+      ES_JAVA_OPTS: "-Xms256m -Xmx512m"
+    networks:
+      server:
+        aliases:
+          - es
+    privileged: true
+    restart: always
+    container_name: es
+    depends_on:
+      - nginx
+  kibana:
+    image: kibana:7.4.2
+    ports:
+      - "5601:5601"
+    environment:
+      ELASTICSEARCH_HOSTS: "http://es:9200"
+    networks:
+      server:
+        aliases:
+          - kibana
+    privileged: true
+    restart: always
+    container_name: kibana
+    depends_on:
+      - es
+  rabbitmq:
+    image: rabbitmq:3.8-management
+    ports:
+      - "5671:5671"
+      - "5672:5672"
+      - "4369:4369"
+      - "25672:25672"
+      - "15671:15671"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: "guest"
+      RABBITMQ_DEFAULT_PASS: "guest"
+    networks:
+      server:
+        aliases:
+          - rabbitmq
+    privileged: true
+    restart: always
+    container_name: rabbitmq
+  nginx:
+    image: nginx:latest
+    ports:
+      - "80:80"
+    volumes:
+      - "/opt/docker/nginx/conf/nginx.conf:/etc/nginx/nginx.conf"
+      - "/opt/docker/nginx/html:/etc/nginx/html"
+      - "/opt/docker/nginx/logs:/etc/nginx/logs/"
+      - "/opt/docker/nginx/conf/conf.d:/etc/nginx/conf.d"
+      - "/opt/docker/nginx:/opt/docker/nginx"
+    networks:
+      server:
+        aliases:
+          - nginx
+    privileged: true
+    restart: always
+    container_name: nginx
+
+networks:
+  # bridge：默认，需要单独配置ports映射主机port和服务的port，并且开启了容器间通信
+  server:
+    driver: bridge
