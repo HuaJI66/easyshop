@@ -33,8 +33,8 @@ public class SeckillScheduleService {
     @Scheduled(cron = "0 3 * * * ?")
     public void uploadL3DProuct() {
         RLock lock = redissonClient.getLock(SeckillConstant.SECKILL_UPLOAD_LOCK);
+        lock.lock(10, TimeUnit.MINUTES);
         try {
-            lock.lock(10, TimeUnit.MINUTES);
             log.info("执行上架任务");
             seckillService.uploadL3DProuct();
         } finally {
