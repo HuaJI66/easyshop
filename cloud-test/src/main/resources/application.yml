@@ -1,4 +1,5 @@
-
+server:
+  port: 7788
 spring:
   #  邮箱配置
   mail:
@@ -29,5 +30,3 @@ spring:
           starttls:
             enable: true
             required: true
-server:
-  port: 7788

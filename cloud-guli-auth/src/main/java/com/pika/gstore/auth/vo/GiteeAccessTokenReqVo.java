@@ -1,6 +1,5 @@
 package com.pika.gstore.auth.vo;
 
-import com.pika.gstore.auth.config.GiteeLoginConfigUtil;
 import lombok.Data;
 
 /**

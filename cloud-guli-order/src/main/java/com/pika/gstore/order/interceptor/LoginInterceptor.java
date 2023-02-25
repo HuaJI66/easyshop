@@ -45,9 +45,9 @@ public class LoginInterceptor implements HandlerInterceptor {
             } else {
                 queryString = "?" + queryString.trim();
             }
-            String redirect_url = "/login.html?redirect_url=http://" + DomainConstant.ORDER_DOMAIN + request.getRequestURI() + queryString;
+            String redirectUrl = "/login.html?redirect_url=" + DomainConstant.ORDER_DOMAIN + request.getRequestURI() + queryString;
             session.setAttribute("errors", Collections.singletonMap("msg", "请登录后再查看订单"));
-            response.sendRedirect("http://" + DomainConstant.AUTH_DOMAIN + redirect_url);
+            response.sendRedirect( DomainConstant.AUTH_DOMAIN + redirectUrl);
             return false;
         }
     }

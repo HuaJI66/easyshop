@@ -38,7 +38,7 @@ public class OrderWebController {
         } catch (Exception e) {
             attributes.addFlashAttribute("errors", Collections.singletonMap("msg", "订单创建失败: " + e.getMessage()));
         }
-        return "redirect:http://" + DomainConstant.ORDER_DOMAIN + "/toTrade";
+        return "redirect:" + DomainConstant.ORDER_DOMAIN + "/toTrade";
     }
 
 

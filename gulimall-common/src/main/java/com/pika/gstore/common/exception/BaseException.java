@@ -53,8 +53,8 @@ public enum BaseException {
     PHONE_EXIST_ERROR(7000409, "其它错误"),
     LOGIN_INVALID_ERROR(7000410, "用户名或密码错误"),
     SEND_ERROR(7000500, "验证码发送失败"),
-    WARE_STOCK_ERROR(8000501, "库存不足"), ;
-
+    WARE_STOCK_ERROR(8000501, "库存不足"),
+    GET_ACCESS_TOKEN_FAILURE(10000400,"获取AccessToken失败");
 
     /**
      * 错误码

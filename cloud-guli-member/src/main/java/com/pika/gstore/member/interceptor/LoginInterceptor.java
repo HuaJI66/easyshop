@@ -45,9 +45,9 @@ public class LoginInterceptor implements HandlerInterceptor {
             } else {
                 queryString = "?" + queryString.trim();
             }
-            String redirectUrl = "/login.html?redirect_url=http://" + DomainConstant. MEMBER_DOMAIN+ request.getRequestURI() + queryString;
+            String redirectUrl = "/login.html?redirect_url=" + DomainConstant. MEMBER_DOMAIN+ request.getRequestURI() + queryString;
             session.setAttribute("errors", Collections.singletonMap("msg", "请登录"));
-            response.sendRedirect("http://" + DomainConstant.AUTH_DOMAIN + redirectUrl);
+            response.sendRedirect( DomainConstant.AUTH_DOMAIN + redirectUrl);
             return false;
         }
     }
