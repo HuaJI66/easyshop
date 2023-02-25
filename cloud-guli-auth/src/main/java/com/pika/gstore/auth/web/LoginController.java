@@ -16,10 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.CookieValue;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.annotation.Resource;
@@ -29,6 +26,7 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Objects;
 
 /**
  * Desc:
@@ -109,5 +107,15 @@ public class LoginController {
             redirectAttributes.addFlashAttribute("errors", Collections.singletonMap("msg", r.getMsg()));
             return "redirect:" + DomainConstant.AUTH_DOMAIN + "login.html";
         }
+    }
+
+    @GetMapping("logout")
+    public String logout(HttpSession session) {
+        Object loginUser = session.getAttribute(AuthConstant.SESSION_LOGIN_USER);
+        if (!Objects.isNull(loginUser)) {
+            session.removeAttribute(AuthConstant.SESSION_LOGIN_USER);
+            session.invalidate();
+        }
+        return "redirect:" + DomainConstant.MAIN_DOMAIN;
     }
 }

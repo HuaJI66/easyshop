@@ -35,10 +35,10 @@ public class AuthFilter implements Filter {
         String url = requestURL.toString().trim();
         //登录请求直接放行
         if (urlPass(url, exclude)) {
-            log.info("放行请求:{}",url);
+            log.info("放行请求:{}", url);
             chain.doFilter(request, response);
         } else {
-            log.warn("拦截请求:{}",url);
+            log.warn("拦截请求:{}", url);
             //非登录请求 ==>是否已登录?
             if (session.getAttribute(AuthConstant.SESSION_LOGIN_USER) == null) {
                 ((HttpServletResponse) response).sendRedirect(AuthConstant.AUTH_URL);
@@ -55,7 +55,7 @@ public class AuthFilter implements Filter {
     /**
      * 是否放行
      */
-    private boolean urlPass(String url, Set<String> set) {
+    private static boolean urlPass(String url, Set<String> set) {
         for (String s : set) {
             if (url.matches(s)) {
                 return true;
