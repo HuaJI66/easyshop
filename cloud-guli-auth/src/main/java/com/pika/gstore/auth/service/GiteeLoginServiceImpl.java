@@ -4,9 +4,11 @@ import com.pika.gstore.auth.feign.GiteeFeignService;
 import com.pika.gstore.auth.vo.GiteeAccessTokenRepVo;
 import com.pika.gstore.auth.vo.GiteeAccessTokenReqVo;
 import com.pika.gstore.auth.vo.GiteeEmailVo;
+import com.pika.gstore.common.constant.DomainConstant;
 import com.pika.gstore.common.to.GiteeUserInfoTo;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -22,7 +24,7 @@ public class GiteeLoginServiceImpl implements Oauth2Service {
     /**
      * 默认授权成功后的回调地址
      */
-    public static final String DEFAULT_REDIRECT_URL = "http://auth.gulimall.com/oauth/gitee/success";
+    public static final String DEFAULT_REDIRECT_URL = DomainConstant.AUTH_DOMAIN + "oauth/gitee/success";
 
     /**
      * gitee跳转授权 url前缀
@@ -69,7 +71,16 @@ public class GiteeLoginServiceImpl implements Oauth2Service {
 
     @Override
     public GiteeUserInfoTo getUserInfo(String accessToken) {
-        return giteeFeignService.getUserInfo(accessToken);
+        GiteeUserInfoTo userInfo = giteeFeignService.getUserInfo(accessToken);
+        userInfo.setAccess_token(accessToken);
+        if (StringUtils.isEmpty(userInfo.getEmail())) {
+            try {
+                String email = getAllEmail(accessToken).get(0).getEmail();
+                userInfo.setEmail(email);
+            } catch (Exception ignored) {
+            }
+        }
+        return userInfo;
     }
 
     public List<GiteeEmailVo> getAllEmail(String accessToken) {

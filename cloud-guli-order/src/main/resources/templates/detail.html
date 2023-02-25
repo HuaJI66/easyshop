@@ -9,7 +9,7 @@
 </head>
 
 <body th:with="loginUser=${session.get('login_user')},
-base_url=${'http://order.gulimall.com'+#httpServletRequest.requestURI+(#httpServletRequest.getQueryString()==null?'':'?'+#httpServletRequest.getQueryString())}">
+base_url=${ORDER_DOMAIN+#httpServletRequest.requestURI+(#httpServletRequest.getQueryString()==null?'':'?'+#httpServletRequest.getQueryString())}">
 <div id="max">
 
     <!--顶部-->
@@ -133,10 +133,10 @@ base_url=${'http://order.gulimall.com'+#httpServletRequest.requestURI+(#httpServ
             <ul class="header_ul_right">
                 <li style="border: 0;">
                     <a th:if="${loginUser==null}"
-                       th:href="${'http://auth.gulimall.com/login.html?redirect_url='+base_url}">你好，请登录</a>
+                       th:href="${AUTH_DOMAIN+'login.html?redirect_url='+base_url}">你好，请登录</a>
                     <span th:if="${loginUser!=null}" th:text="'你好,'+${loginUser.username}"></span>
                 </li>
-                <li th:if="${loginUser==null}"><a href="http://auth.gulimall.com/reg.html"
+                <li th:if="${loginUser==null}"><a th:href="${AUTH_DOMAIN}+'reg.html'"
                                                   style="color: red;">免费注册</a> |
                 </li>
                 <li th:if="${loginUser!=null}">

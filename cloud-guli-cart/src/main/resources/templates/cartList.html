@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="/static/cart/css/font-awesome-4.7.0/css/font-awesome.css"/>
 </head>
 <body th:with="loginUser=${session.get('login_user')},
-base_url=${'http://cart.gulimall.com'+#httpServletRequest.requestURI
+base_url=${CART_DOMAIN+#httpServletRequest.requestURI
 +(#httpServletRequest.getQueryString()==null?'':'?'+#httpServletRequest.getQueryString())}">
 <header>
     <a name="mao1">
@@ -19,17 +19,16 @@ base_url=${'http://cart.gulimall.com'+#httpServletRequest.requestURI
 
             <ul class="header-left">
                 <li>
-
-                    <a href="http://gulimall.com/reg.html">首页</a>
+                    <a th:href="${MAIN_DOMAIN}">首页</a>
                 </li>
 
             </ul>
             <ul class="header-right">
-                <li><a th:href="'http://auth.gulimall.com/login.html?redirect_url='+${base_url}"
+                <li><a th:href="AUTH_DOMAIN+'login.html?redirect_url='+${base_url}"
                        th:text="'你好，'+${loginUser!=null?loginUser.username:'请登录'}"></a></li>
-                <li th:if="${loginUser==null}"><a href="http://auth.gulimall.com/reg.html">免费注册</a></li>
+                <li th:if="${loginUser==null}"><a th:href="${AUTH_DOMAIN}'reg.html'">免费注册</a></li>
                 <li class="spacer"></li>
-                <li th:if="${loginUser!=null}"><a href="http://member.gulimall.com/memberOrder.html">我的订单</a></li>
+                <li th:if="${loginUser!=null}"><a th:href="${MEMBER_DOMAIN}+'memberOrder.html'">我的订单</a></li>
                 <li class="spacer"></li>
             </ul>
             <div style="clear: both;"></div>
@@ -42,8 +41,8 @@ base_url=${'http://cart.gulimall.com'+#httpServletRequest.requestURI
     <div class="one_sousuo">
         <div class="one_search_top">
             <div class="one_top_left">
-                <a href="http://gulimall.com" class="one_left_logo"><img src="/static/cart/img/logo1.jpg"></a>
-                <a href="http://cart.gulimall.com/cart.html" class="one_left_link">购物车</a>
+                <a th:href="${MAIN_DOMAIN}" class="one_left_logo"><img src="/static/cart/img/logo1.jpg"></a>
+                <a th:href="${CART_DOMAIN}+'cart.html'" class="one_left_link">购物车</a>
             </div>
             <div class="one_top_right">
                 <input type="text" class="one_right_txt" placeholder="" onfocus="this.placeholder=''"
@@ -54,7 +53,8 @@ base_url=${'http://cart.gulimall.com'+#httpServletRequest.requestURI
         <div class="one_search_load" th:if="${loginUser}==null">
             <img src="/static/cart//img/shop_07.jpg" class="one_load_wraing">
             <span>您还没有登录！登录后购物车的商品将保存到您账号中</span>
-            <a  th:href="${'http://auth.gulimall.com/login.html?redirect_url='+base_url}"><input type="button" value="立即登录" class="one_load_btn"></a>
+            <a th:href="${AUTH_DOMAIN+'login.html?redirect_url='+base_url}"><input type="button" value="立即登录"
+                                                                                   class="one_load_btn"></a>
         </div>
     </div>
 </div>
@@ -224,17 +224,17 @@ base_url=${'http://cart.gulimall.com'+#httpServletRequest.requestURI
 <script src="/static/cart//js/index.js" charset="utf-8"></script>
 <script type="text/javascript">
     function toTrade() {
-        window.location.href = "http://order.gulimall.com/toTrade";
+        window.location.href = [[${ORDER_DOMAIN}]] + "toTrade";
     }
 
-    function toItem(skuId) {
-        window.location.href = "http://item.gmall.com:8084/" + skuId + ".html";
-    }
-
-    function login() {
-        var s = encodeURIComponent("http://cart.gmall.com:8087/cartList");
-        window.location.href = "http://passport.atguigu.com/index?originUrl=" + s;
-    }
+    // function toItem(skuId) {
+    //     window.location.href = "http://item.gmall.com:8084/" + skuId + ".html";
+    // }
+    //
+    // function login() {
+    //     var s = encodeURIComponent("http://cart.gmall.com:8087/cartList");
+    //     window.location.href = "http://passport.atguigu.com/index?originUrl=" + s;
+    // }
 
     //封装总价钱函数
     function sumSumPrice() {
@@ -763,14 +763,14 @@ base_url=${'http://cart.gulimall.com'+#httpServletRequest.requestURI
         var skuId = $(chkbox).attr("skuId");
         var checked = $(chkbox).prop("checked");
         var param = "checkedState=" + checked + "&" + "skuId=" + skuId;
-        location.href = 'http://cart.gulimall.com/cartItem/changeState?' + param;
+        location.href = [[${CART_DOMAIN}]] + 'cartItem/changeState?' + param;
     }
 
     $('.opsNumBtn').click(function () {
         let skuId = $(this).parent().attr('skuId');
         let num = $(this).parent().find('.opsNum').text();
         // alert(skuId + '==>' + num);
-        location.href = 'http://cart.gulimall.com/cartItem/changeNum?skuId=' + skuId + '&num=' + num;
+        location.href = [[${CART_DOMAIN}]] + 'cartItem/changeNum?skuId=' + skuId + '&num=' + num;
     });
     var deleteId;
 
@@ -778,9 +778,10 @@ base_url=${'http://cart.gulimall.com'+#httpServletRequest.requestURI
         // alert(skuId);
         deleteId = skuId;
     }
+
     function deleteCartItem(skuId) {
         // alert(skuId);
-        location.href = 'http://cart.gulimall.com/cartItem/delete?skuId=' + deleteId;
+        location.href = [[${CART_DOMAIN}]] + 'cartItem/delete?skuId=' + deleteId;
     }
 </script>
 </html>

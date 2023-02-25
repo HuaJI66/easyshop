@@ -15,13 +15,13 @@
 </head>
 
 <body th:with="loginUser=${session.get('login_user')},
-base_url=${'http://member.gulimall.com'+#httpServletRequest.requestURI+(#httpServletRequest.getQueryString()==null?'':'?'+#httpServletRequest.getQueryString())}">
+base_url=${MEMBER_DOMAIN+#httpServletRequest.requestURI+(#httpServletRequest.getQueryString()==null?'':'?'+#httpServletRequest.getQueryString())}">
 <div id="nav">
     <nav>
 
         <div class="myjd">
             <h3>我的谷粒商城</h3>
-            <button onclick="location.href='http://gulimall.com'">返回谷粒商城首页</button>
+            <a th:href="${MAIN_DOMAIN}">返回谷粒商城首页</a>
         </div>
         <ul class="nav_ul">
             <li>首页</li>

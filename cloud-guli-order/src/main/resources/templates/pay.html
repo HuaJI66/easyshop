@@ -7,17 +7,17 @@
     <script src="/static/order/pay/js\jquery-3.1.1.min.js" charset="utf-8"></script>
 </head>
 <body th:with="loginUser=${session.get('login_user')},
-base_url=${'http://order.gulimall.com'+#httpServletRequest.requestURI+(#httpServletRequest.getQueryString()==null?'':'?'+#httpServletRequest.getQueryString())}">
+base_url=${ORDER_DOMAIN+#httpServletRequest.requestURI+(#httpServletRequest.getQueryString()==null?'':'?'+#httpServletRequest.getQueryString())}">
 <div class="One_Jdbox">
     <div class="Jdbox_head">
         <img src="/static/order/pay/img\logo1.jpg" alt=""><span class="bank">收银台</span>
         <ul>
             <li style="border: 0;">
                 <a th:if="${loginUser==null}"
-                   th:href="${'http://auth.gulimall.com/login.html?redirect_url='+base_url}">你好，请登录</a>
+                   th:href="${AUTH_DOMAIN+'login.html?redirect_url='+base_url}">你好，请登录</a>
                 <span th:if="${loginUser!=null}" th:text="'你好,'+${loginUser.username}"></span>
             </li>
-            <li th:if="${loginUser==null}"><a href="http://auth.gulimall.com/reg.html"
+            <li th:if="${loginUser==null}"><a th:href="AUTH_DOMAIN+'reg.html'"
                                               style="color: red;">免费注册</a> |
             </li>
             <li>我的订单</li>
@@ -109,7 +109,7 @@ base_url=${'http://order.gulimall.com'+#httpServletRequest.requestURI+(#httpServ
                 <img src="/static/order/pay/img\weixin.png" alt="">微信支付
             </li>
             <li>
-                <a th:href="'http://order.gulimall.com/payOrder?orderSn='+${OrderSubmitRepVo.order.orderSn}">
+                <a th:href="ORDER_DOMAIN+'payOrder?orderSn='+${OrderSubmitRepVo.order.orderSn}">
                     <img src="/static/order/pay/img\zhifubao.png" style="weight:auto;height:30px;" alt="">支付宝
                 </a>
             </li>

@@ -13,13 +13,13 @@
 
 </head>
 
-<body th:with="login_user=${session.get('login_user')},base_url=${'http://cart.gulimall.com'+#httpServletRequest.requestURI+(#httpServletRequest.getQueryString()==null?'':'?'+#httpServletRequest.getQueryString())}">
+<body th:with="login_user=${session.get('login_user')},base_url=${CART_DOMAIN+#httpServletRequest.requestURI+(#httpServletRequest.getQueryString()==null?'':'?'+#httpServletRequest.getQueryString())}">
 <!--头部-->
 <div class="alert-info">
     <div class="hd_wrap_top">
         <ul class="hd_wrap_left">
             <li class="hd_home"><i class="glyphicon glyphicon-home"></i>
-                <a href="http://gulimall.com">谷粒商城首页</a>
+                <a th:href="${MAIN_DOMAIN}">谷粒商城首页</a>
             </li>
 
         </ul>
@@ -28,13 +28,13 @@
             <li class="forel">
                 <a th:text="'你好'+${login_user!=null?login_user.username:'请登录'}"
                    class="link_login"
-                   th:href="@{'http://auth.gulimall.com/login.html?redirect_url='+${base_url}}"></a>&nbsp;
-                <a href="https://auth.gmall.com/reg.html" class="link_regist">免费注册</a>
+                   th:href="${AUTH_DOMAIN+'/login.html?redirect_url='+base_url}"></a>&nbsp;
+                <a th:href="${AUTH_DOMAIN}+'/reg.html'" class="link_regist">免费注册</a>
             </li>
             <li class="spacer"></li>
 
             <li>
-                <a href="/static/cart//javascript:;">我的订单</a>
+                <a th:href="${MEMBER_DOMAIN+'/memberOrder.html'}">我的订单</a>
             </li>
 
 
@@ -71,13 +71,13 @@
                             <h3 class="ftx-02">商品已成功加入购物车</h3></div>
                         <div class="p-item">
                             <div class="p-img">
-                                <a href="/static/cart//javascript:;" target="_blank">
+                                <a th:href="${ITEM_DOMAIN+'/'+cart_item.skuId+'.html'}" target="_blank">
                                     <img style="height: 60px;width:60px;"
                                          th:src="${cart_item.image}"></a>
                             </div>
                             <div class="p-info">
                                 <div class="p-name">
-                                    <a th:href="${'http://item.gulimall.com/'+cart_item.skuId+'.html'}"
+                                    <a th:href="${ITEM_DOMAIN+cart_item.skuId+'.html'}"
                                        th:text="${cart_item.title}">TCL 55A950C 55英寸32核人工智能
                                         HDR曲面超薄4K电视金属机身（枪色）</a>
                                 </div>
@@ -94,8 +94,8 @@
                         <div class="clr"></div>
                         <div class="bg_shop">
                             <a class="btn-tobback"
-                               th:href="${'http://item.gulimall.com/'+cart_item.skuId+'.html'}">查看商品详情</a>
-                            <a class="btn-addtocart" href="http://cart.gulimall.com/cart.html"
+                               th:href="${ITEM_DOMAIN+cart_item.skuId+'.html'}">查看商品详情</a>
+                            <a class="btn-addtocart" th:href="${CART_DOMAIN}+'cart.html'"
                                id="GotoShoppingCart"><b></b>去购物车结算</a>
                         </div>
                     </div>

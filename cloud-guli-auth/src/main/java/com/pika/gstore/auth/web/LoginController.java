@@ -2,7 +2,6 @@ package com.pika.gstore.auth.web;
 
 import cn.hutool.core.lang.TypeReference;
 import cn.hutool.core.net.URLEncodeUtil;
-import com.pika.gstore.auth.config.GiteeLoginConfig;
 import com.pika.gstore.auth.feign.MemberFeignService;
 import com.pika.gstore.auth.service.GiteeLoginServiceImpl;
 import com.pika.gstore.auth.vo.GiteeAccessTokenRepVo;
@@ -67,16 +66,7 @@ public class LoginController {
     public String giteeAuth(@RequestParam(value = "redirect_url", defaultValue = DomainConstant.MAIN_DOMAIN) String redirectUrl,
                             String code, String state, HttpSession session, RedirectAttributes redirectAttributes) {
         GiteeAccessTokenRepVo repVo = giteeLoginService.getAccessToken(code);
-        System.out.println("repVo = " + repVo);
         GiteeUserInfoTo userInfo = giteeLoginService.getUserInfo(repVo.getAccess_token());
-        userInfo.setAccess_token(repVo.getAccess_token());
-        if (StringUtils.isEmpty(userInfo.getEmail())) {
-            try {
-                String email = giteeLoginService.getAllEmail(repVo.getAccess_token()).get(0).getEmail();
-                userInfo.setEmail(email);
-            } catch (Exception ignored) {
-            }
-        }
 
         try {
             R r = memberFeignService.loginOrRegistry(userInfo);
@@ -87,11 +77,11 @@ public class LoginController {
                 return "redirect:" + redirectUrl;
             } else {
                 session.setAttribute("errors", Collections.singletonMap("msg", r.getMsg()));
-                return "redirect:" + DomainConstant.AUTH_DOMAIN + "/login.html";
+                return "redirect:" + DomainConstant.AUTH_DOMAIN + "login.html";
             }
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("errors", Collections.singletonMap("msg", e.getMessage()));
-            return "redirect:" + DomainConstant.AUTH_DOMAIN + "/login.html";
+            return "redirect:" + DomainConstant.AUTH_DOMAIN + "login.html";
         }
 
     }
@@ -107,7 +97,7 @@ public class LoginController {
             HashMap<String, String> map = new HashMap<>(result.getFieldErrorCount());
             map.put("msg", "账号和密码不能为空");
             redirectAttributes.addFlashAttribute("errors", map);
-            return "redirect:" + DomainConstant.AUTH_DOMAIN + "/login.html";
+            return "redirect:" + DomainConstant.AUTH_DOMAIN + "login.html";
         }
         R r = memberFeignService.getMember(userLoginTo);
         if (r.getCode() == 0) {
@@ -117,7 +107,7 @@ public class LoginController {
             return "redirect:" + redirectUrl;
         } else {
             redirectAttributes.addFlashAttribute("errors", Collections.singletonMap("msg", r.getMsg()));
-            return "redirect:" + DomainConstant.AUTH_DOMAIN + "/login.html";
+            return "redirect:" + DomainConstant.AUTH_DOMAIN + "login.html";
         }
     }
 }

@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="/static/item/scss/header.css"/>
     <link rel="stylesheet" type="text/css" href="/static/item/bootstrap/css/bootstrap.css"/>
 </head>
-<body th:with="loginUser=${session.get('login_user')},base_url=${'http://item.gulimall.com'+#httpServletRequest.requestURI+(#httpServletRequest.getQueryString()==null?'':'?'+#httpServletRequest.getQueryString())}">
+<body th:with="loginUser=${session.get('login_user')},base_url=${ITEM_DOMAIN+#httpServletRequest.requestURI+(#httpServletRequest.getQueryString()==null?'':'?'+#httpServletRequest.getQueryString())}">
 <div id="max">
     <header>
         <!--品牌官方网站-->
@@ -60,13 +60,14 @@
             <ul class="header_ul_right">
                 <li style="border: 0;">
                     <a th:if="${loginUser==null}"
-                       th:href="${'http://auth.gulimall.com/login.html?redirect_url='+base_url}">你好，请登录</a>
+                       th:href="${AUTH_DOMAIN+'/login.html?redirect_url='+base_url}">你好，请登录</a>
                     <span th:if="${loginUser!=null}" th:text="'你好,'+${loginUser.username}"></span>
                 </li>
-                <li th:if="${loginUser==null}"><a href="http://auth.gulimall.com/reg.html"
+                <li th:if="${loginUser==null}"><a th:href="${AUTH_DOMAIN}+'/reg.html'"
                                                   style="color: red;">免费注册</a> |
                 </li>
-                <li th:if="${loginUser!=null}"><a href="http://member.gulimall.com/memberOrder.html" class="aa">我的订单</a> |
+                <li th:if="${loginUser!=null}"><a th:href="${MEMBER_DOMAIN}+'/memberOrder.html'"
+                                                  class="aa">我的订单</a> |
                 </li>
                 <li th:if="${loginUser!=null}" class="jingdong"><a href="/static/item/javascript:;">我的京东</a><span
                         class="glyphicon glyphicon-menu-down">|</span>
@@ -263,11 +264,11 @@
     <nav>
         <div class="nav_min">
             <div class="nav_top">
-                <div class="nav_top_one"><a href="http://gulimall.com"><img src="/static/item/img/111.png"/></a></div>
+                <div class="nav_top_one"><a th:href="${MAIN_DOMAIN}"><img src="/static/item/img/111.png"/></a></div>
                 <div class="nav_top_two"><input type="text"/>
                     <button>搜索</button>
                 </div>
-                <div class="nav_top_three"><a href="http://cart.gulimall.com/cart.html">我的购物车</a><span
+                <div class="nav_top_three"><a th:href="${CART_DOMAIN}+'/cart.html'">我的购物车</a><span
                         class="glyphicon glyphicon-shopping-cart"></span>
                     <div class="nav_top_three_1">
                         <img src="/static/item/img/44.png"/>购物车还没有商品，赶紧选购吧！
@@ -651,7 +652,7 @@
                            th:onclick="doSeckill([[${seckillInfo}]]);" href="#">立即抢购</a>
                     </div>
                     <div class="box-btns-two" th:else="${item.skuRedisTo!=null&&item.skuRedisTo.size()>0}">
-                        <a  id="addCartA" th:attr="skuId=${skuId}" href="#">加入购物车</a>
+                        <a id="addCartA" th:attr="skuId=${skuId}" href="#">加入购物车</a>
                     </div>
                     <div class="box-btns-three">
                         <img src="/static/item/img/e4ed3606843f664591ff1f68f7fda12d.png" alt=""/> 分享
@@ -1271,13 +1272,13 @@
         for (let i = 1; i < array.length; i++) {
             filter = $(filter).filter(array[i]);
         }
-        location.href = 'http://item.gulimall.com/' + filter[0] + '.html';
+        location.href = [[${AUTH_DOMAIN}]] + filter[0] + '.html';
         return false;
     })
     $('#addCartA').click(function () {
         let num = $('#numInput').val();
         let skuId = $(this).attr('skuId');
-        location.href = "http://cart.gulimall.com/addToCart?skuId=" + skuId + "&num=" + num;
+        location.href = [[${CART_DOMAIN}]] + "/addToCart?skuId=" + skuId + "&num=" + num;
     })
 
     function doSeckill(seckillInfo) {
@@ -1290,7 +1291,7 @@
         if (num > (seckillInfo.seckillLimit * 1)) {
             alert('商品秒杀每人限购 ' + seckillInfo.seckillLimit + '件');
         }
-        location.href = "http://seckill.gulimall.com/doSeckill?skuId=" + seckillInfo.skuId + '&sessionId='
+        location.href = [[${SECKILL_DOMAIN}]] + "/doSeckill?skuId=" + seckillInfo.skuId + '&sessionId='
             + seckillInfo.promotionSessionId + '&code=' + seckillInfo.uuid + '&num=' + num;
         return false;
     }

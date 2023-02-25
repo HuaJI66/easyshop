@@ -17,7 +17,7 @@
 </head>
 
 <body th:with="loginUser=${session.get('login_user')},
-base_url=${'http://gulimall.com'+#httpServletRequest.requestURI+(#httpServletRequest.getQueryString()==null?'':'?'+#httpServletRequest.getQueryString())}">
+base_url=${MAIN_DOMAIN+#httpServletRequest.requestURI+(#httpServletRequest.getQueryString()==null?'':'?'+#httpServletRequest.getQueryString())}">
 <div class="top_find">
     <div class="top_find_son">
         <img src="/static/index/img/top_find_logo.png" alt="">
@@ -96,14 +96,15 @@ base_url=${'http://gulimall.com'+#httpServletRequest.requestURI+(#httpServletReq
             </b>
             <ul th:with="loginUser=${session.get('login_user')}">
                 <li>
-                    <a th:href="${'http://auth.gulimall.com/login.html?redirect_url='+base_url}" th:text="'你好，'+${loginUser!=null?loginUser.username:'请登录'}"></a>
+                    <a th:href="${AUTH_DOMAIN+'login.html?redirect_url='+base_url}"
+                       th:text="'你好，'+${loginUser!=null?loginUser.username:'请登录'}"></a>
                 </li>
                 <li>
-                    <a href="http://auth.gulimall.com/reg.html" class="li_2" th:if="${loginUser==null}">免费注册</a>
+                    <a th:href="${AUTH_DOMAIN}+'reg.html'" class="li_2" th:if="${loginUser==null}">免费注册</a>
                 </li>
                 <span>|</span>
                 <li>
-                    <a href="http://member.gulimall.com/memberOrder.html">我的订单</a>
+                    <a th:href="${MEMBER_DOMAIN}+'memberOrder.html'">我的订单</a>
                 </li>
             </ul>
         </div>
@@ -119,7 +120,7 @@ base_url=${'http://gulimall.com'+#httpServletRequest.requestURI+(#httpServletReq
         <div class="header_ico">
             <div class="header_gw">
                 <img src="/static/index/img/img_15.png"/>
-                <span><a href="http://cart.gulimall.com/cart.html">我的购物车</a></span>
+                <span><a th:href="${CART_DOMAIN}+'cart.html'">我的购物车</a></span>
                 <span>0</span>
             </div>
             <div class="header_ko">
@@ -554,21 +555,23 @@ base_url=${'http://gulimall.com'+#httpServletRequest.requestURI+(#httpServletReq
 <script type="text/javascript">
     function search() {
         var keyword = $("#searchText").val()
-        window.location.href = "http://search.gulimall.com/list.html?keyword=" + keyword;
+        window.location.href = [[${SEARCH_DOMAIN}]] + "list.html?keyword=" + keyword;
     }
-    $.get("http://seckill.gulimall.com/getCurrSkus", function (res) {
+
+    $.get([[${SECKILL_DOMAIN}]] + "getCurrSkus", function (res) {
         if (res.data.length > 0) {
             res.data.forEach(function (item) {
                 $("<li onclick='toDetail(" + item.skuId + ")'></li>").append($("<img style='width: 130px; height: 130px' src='" + item.skuInfoTo.skuDefaultImg + "' />"))
-                    .append($("<p>"+item.skuInfoTo.skuTitle+"</p>"))
+                    .append($("<p>" + item.skuInfoTo.skuTitle + "</p>"))
                     .append($("<span>" + item.seckillPrice + "</span>"))
                     .append($("<s>" + item.skuInfoTo.price + "</s>"))
                     .appendTo("#seckillSkuContent");
             })
         }
     })
+
     function toDetail(skuId) {
-        location.href = "http://item.gulimall.com/" + skuId + ".html";
+        location.href = [[${ITEM_DOMAIN}]] + skuId + ".html";
     }
 </script>
 <script type="text/javascript" src="/static/index/js/text.js"></script>
