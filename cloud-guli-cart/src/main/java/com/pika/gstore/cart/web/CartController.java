@@ -40,7 +40,7 @@ public class CartController {
         return cartService.getCurrUserCheckedCart();
     }
 
-    @GetMapping("cart.html")
+    @GetMapping("/cart.html")
     public String cart(Model model) {
         CartVo cartVo = cartService.getCart();
         model.addAttribute("cartList", cartVo);

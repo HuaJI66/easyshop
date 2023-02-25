@@ -22,8 +22,11 @@ public class OrderPayListener {
     @Resource
     private OrderService orderService;
 
+    /**
+     * 支付宝支付成功异步回调地址,需要应用可公网访问
+     */
     @RequestMapping("/paid/notify")
     public String paidNotify(PayAsyncVo response, HttpServletRequest request) throws AlipayApiException {
-        return orderService.handlePaidNotify(request,response);
+        return orderService.handlePaidNotify(request, response);
     }
 }

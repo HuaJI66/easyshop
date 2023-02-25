@@ -275,7 +275,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
             }
         } else {
             // 验签失败则记录异常日志，并在response中返回failure.
-
+            log.warn(response.getOut_trade_no() + "订单验证已支付失败");
         }
         return "failure";
     }

@@ -109,7 +109,7 @@ base_url=${ORDER_DOMAIN+#httpServletRequest.requestURI+(#httpServletRequest.getQ
                 <img src="/static/order/pay/img\weixin.png" alt="">微信支付
             </li>
             <li>
-                <a th:href="ORDER_DOMAIN+'payOrder?orderSn='+${OrderSubmitRepVo.order.orderSn}">
+                <a th:href="${ORDER_DOMAIN+'payOrder?orderSn='+OrderSubmitRepVo.order.orderSn}">
                     <img src="/static/order/pay/img\zhifubao.png" style="weight:auto;height:30px;" alt="">支付宝
                 </a>
             </li>
