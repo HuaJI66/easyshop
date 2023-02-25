@@ -754,7 +754,7 @@ base_url=${ORDER_DOMAIN+#httpServletRequest.requestURI+(#httpServletRequest.getQ
         //设置表单addrId
         $("#addrInput").val(addrId);
         //查询运费
-        let url = [[${MAIN_DOMAIN}]];
+        let url = '[[${MAIN_DOMAIN}]]';
         $.get(url + "/admin/ware/wareinfo/fare?addrId=" + addrId, function (res) {
             let data = res.fare;
             $('#fare').text(data);

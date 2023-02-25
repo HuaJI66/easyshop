@@ -763,14 +763,14 @@ base_url=${CART_DOMAIN+#httpServletRequest.requestURI
         var skuId = $(chkbox).attr("skuId");
         var checked = $(chkbox).prop("checked");
         var param = "checkedState=" + checked + "&" + "skuId=" + skuId;
-        location.href = [[${CART_DOMAIN}]] + 'cartItem/changeState?' + param;
+        location.href = '[[${CART_DOMAIN}]]' + 'cartItem/changeState?' + param;
     }
 
     $('.opsNumBtn').click(function () {
         let skuId = $(this).parent().attr('skuId');
         let num = $(this).parent().find('.opsNum').text();
         // alert(skuId + '==>' + num);
-        location.href = [[${CART_DOMAIN}]] + 'cartItem/changeNum?skuId=' + skuId + '&num=' + num;
+        location.href = '[[${CART_DOMAIN}]]' + 'cartItem/changeNum?skuId=' + skuId + '&num=' + num;
     });
     var deleteId;
 
@@ -781,7 +781,7 @@ base_url=${CART_DOMAIN+#httpServletRequest.requestURI
 
     function deleteCartItem(skuId) {
         // alert(skuId);
-        location.href = [[${CART_DOMAIN}]] + 'cartItem/delete?skuId=' + deleteId;
+        location.href = '[[${CART_DOMAIN}]]' + 'cartItem/delete?skuId=' + deleteId;
     }
 </script>
 </html>

@@ -35,7 +35,7 @@ public class AuthFilter implements Filter {
         String url = requestURL.toString().trim();
         //登录请求直接放行
         if (urlPass(url, exclude)) {
-            log.info("放行请求:{}", url);
+//            log.info("放行请求:{}", url);
             chain.doFilter(request, response);
         } else {
             log.warn("拦截请求:{}", url);

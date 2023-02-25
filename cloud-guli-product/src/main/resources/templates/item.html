@@ -1272,13 +1272,13 @@
         for (let i = 1; i < array.length; i++) {
             filter = $(filter).filter(array[i]);
         }
-        location.href = [[${AUTH_DOMAIN}]] + filter[0] + '.html';
+        location.href = '[[${AUTH_DOMAIN}]]' + filter[0] + '.html';
         return false;
     })
     $('#addCartA').click(function () {
         let num = $('#numInput').val();
         let skuId = $(this).attr('skuId');
-        location.href = [[${CART_DOMAIN}]] + "/addToCart?skuId=" + skuId + "&num=" + num;
+        location.href = '[[${CART_DOMAIN}]]' + "/addToCart?skuId=" + skuId + "&num=" + num;
     })
 
     function doSeckill(seckillInfo) {
@@ -1291,7 +1291,7 @@
         if (num > (seckillInfo.seckillLimit * 1)) {
             alert('商品秒杀每人限购 ' + seckillInfo.seckillLimit + '件');
         }
-        location.href = [[${SECKILL_DOMAIN}]] + "/doSeckill?skuId=" + seckillInfo.skuId + '&sessionId='
+        location.href = '[[${SECKILL_DOMAIN}]]' + "/doSeckill?skuId=" + seckillInfo.skuId + '&sessionId='
             + seckillInfo.promotionSessionId + '&code=' + seckillInfo.uuid + '&num=' + num;
         return false;
     }

@@ -116,7 +116,7 @@ public class OrderMqConfig {
     }
 
     @Bean
-    public Binding binding4(@Qualifier(MqConstant.ORDER_SECKILL_QUEUE)Queue queue,@Qualifier(MqConstant.ORDER_EVENT_EXCHANGE) Exchange exchange) {
+    public Binding binding4(@Qualifier(MqConstant.ORDER_SECKILL_QUEUE) Queue queue, @Qualifier(MqConstant.ORDER_EVENT_EXCHANGE) Exchange exchange) {
         return BindingBuilder.bind(queue).to(exchange).with(MqConstant.ORDER_SECKILL_KEY).noargs();
     }
 }
