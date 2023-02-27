@@ -1,4 +1,4 @@
-package com.pika.gstore.order.config;
+package com.pika.gstore.third.config;
 
 import com.alibaba.fastjson.JSON;
 import com.alipay.api.AlipayApiException;
@@ -8,7 +8,7 @@ import com.alipay.api.domain.AlipayTradeCloseModel;
 import com.alipay.api.request.AlipayTradeCloseRequest;
 import com.alipay.api.request.AlipayTradePagePayRequest;
 import com.alipay.api.response.AlipayTradeCloseResponse;
-import com.pika.gstore.order.vo.PayVo;
+import com.pika.gstore.third.vo.PayVo;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
