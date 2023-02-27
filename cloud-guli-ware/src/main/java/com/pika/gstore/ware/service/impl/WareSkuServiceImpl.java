@@ -7,7 +7,7 @@ import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.pika.gstore.common.constant.MqConstant;
-import com.pika.gstore.common.enume.OrderStatusEnum;
+import com.pika.gstore.common.enums.OrderStatusEnum;
 import com.pika.gstore.common.exception.BaseException;
 import com.pika.gstore.common.to.SkuHasStockVo;
 import com.pika.gstore.common.to.StockLockedTo;

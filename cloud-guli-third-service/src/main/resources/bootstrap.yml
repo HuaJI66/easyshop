@@ -1,6 +1,11 @@
 server:
   port: 7000
 spring:
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  mvc:
+    date-format: yyyy-MM-dd HH:mm:ss
   application:
     name: cloud-guli-third-service
   cloud:
@@ -19,3 +24,18 @@ spring:
           - data-id: sentinel.yaml
             group: dev
             refresh: true
+
+          - data-id: alipay.yaml
+            group: dev
+            refresh: true
+  rabbitmq:
+    host: localhost
+    port: 5672
+    virtual-host: /
+    listener:
+      simple:
+        acknowledge-mode: manual # 接收消息手动确认
+    publisher-returns: true #开启息成功入队回调
+    publisher-confirm-type: simple
+    template:
+      mandatory: true

@@ -58,10 +58,10 @@
                 </li>
             </ul>
             <ul class="header_ul_right">
-                <li style="border: 0;">
+                <li style="float: right">
                     <a th:if="${loginUser==null}"
                        th:href="${AUTH_DOMAIN+'/login.html?redirect_url='+base_url}">你好，请登录</a>
-                    <span th:if="${loginUser!=null}" th:text="'你好,'+${loginUser.username}"></span>
+                    <span th:if="${loginUser!=null}" th:text="${loginUser.username}"></span>
                 </li>
                 <li th:if="${loginUser==null}"><a th:href="${AUTH_DOMAIN}+'/reg.html'"
                                                   style="color: red;">免费注册</a> |

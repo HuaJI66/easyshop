@@ -36,6 +36,8 @@ public enum BaseException {
     ORDER_DEL_TOKEN_EXCEPTION(4000502, "令牌校验或删除失败"),
     ORDER_COMPUTE_PRICE_EXCEPTION(4000503, "价格校验失败"),
     ORDER_NOT_EXISTS_EXCEPTION(4000504, "订单号不存在"),
+    ORDER_STATUS_CANCEL_EXCEPTION(4000505, "订单号取消"),
+    ORDER_STATUS_PAID_EXCEPTION(4000506, "订单已支付"),
 
     /**
      * 未携带手机号或验证码

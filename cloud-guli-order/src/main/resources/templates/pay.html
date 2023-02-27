@@ -103,13 +103,14 @@ base_url=${ORDER_DOMAIN+#httpServletRequest.requestURI+(#httpServletRequest.getQ
             </ul>
         </div>
     </div>
-    <div class="Jd_footer">
+    <div class="Jd_footer"  >
         <ul>
             <li>
                 <img src="/static/order/pay/img\weixin.png" alt="">微信支付
             </li>
             <li>
-                <a th:href="${ORDER_DOMAIN+'payOrder?orderSn='+OrderSubmitRepVo.order.orderSn}">
+                <a th:with="payType=${T(com.pika.gstore.common.enums.PayType).ALI_WEB.ordinal()}"
+                   th:href="${ORDER_DOMAIN+'payOrder?orderSn='+OrderSubmitRepVo.order.orderSn+'&payType='+payType}">
                     <img src="/static/order/pay/img\zhifubao.png" style="weight:auto;height:30px;" alt="">支付宝
                 </a>
             </li>

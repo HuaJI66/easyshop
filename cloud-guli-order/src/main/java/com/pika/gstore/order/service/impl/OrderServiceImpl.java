@@ -2,33 +2,36 @@ package com.pika.gstore.order.service.impl;
 
 import cn.hutool.core.lang.TypeReference;
 import cn.hutool.core.util.IdUtil;
-import com.alipay.api.AlipayApiException;
-import com.alipay.api.internal.util.AlipaySignature;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.IdWorker;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.pika.gstore.common.constant.MqConstant;
 import com.pika.gstore.common.constant.OrderConstant;
+import com.pika.gstore.common.enums.OrderStatusEnum;
 import com.pika.gstore.common.exception.BaseException;
 import com.pika.gstore.common.exception.NoStockException;
 import com.pika.gstore.common.to.MemberInfoTo;
 import com.pika.gstore.common.to.OrderTo;
 import com.pika.gstore.common.to.SkuHasStockVo;
 import com.pika.gstore.common.to.es.SeckillOrderTo;
+import com.pika.gstore.common.utils.PageUtils;
+import com.pika.gstore.common.utils.Query;
 import com.pika.gstore.common.utils.R;
-import com.pika.gstore.order.config.AlipayTemplate;
+import com.pika.gstore.order.dao.OrderDao;
+import com.pika.gstore.order.entity.OrderEntity;
 import com.pika.gstore.order.entity.OrderItemEntity;
-import com.pika.gstore.common.enume.OrderStatusEnum;
-import com.pika.gstore.order.entity.PaymentInfoEntity;
-import com.pika.gstore.order.feign.MemberFeignService;
+import com.pika.gstore.order.exception.OrderException;
 import com.pika.gstore.order.feign.CartFeignService;
+import com.pika.gstore.order.feign.MemberFeignService;
 import com.pika.gstore.order.feign.ProductFeignService;
 import com.pika.gstore.order.feign.WareFeignService;
 import com.pika.gstore.order.interceptor.LoginInterceptor;
 import com.pika.gstore.order.service.OrderItemService;
+import com.pika.gstore.order.service.OrderService;
 import com.pika.gstore.order.service.PaymentInfoService;
-import com.pika.gstore.order.service.impl.enume.AlipayStatusEnum;
 import com.pika.gstore.order.to.OrderCreateTo;
 import com.pika.gstore.order.vo.*;
 import lombok.extern.slf4j.Slf4j;
@@ -37,24 +40,6 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.script.DefaultRedisScript;
 import org.springframework.stereotype.Service;
-
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.time.Duration;
-import java.util.*;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.stream.Collectors;
-
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.pika.gstore.common.utils.PageUtils;
-import com.pika.gstore.common.utils.Query;
-
-import com.pika.gstore.order.dao.OrderDao;
-import com.pika.gstore.order.entity.OrderEntity;
-import com.pika.gstore.order.service.OrderService;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
@@ -62,7 +47,17 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.time.Duration;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.stream.Collectors;
 
 
 @Service("orderService")
@@ -86,9 +81,6 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
     private RabbitTemplate rabbitTemplate;
     @Resource
     private PaymentInfoService paymentInfoService;
-    @Resource
-    private AlipayTemplate alipayTemplate;
-
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
         return new PageUtils(page(new Query<OrderEntity>().getPage(params), new QueryWrapper<>()
@@ -205,7 +197,9 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
     @Override
     public boolean closeOrder(OrderTo order) {
         OrderEntity orderDb = getById(order.getId());
-        if (orderDb.getStatus().equals(OrderStatusEnum.CREATE_NEW.getCode())) {
+        if (orderDb == null) {
+            return true;
+        } else if (orderDb.getStatus().equals(OrderStatusEnum.CREATE_NEW.getCode())) {
             order.setStatus(OrderStatusEnum.CANCELED.getCode());
             OrderEntity entity = new OrderEntity();
             entity.setId(order.getId());
@@ -224,7 +218,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
         OrderEntity order = getOrderByOrderSn(orderSn);
         Integer status = order.getStatus();
         if (status.equals(OrderStatusEnum.CANCELED.getCode())) {
-            throw new RuntimeException("订单已取消");
+            throw new OrderException(BaseException.ORDER_STATUS_CANCEL_EXCEPTION.getCode(), BaseException.ORDER_STATUS_CANCEL_EXCEPTION.getMsg());
         } else if (status.equals(OrderStatusEnum.CREATE_NEW.getCode())) {
             OrderItemEntity one = orderItemService.getOne(new LambdaQueryWrapper<OrderItemEntity>()
                     .eq(OrderItemEntity::getOrderSn, orderSn).last("limit 1"));
@@ -232,7 +226,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
             System.out.println("payVo = " + payVo);
             return payVo;
         } else {
-            throw new RuntimeException("订单已支付");
+            throw new OrderException(BaseException.ORDER_STATUS_PAID_EXCEPTION.getCode(), BaseException.ORDER_STATUS_PAID_EXCEPTION.getMsg());
         }
     }
 
@@ -253,58 +247,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
     }
 
     @Override
-    public String handlePaidNotify(HttpServletRequest request, PayAsyncVo response) throws AlipayApiException {
-        boolean signVerified = isSignVerified(request);
-        log.warn("验证签名结果:" + signVerified);
-        if (signVerified) {
-            // TODO 验签成功后，按照支付结果异步通知中的描述，对支付结果中的业务内容进行二次校验，校验成功后在response中返回success并继续商户自身业务处理，校验失败返回failure
-            String tradeStatus = response.getTrade_status();
-            if (AlipayStatusEnum.TRADE_FINISHED.equals(tradeStatus) || AlipayStatusEnum.TRADE_SUCCESS.equals(tradeStatus)) {
-                String outTradeNo = response.getOut_trade_no();
-                //1.保存交易流失水
-                PaymentInfoEntity paymentInfo = new PaymentInfoEntity();
-                paymentInfo.setAlipayTradeNo(response.getTrade_no());
-                paymentInfo.setOrderSn(outTradeNo);
-                paymentInfo.setPaymentStatus(tradeStatus);
-                paymentInfo.setCallbackTime(response.getNotify_time());
-                paymentInfoService.save(paymentInfo);
-                //2.更新订单状态
-                updateOrderStatus(outTradeNo, OrderStatusEnum.PAYED.getCode());
-                log.info(outTradeNo + "订单完成");
-                return "success";
-            }
-        } else {
-            // 验签失败则记录异常日志，并在response中返回failure.
-            log.warn(response.getOut_trade_no() + "订单验证已支付失败");
-        }
-        return "failure";
-    }
-
-
-    /**
-     * Desc: 支付宝签名验证
-     */
-    private boolean isSignVerified(HttpServletRequest request) throws AlipayApiException {
-        //获取支付宝POST过来反馈信息
-        Map<String, String> params = new HashMap<>();
-        Map requestParams = request.getParameterMap();
-        for (Iterator iter = requestParams.keySet().iterator(); iter.hasNext(); ) {
-            String name = (String) iter.next();
-            String[] values = (String[]) requestParams.get(name);
-            String valueStr = "";
-            for (int i = 0; i < values.length; i++) {
-                valueStr = (i == values.length - 1) ? valueStr + values[i]
-                        : valueStr + values[i] + ",";
-            }
-            //乱码解决，这段代码在出现乱码时使用。如果mysign和sign不相等也可以使用这段代码转化
-//            valueStr = new String(valueStr.getBytes(StandardCharsets.ISO_8859_1), "gbk");
-            params.put(name, valueStr);
-        }
-        //调用SDK验证签名
-        return AlipaySignature.rsaCheckV1(params, alipayTemplate.getAlipayPublicKey(), alipayTemplate.getCharset(), alipayTemplate.getSignType());
-    }
-
-    private void updateOrderStatus(String orderSn, Integer status) {
+    public void updateOrderStatus(String orderSn, Integer status) {
         update(new LambdaUpdateWrapper<OrderEntity>().set(OrderEntity::getStatus, status).eq(OrderEntity::getOrderSn, orderSn));
     }
 

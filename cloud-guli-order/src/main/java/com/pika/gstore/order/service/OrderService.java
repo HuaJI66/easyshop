@@ -1,6 +1,5 @@
 package com.pika.gstore.order.service;
 
-import com.alipay.api.AlipayApiException;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.pika.gstore.common.to.OrderTo;
 import com.pika.gstore.common.to.es.SeckillOrderTo;
@@ -8,7 +7,6 @@ import com.pika.gstore.common.utils.PageUtils;
 import com.pika.gstore.order.entity.OrderEntity;
 import com.pika.gstore.order.vo.*;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
@@ -35,8 +33,7 @@ public interface OrderService extends IService<OrderEntity> {
 
     PageUtils currUserOrderItemList(Map<String, Object> params);
 
-
-    String handlePaidNotify(HttpServletRequest request, PayAsyncVo response) throws AlipayApiException;
+    void updateOrderStatus(String orderSn, Integer status);
 
     Boolean createSeckillOrder(SeckillOrderTo order);
 }

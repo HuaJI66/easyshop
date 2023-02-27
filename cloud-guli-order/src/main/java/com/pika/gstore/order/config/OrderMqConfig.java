@@ -3,19 +3,14 @@ package com.pika.gstore.order.config;
 import com.pika.gstore.common.constant.MqConstant;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.*;
-import org.springframework.amqp.rabbit.annotation.EnableRabbit;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.CorrelationData;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
-import org.springframework.amqp.rabbit.support.DefaultMessagePropertiesConverter;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import javax.annotation.PostConstruct;
-import javax.annotation.Resource;
 
 /**
  * Desc:
@@ -118,5 +113,18 @@ public class OrderMqConfig {
     @Bean
     public Binding binding4(@Qualifier(MqConstant.ORDER_SECKILL_QUEUE) Queue queue, @Qualifier(MqConstant.ORDER_EVENT_EXCHANGE) Exchange exchange) {
         return BindingBuilder.bind(queue).to(exchange).with(MqConstant.ORDER_SECKILL_KEY).noargs();
+    }
+
+    /**
+     * 订单状态更新队列
+     */
+    @Bean(MqConstant.ORDER_STATUS_QUEUE)
+    public Queue queue4() {
+        return QueueBuilder.durable(MqConstant.ORDER_STATUS_QUEUE).build();
+    }
+
+    @Bean
+    public Binding binding5(@Qualifier(MqConstant.ORDER_STATUS_QUEUE) Queue queue, @Qualifier(MqConstant.ORDER_EVENT_EXCHANGE) Exchange exchange) {
+        return BindingBuilder.bind(queue).to(exchange).with(MqConstant.ORDER_UPDATE_KEY).noargs();
     }
 }

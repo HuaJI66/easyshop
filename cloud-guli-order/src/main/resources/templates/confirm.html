@@ -75,7 +75,7 @@ base_url=${ORDER_DOMAIN+#httpServletRequest.requestURI+(#httpServletRequest.getQ
 
         </ul>
         <ul class="header-right">
-            <li style="border: 0;">
+            <li style="float: right">
                 <a th:if="${loginUser==null}"
                    th:href="${AUTH_DOMAIN+'/login.html?redirect_url='+base_url}">你好，请登录</a>
                 <span th:if="${loginUser!=null}" th:text="'你好,'+${loginUser.username}"></span>
@@ -352,7 +352,7 @@ base_url=${ORDER_DOMAIN+#httpServletRequest.requestURI+(#httpServletRequest.getQ
     <!--收货人信息-->
     <div class="top-2">
         <span>收货人信息</span>
-        <span>新增收货地址</span>
+        <span><a href="#">新增收货地址</a></span>
     </div>
 
     <!--地址-->

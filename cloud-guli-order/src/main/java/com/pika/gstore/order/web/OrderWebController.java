@@ -1,7 +1,6 @@
 package com.pika.gstore.order.web;
 
 import com.pika.gstore.common.constant.DomainConstant;
-import com.pika.gstore.order.config.AlipayTemplate;
 import com.pika.gstore.order.service.OrderService;
 import com.pika.gstore.order.vo.OrderSubmitRepVo;
 import com.pika.gstore.order.vo.OrderSubmitVo;

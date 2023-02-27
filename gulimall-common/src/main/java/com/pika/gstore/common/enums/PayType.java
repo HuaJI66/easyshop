@@ -1,4 +1,4 @@
-package com.pika.gstore.third.enums;
+package com.pika.gstore.common.enums;
 
 /**
  * @author pi'ka'chu

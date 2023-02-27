@@ -1,7 +1,7 @@
-package com.pika.gstore.third.service;
+package com.pika.gstore.third.service.pay;
 
-import com.pika.gstore.third.enums.PayType;
-import com.pika.gstore.third.service.impl.WebAliPayServiceImpl;
+import com.pika.gstore.common.enums.PayType;
+import com.pika.gstore.third.service.pay.impl.WebAliPayServiceImpl;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -9,7 +9,7 @@ import javax.annotation.Resource;
 import java.util.HashMap;
 
 /**
- * Desc:
+ * Desc:工厂模式,根据payType提供不同支付方式
  *
  * @author pikachu
  * @since 2023/2/27 12:23

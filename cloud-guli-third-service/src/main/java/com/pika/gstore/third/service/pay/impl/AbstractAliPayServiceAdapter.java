@@ -1,6 +1,6 @@
-package com.pika.gstore.third.service.impl;
+package com.pika.gstore.third.service.pay.impl;
 
-import com.pika.gstore.third.service.PayService;
+import com.pika.gstore.third.service.pay.PayService;
 
 /**
  * Desc:接口适配器模式 (缺省适配器模式)
@@ -14,27 +14,27 @@ import com.pika.gstore.third.service.PayService;
  */
 public abstract class AbstractAliPayServiceAdapter implements PayService {
     @Override
-    public Object beforePay(Object obj) {
+    public Object beforePay(Object... objects) {
         throw new RuntimeException("Unsupported method");
     }
 
     @Override
-    public Object doPay(Object obj) {
+    public Object doPay(Object... objects) {
         throw new RuntimeException("Unsupported method");
     }
 
     @Override
-    public Object afterPaidNotify(Object obj) {
+    public Object afterPaidNotify(Object... objects) {
         throw new RuntimeException("Unsupported method");
     }
 
     @Override
-    public Object checkPay(Object obj) {
+    public Object checkPay(Object... objects) {
         throw new RuntimeException("Unsupported method");
     }
 
     @Override
-    public Object refund(Object obj) {
+    public Object refund(Object... objects) {
         throw new RuntimeException("Unsupported method");
     }
 }
