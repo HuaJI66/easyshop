@@ -26,7 +26,7 @@ base_url=${CART_DOMAIN+#httpServletRequest.requestURI
             <ul class="header-right">
                 <li><a th:href="AUTH_DOMAIN+'login.html?redirect_url='+${base_url}"
                        th:text="'你好，'+${loginUser!=null?loginUser.username:'请登录'}"></a></li>
-                <li th:if="${loginUser==null}"><a th:href="${AUTH_DOMAIN}'reg.html'">免费注册</a></li>
+                <li th:if="${loginUser==null}"><a th:href="${AUTH_DOMAIN}+'reg.html'">免费注册</a></li>
                 <li class="spacer"></li>
                 <li th:if="${loginUser!=null}"><a th:href="${MEMBER_DOMAIN}+'memberOrder.html'">我的订单</a></li>
                 <li class="spacer"></li>

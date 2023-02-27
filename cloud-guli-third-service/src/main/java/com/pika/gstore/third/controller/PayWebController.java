@@ -1,8 +1,6 @@
 package com.pika.gstore.third.controller;
 
-import com.alipay.api.AlipayApiException;
 import com.pika.gstore.common.utils.R;
-import com.pika.gstore.third.config.AlipayTemplate;
 import com.pika.gstore.third.service.PayFactory;
 import com.pika.gstore.third.service.PayService;
 import com.pika.gstore.third.vo.PayVo;
@@ -11,8 +9,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import javax.annotation.Resource;
 
 @Controller
 public class PayWebController {
