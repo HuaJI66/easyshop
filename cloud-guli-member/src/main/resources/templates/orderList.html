@@ -58,7 +58,7 @@ base_url=${MEMBER_DOMAIN+#httpServletRequest.requestURI+(#httpServletRequest.get
                 <button>搜索</button>
             </div>
             <ul class="shop">
-                <li><i class="shop_che"></i>我的购物车 >
+                <li><i class="shop_che"></i><a th:href="${CART_DOMAIN+'cart.html'}">我的购物车 ></a>
                     <ol>
                         <li>
                             <img src="/static/member/list/img/shop.png" alt="">

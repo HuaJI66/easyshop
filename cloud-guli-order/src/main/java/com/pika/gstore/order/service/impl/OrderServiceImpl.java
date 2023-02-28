@@ -81,6 +81,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
     private RabbitTemplate rabbitTemplate;
     @Resource
     private PaymentInfoService paymentInfoService;
+
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
         return new PageUtils(page(new Query<OrderEntity>().getPage(params), new QueryWrapper<>()
@@ -248,7 +249,10 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
 
     @Override
     public void updateOrderStatus(String orderSn, Integer status) {
-        update(new LambdaUpdateWrapper<OrderEntity>().set(OrderEntity::getStatus, status).eq(OrderEntity::getOrderSn, orderSn));
+        update(new LambdaUpdateWrapper<OrderEntity>()
+                .set(OrderEntity::getStatus, status)
+                .eq(OrderEntity::getOrderSn, orderSn)
+        );
     }
 
     /**
