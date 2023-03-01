@@ -11,6 +11,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.pika.gstore.common.constant.MqConstant;
 import com.pika.gstore.common.constant.OrderConstant;
 import com.pika.gstore.common.enums.OrderStatusEnum;
+import com.pika.gstore.common.enums.PayType;
 import com.pika.gstore.common.exception.BaseException;
 import com.pika.gstore.common.exception.NoStockException;
 import com.pika.gstore.common.to.MemberInfoTo;
@@ -215,7 +216,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
     }
 
     @Override
-    public PayVo getPayVo(String orderSn) {
+    public Object getPayVo(String orderSn, Integer payType) {
         OrderEntity order = getOrderByOrderSn(orderSn);
         Integer status = order.getStatus();
         if (status.equals(OrderStatusEnum.CANCELED.getCode())) {
@@ -223,7 +224,16 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
         } else if (status.equals(OrderStatusEnum.CREATE_NEW.getCode())) {
             OrderItemEntity one = orderItemService.getOne(new LambdaQueryWrapper<OrderItemEntity>()
                     .eq(OrderItemEntity::getOrderSn, orderSn).last("limit 1"));
-            PayVo payVo = new PayVo("", orderSn, one.getSkuName(), order.getPayAmount().setScale(2, RoundingMode.UP).toString(), "");
+            Object payVo = one;
+            if (payType.equals(PayType.ALI_WEB.ordinal())) {
+                payVo = new PayVo("", orderSn, one.getSkuName(), order.getPayAmount().setScale(2, RoundingMode.UP).toString(), "");
+            } else if (payType.equals(PayType.UNIONPAY_WEB.ordinal())) {
+                payVo = new UnionPayVo(orderSn, null,
+                        String.valueOf(order.getPayAmount().multiply(BigDecimal.valueOf(100)).longValueExact()),
+                        one.getSkuName(), OrderConstant.ORDER_NUMBER_KEY_EXPIRE
+                );
+            }
+
             System.out.println("payVo = " + payVo);
             return payVo;
         } else {

@@ -13,5 +13,5 @@ import org.springframework.web.bind.annotation.RequestParam;
 @FeignClient("cloud-guli-third-service")
 public interface ThirdFeignService {
     @PostMapping(value = "/payOrder")
-    R payOrder(@RequestBody PayVo payVo, @RequestParam("payType") Integer payType);
+    R payOrder(@RequestBody Object payVo, @RequestParam("payType") Integer payType);
 }

@@ -84,6 +84,12 @@
             <artifactId>alipay-sdk-java</artifactId>
             <version>4.35.37.ALL</version>
         </dependency>
+        <!--   自定义整合银联支付    -->
+        <dependency>
+            <groupId>com.pika.unionpay</groupId>
+            <artifactId>unionpay-spring-boot-starter</artifactId>
+            <version>0.0.1</version>
+        </dependency>
     </dependencies>
     <build>
         <plugins>

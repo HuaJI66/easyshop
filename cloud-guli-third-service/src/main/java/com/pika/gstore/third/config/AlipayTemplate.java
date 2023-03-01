@@ -14,6 +14,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 /**
  * @author pi'ka'chu
@@ -64,11 +65,12 @@ public class AlipayTemplate {
 
     /**
      * 支付
+     *
      * @param vo
-     * @see PayVo
      * @return 会收到支付宝的响应，响应的是一个页面，只要浏览器显示这个页面，就会自动来到支付宝的收银台页面
+     * @see PayVo
      */
-    public String pay(PayVo vo) throws AlipayApiException {
+    public String pay(LinkedHashMap<String, String> vo) throws AlipayApiException {
         System.out.println("app_id = " + appId);
         //1、根据支付宝的配置生成一个支付客户端
         AlipayClient alipayClient = new DefaultAlipayClient(gatewayUrl, appId, merchantPrivateKey, "json", charset, alipayPublicKey, signType);
@@ -78,19 +80,19 @@ public class AlipayTemplate {
         alipayRequest.setReturnUrl(returnUrl);
         alipayRequest.setNotifyUrl(notifyUrl);
 
+        HashMap<String, String> map = new HashMap<>(vo);
         //商户订单号，商户网站订单系统中唯一订单号，必填
-        String outTradeNo = vo.getOut_trade_no();
+//        String outTradeNo = vo.getOut_trade_no();
         //付款金额，必填
-        String totalAmount = vo.getTotal_amount();
+//        String totalAmount = vo.getTotal_amount();
         //订单名称，必填
-        String subject = vo.getSubject()!=null?vo.getSubject():"PIKACHU 商城订单";
+//        String subject = vo.getSubject() != null ? vo.getSubject() : "PIKACHU 商城订单";
         //商品描述，可空
-        String body = vo.getBody();
-        HashMap<String, String> map = new HashMap<>();
-        map.put("out_trade_no", outTradeNo);
-        map.put("total_amount", totalAmount);
-        map.put("subject", subject);
-        map.put("body", body);
+//        String body = vo.getBody();
+//        map.put("out_trade_no", outTradeNo);
+//        map.put("total_amount", totalAmount);
+//        map.put("subject", subject);
+//        map.put("body", body);
         map.put("product_code", "FAST_INSTANT_TRADE_PAY");
         map.put("timeout_express", timeoutExpress);
         alipayRequest.setBizContent(JSON.toJSONString(map));
@@ -100,7 +102,7 @@ public class AlipayTemplate {
     /**
      * 统一收单交易关闭接口
      */
-    public String close(String outTradeNo,String tradeNo) throws AlipayApiException {
+    public String close(String outTradeNo, String tradeNo) throws AlipayApiException {
         //商户订单号和支付宝交易号不能同时为空。 trade_no、  out_trade_no如果同时存在优先取trade_no
         // SDK 公共请求类，包含公共请求参数，以及封装了签名与验签，开发者无需关注签名与验签
         AlipayClient client = new DefaultAlipayClient(gatewayUrl, appId, merchantPrivateKey, "json", charset, alipayPublicKey, signType);

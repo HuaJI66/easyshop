@@ -15,6 +15,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
@@ -24,20 +25,20 @@ import java.util.Map;
  * @since 2023/2/27 9:09
  */
 @Service
-public class WebAliPayServiceImpl extends AbstractAliPayServiceAdapter {
+public class WebAliPayImpl extends AbstractAliPayAdapter {
     @Resource
     private AlipayTemplate alipayTemplate;
     @Resource
     private RabbitTemplate rabbitTemplate;
 
     @Override
-    public Object afterPaidNotify(Object... objects) {
+    public Object afterPaidBackNotify(Object... objects) {
         boolean result;
         try {
             HttpServletRequest request = (HttpServletRequest) objects[0];
             PayAsyncVo response = (PayAsyncVo) objects[1];
             String tradeStatus = response.getTrade_status();
-             result = isSignVerified(request) &&
+            result = isSignVerified(request) &&
                     (AlipayStatusEnum.TRADE_FINISHED.equals(tradeStatus) ||
                             AlipayStatusEnum.TRADE_SUCCESS.equals(tradeStatus));
             if (result) {
@@ -59,7 +60,7 @@ public class WebAliPayServiceImpl extends AbstractAliPayServiceAdapter {
     @Override
     public String doPay(Object... objects) {
         try {
-            return alipayTemplate.pay((PayVo) objects[0]);
+            return alipayTemplate.pay((LinkedHashMap<String, String>) objects[0]);
         } catch (AlipayApiException e) {
             throw new RuntimeException(e);
         }

@@ -1,5 +1,7 @@
 package com.pika.gstore.third.service.pay;
 
+import com.pika.gstore.third.service.pay.impl.*;
+
 /**
  * @author pi'ka'chu
  */
@@ -20,9 +22,14 @@ public interface PayService {
      * @param objects {@link Object}数组 <br>
      * @return {@link Object}数组   订单支付页面<br>
      * </div>
-     *
-     * <div>实现类:{@link com.pika.gstore.third.service.pay.impl.WebAliPayServiceImpl}<br>
-     * 参数: {@link com.pika.gstore.third.vo.PayVo}<br>
+     * <br>
+     * <div>实现类:{@link WebAliPayImpl}<br>
+     * 参数: {@link java.util.LinkedHashMap}<br>
+     * 返回: {@link String} 支付form表单,可直接返回进行跳转
+     * </div>
+     * <br>
+     *  <div>实现类:{@link java.util.LinkedHashMap}<br>
+     * 参数: {@link com.pika.vo.UnionPayVo}<br>
      * 返回: {@link String} 支付form表单,可直接返回进行跳转
      * </div>
      */
@@ -30,20 +37,41 @@ public interface PayService {
 
     /**
      * <div>
-     *  Desc: 支付成功后回调
+     *  Desc: 支付成功后后台回调
+     *
+     * @param objects {@link Object}数组 <br>
+     * @return {@link Object}数组   <br>
+     * </div>
+     * <br>
+     * <div>实现类:{@link WebAliPayImpl}<br>
+     * 参数: <br>
+     * -{@link javax.servlet.http.HttpServletRequest}<br>
+     * -{@link com.pika.gstore.third.vo.PayAsyncVo}<br>
+     * 返回: {@link String} 校验成功后在response中返回"success"并发送订单状态更新消，校验失败返回"failure"
+     * </div>
+     * <br>
+     * <div>实现类:{@link WebUnionPayImpl}<br>
+     * 参数: {@link javax.servlet.http.HttpServletRequest}<br>
+     * 返回: {@link String} 校验成功后在response中返回"ok"并发送订单状态更新消息，返回给银联服务器http 200  状态码,校验失败返回"error"
+     * </div>
+     */
+    Object afterPaidBackNotify(Object... objects);
+
+    /**
+     * <div>
+     *  Desc: 支付成功后前台回调
      *
      * @param objects {@link Object}数组 <br>
      * @return {@link Object}数组   <br>
      * </div>
      *
-     * <div>实现类:{@link com.pika.gstore.third.service.pay.impl.WebAliPayServiceImpl}<br>
+     * <div>实现类:{@link WebUnionPayImpl}<br>
      * 参数: <br>
      * -{@link javax.servlet.http.HttpServletRequest}<br>
-     * -{@link com.pika.gstore.third.vo.PayAsyncVo}<br>
-     * 返回: {@link String} 校验成功后在response中返回success并继续商户自身业务处理，校验失败返回failure
+     * 返回: {@link Boolean} 校验是否成功,成功则发送订单状态更新消息
      * </div>
      */
-    Object afterPaidNotify(Object... objects);
+    Object afterPaidFrontNotify(Object... objects);
 
     /**
      * Desc:检查支付状态

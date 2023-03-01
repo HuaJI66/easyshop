@@ -10,7 +10,7 @@ import lombok.Data;
 
 /**
  * 支付信息表
- * 
+ *
  * @author pikachu
  * @email pikachu@pikachu.com
  * @date 2022-11-21 22:34:09

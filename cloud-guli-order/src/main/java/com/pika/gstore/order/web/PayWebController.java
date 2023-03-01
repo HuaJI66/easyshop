@@ -38,7 +38,7 @@ public class PayWebController {
                            HttpServletResponse response) throws IOException {
         log.warn("支付方式:{}", payType);
         try {
-            PayVo payVo = orderService.getPayVo(orderSn);
+            Object payVo = orderService.getPayVo(orderSn,payType);
             R r = thirdFeignService.payOrder(payVo, payType);
             if (r.getCode() == 0) {
                 return (String) r.getData();

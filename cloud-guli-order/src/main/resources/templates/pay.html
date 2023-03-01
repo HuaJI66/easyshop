@@ -103,15 +103,21 @@ base_url=${ORDER_DOMAIN+#httpServletRequest.requestURI+(#httpServletRequest.getQ
             </ul>
         </div>
     </div>
-    <div class="Jd_footer"  >
+    <div class="Jd_footer">
         <ul>
             <li>
-                <img src="/static/order/pay/img\weixin.png" alt="">微信支付
+                <img src="/static/order/pay/img/weixin.png" alt="">微信支付(暂不支持)
             </li>
             <li>
                 <a th:with="payType=${T(com.pika.gstore.common.enums.PayType).ALI_WEB.ordinal()}"
                    th:href="${ORDER_DOMAIN+'payOrder?orderSn='+OrderSubmitRepVo.order.orderSn+'&payType='+payType}">
-                    <img src="/static/order/pay/img\zhifubao.png" style="weight:auto;height:30px;" alt="">支付宝
+                    <img src="/static/order/pay/img/zhifubao.png" style="weight:auto;height:30px;" alt="">支付宝
+                </a>
+            </li>
+            <li>
+                <a th:with="payType=${T(com.pika.gstore.common.enums.PayType).UNIONPAY_WEB.ordinal()}"
+                   th:href="${ORDER_DOMAIN+'payOrder?orderSn='+OrderSubmitRepVo.order.orderSn+'&payType='+payType}">
+                    <img src="/static/order/pay/img/unionpay.png" style="weight:auto;height:30px;" alt="">银联支付
                 </a>
             </li>
         </ul>
@@ -120,7 +126,7 @@ base_url=${ORDER_DOMAIN+#httpServletRequest.requestURI+(#httpServletRequest.getQ
         <p>
             <span>Copyright @2004-2017 谷粒学院gulimall.com 版权所有</span>
             <span>
-            <img src="/static/order/pay/img\foots.png" alt="">
+            <img src="/static/order/pay/img/foots.png" alt="">
           </span>
         </p>
     </div>

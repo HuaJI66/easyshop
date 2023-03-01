@@ -29,7 +29,7 @@ public interface OrderService extends IService<OrderEntity> {
 
     boolean closeOrder(OrderTo order);
 
-    PayVo getPayVo(String orderSn);
+    Object getPayVo(String orderSn, Integer payType);
 
     PageUtils currUserOrderItemList(Map<String, Object> params);
 

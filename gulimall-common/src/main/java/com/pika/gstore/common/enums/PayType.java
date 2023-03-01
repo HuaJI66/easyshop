@@ -20,5 +20,13 @@ public enum PayType {
     /**
      * 微信app支付
      */
-    WECHAT_APP,;
+    WECHAT_APP,
+    /**
+     * 银联网页支付
+     */
+    UNIONPAY_WEB,
+    /**
+     * 云闪付app支付
+     */
+    UNIONPAY_APP,
 }
