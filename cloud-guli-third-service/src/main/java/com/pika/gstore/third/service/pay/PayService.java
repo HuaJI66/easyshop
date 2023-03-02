@@ -3,6 +3,7 @@ package com.pika.gstore.third.service.pay;
 import com.pika.gstore.third.service.pay.impl.*;
 
 /**
+ * 聚合支付接口
  * @author pi'ka'chu
  */
 public interface PayService {
