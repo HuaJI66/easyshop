@@ -2,7 +2,7 @@ package com.pika.gstore.third.listener;
 
 import com.pika.gstore.common.constant.DomainConstant;
 import com.pika.gstore.common.enums.PayType;
-import com.pika.gstore.third.service.pay.PayFactory;
+import com.pika.gstore.third.service.pay.SimplePayFactory;
 import com.pika.gstore.third.service.pay.PayService;
 import com.pika.gstore.third.vo.PayAsyncVo;
 import lombok.extern.slf4j.Slf4j;
@@ -30,7 +30,7 @@ public class PayNotifyListener {
     @ResponseBody
     public String paidNotify(HttpServletRequest request, PayAsyncVo response) {
         log.info("收到支付宝支付成功通知:{}", response.getOut_trade_no());
-        PayService payService = PayFactory.getPayService(PayType.ALI_WEB.ordinal());
+        PayService payService = SimplePayFactory.getPayService(PayType.ALI_WEB.ordinal());
         return (String) payService.afterPaidBackNotify(request, response);
     }
 
@@ -40,7 +40,7 @@ public class PayNotifyListener {
     @RequestMapping(value = {"/paid/notify/backRcvResponse/unionpay"})
     @ResponseBody
     public String backRcvResponse(HttpServletRequest request) {
-        return (String) PayFactory.getPayService(PayType.UNIONPAY_WEB.ordinal()).afterPaidBackNotify(request);
+        return (String) SimplePayFactory.getPayService(PayType.UNIONPAY_WEB.ordinal()).afterPaidBackNotify(request);
     }
 
     /**
