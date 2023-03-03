@@ -16,31 +16,31 @@ import com.pika.gstore.third.service.pay.PayService;
 public abstract class AbstractAliPayAdapter implements PayService {
     @Override
     public Object beforePay(Object... objects) {
-        throw new RuntimeException("Unsupported method");
+        throw new UnsupportedOperationException("Unsupported method");
     }
 
     @Override
     public Object doPay(Object... objects) {
-        throw new RuntimeException("Unsupported method");
+        throw new UnsupportedOperationException("Unsupported method");
     }
 
     @Override
     public Object afterPaidBackNotify(Object... objects) {
-        throw new RuntimeException("Unsupported method");
+        throw new UnsupportedOperationException("Unsupported method");
     }
 
     @Override
     public Object checkPay(Object... objects) {
-        throw new RuntimeException("Unsupported method");
+        throw new UnsupportedOperationException("Unsupported method");
     }
 
     @Override
     public Object refund(Object... objects) {
-        throw new RuntimeException("Unsupported method");
+        throw new UnsupportedOperationException("Unsupported method");
     }
 
     @Override
     public Object afterPaidFrontNotify(Object... objects) {
-        throw new RuntimeException("Unsupported method");
+        throw new UnsupportedOperationException("Unsupported method");
     }
 }
