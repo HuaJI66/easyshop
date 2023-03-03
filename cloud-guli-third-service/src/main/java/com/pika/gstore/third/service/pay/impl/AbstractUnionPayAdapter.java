@@ -8,7 +8,7 @@ import com.pika.gstore.third.service.pay.PayService;
  * @author pikachu
  * @since 2023/3/1 12:43
  */
-public class AbstractUnionPayAdapter implements PayService {
+public abstract class AbstractUnionPayAdapter implements PayService {
     @Override
     public Object beforePay(Object... objects) {
         throw new RuntimeException("Unsupported method");
