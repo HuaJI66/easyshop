@@ -16,7 +16,7 @@ import java.util.LinkedHashMap;
 public class PayWebController {
     @PostMapping(value = "/payOrder")
     @ResponseBody
-    public R payOrder(@RequestBody HashMap<String, String> payVo,
+    public R payOrder(@RequestBody LinkedHashMap<String, String> payVo,
                       @RequestParam("payType") Integer payType) {
         try {
             PayService payService = SimplePayFactory.getPayService(payType);

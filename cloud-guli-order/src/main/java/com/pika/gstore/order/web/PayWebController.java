@@ -6,7 +6,6 @@ import com.pika.gstore.common.utils.R;
 import com.pika.gstore.order.exception.OrderException;
 import com.pika.gstore.order.feign.ThirdFeignService;
 import com.pika.gstore.order.service.OrderService;
-import com.pika.gstore.order.vo.PayVo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;

@@ -1,7 +1,6 @@
 package com.pika.gstore.order.feign;
 
 import com.pika.gstore.common.utils.R;
-import com.pika.gstore.order.vo.PayVo;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

@@ -25,12 +25,12 @@ public interface PayService {
      * </div>
      * <br>
      * <li>实现类:{@link WebAliPayImpl}<br>
-     * 参数: {@link java.util.HashMap}<br>
+     * 参数: {@link java.util.LinkedHashMap}<br>
      * 返回: {@link String} 支付form表单,可直接返回进行跳转
      * </li>
      * <br>
      *  <li>实现类:{@link WebUnionPayImpl}<br>
-     * 参数: {@link java.util.HashMap}<br>
+     * 参数: {@link java.util.LinkedHashMap}<br>
      * 返回: {@link String} 支付form表单,可直接返回进行跳转
      * </li>
      */
