@@ -24,15 +24,15 @@ public interface PayService {
      * @return {@link Object}数组   订单支付页面<br>
      * </div>
      * <br>
-     * <div>实现类:{@link WebAliPayImpl}<br>
-     * 参数: {@link java.util.LinkedHashMap}<br>
+     * <li>实现类:{@link WebAliPayImpl}<br>
+     * 参数: {@link java.util.HashMap}<br>
      * 返回: {@link String} 支付form表单,可直接返回进行跳转
-     * </div>
+     * </li>
      * <br>
-     *  <div>实现类:{@link java.util.LinkedHashMap}<br>
-     * 参数: {@link com.pika.vo.UnionPayVo}<br>
+     *  <li>实现类:{@link WebUnionPayImpl}<br>
+     * 参数: {@link java.util.HashMap}<br>
      * 返回: {@link String} 支付form表单,可直接返回进行跳转
-     * </div>
+     * </li>
      */
     Object doPay(Object... objects);
 
@@ -44,17 +44,17 @@ public interface PayService {
      * @return {@link Object}数组   <br>
      * </div>
      * <br>
-     * <div>实现类:{@link WebAliPayImpl}<br>
+     * <li>实现类:{@link WebAliPayImpl}<br>
      * 参数: <br>
      * -{@link javax.servlet.http.HttpServletRequest}<br>
      * -{@link com.pika.gstore.third.vo.PayAsyncVo}<br>
      * 返回: {@link String} 校验成功后在response中返回"success"并发送订单状态更新消，校验失败返回"failure"
-     * </div>
+     * </li>
      * <br>
-     * <div>实现类:{@link WebUnionPayImpl}<br>
+     * <li>实现类:{@link WebUnionPayImpl}<br>
      * 参数: {@link javax.servlet.http.HttpServletRequest}<br>
      * 返回: {@link String} 校验成功后在response中返回"ok"并发送订单状态更新消息，返回给银联服务器http 200  状态码,校验失败返回"error"
-     * </div>
+     * </li>
      */
     Object afterPaidBackNotify(Object... objects);
 
@@ -66,11 +66,11 @@ public interface PayService {
      * @return {@link Object}数组   <br>
      * </div>
      *
-     * <div>实现类:{@link WebUnionPayImpl}<br>
+     * <li>实现类:{@link WebUnionPayImpl}<br>
      * 参数: <br>
      * -{@link javax.servlet.http.HttpServletRequest}<br>
      * 返回: {@link Boolean} 校验是否成功,成功则发送订单状态更新消息
-     * </div>
+     * </li>
      */
     Object afterPaidFrontNotify(Object... objects);
 

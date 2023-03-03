@@ -9,13 +9,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 @Controller
 public class PayWebController {
     @PostMapping(value = "/payOrder")
     @ResponseBody
-    public R payOrder(@RequestBody LinkedHashMap<String, String> payVo,
+    public R payOrder(@RequestBody HashMap<String, String> payVo,
                       @RequestParam("payType") Integer payType) {
         try {
             PayService payService = SimplePayFactory.getPayService(payType);
