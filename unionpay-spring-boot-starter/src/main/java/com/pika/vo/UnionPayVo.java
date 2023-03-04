@@ -14,7 +14,7 @@ import java.time.temporal.ChronoUnit;
  */
 @Data
 public class UnionPayVo {
-    public static DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
+    private static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
     /**
      * 商户订单号，8-40位数字字母，不能含“-”或“_”，可以自行定制规则
      */
@@ -74,23 +74,20 @@ public class UnionPayVo {
      */
     public String getTxnTime() {
         if (this.txnTime == null) {
-            txnTime = dateFormat.format(LocalDateTime.now());
+            txnTime = DATE_FORMAT.format(LocalDateTime.now());
         }
         return this.txnTime;
     }
 
     /**
      * Desc: 设置交易商品名称
-     *
-     * @param productName
-     * @return {@link String}
      */
     public String getRiskRateInfo() {
         return "{commodityName=" + riskRateInfo + "}";
     }
 
     public String getPayTimeout() {
-        return dateFormat.format(LocalDateTime.now().plus(payTimeout, ChronoUnit.MINUTES));
+        return DATE_FORMAT.format(LocalDateTime.now().plus(payTimeout, ChronoUnit.MINUTES));
     }
 
 
