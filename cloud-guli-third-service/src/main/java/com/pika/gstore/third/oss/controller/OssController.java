@@ -1,4 +1,4 @@
-package com.pika.gstore.third.controller;
+package com.pika.gstore.third.oss.controller;
 
 import com.aliyun.oss.OSSClient;
 import com.aliyun.oss.common.utils.BinaryUtil;

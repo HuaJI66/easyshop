@@ -1,4 +1,4 @@
-package com.pika.gstore.third.config;
+package com.pika.gstore.third.sms.config;
 
 import com.aliyun.auth.credentials.Credential;
 import com.aliyun.auth.credentials.provider.StaticCredentialProvider;
@@ -7,7 +7,6 @@ import com.aliyun.sdk.service.dysmsapi20170525.AsyncClient;
 import com.aliyun.teaopenapi.models.Config;
 import darabonba.core.client.ClientOverrideConfiguration;
 import lombok.Data;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

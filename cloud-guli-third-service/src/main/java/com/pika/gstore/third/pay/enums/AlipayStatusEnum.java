@@ -1,4 +1,4 @@
-package com.pika.gstore.third.enums;
+package com.pika.gstore.third.pay.enums;
 
 import lombok.Getter;
 

@@ -1,13 +1,12 @@
-package com.pika.gstore.third.service.pay;
+package com.pika.gstore.third.pay.service;
 
 import com.pika.gstore.common.enums.PayType;
-import com.pika.gstore.third.service.pay.impl.WebAliPayImpl;
-import com.pika.gstore.third.service.pay.impl.WebUnionPayImpl;
+import com.pika.gstore.third.pay.service.impl.WebAliPayImpl;
+import com.pika.gstore.third.pay.service.impl.WebUnionPayImpl;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
-import java.util.HashMap;
 
 /**
  * Desc:简单工厂模式,根据payType提供不同支付方式

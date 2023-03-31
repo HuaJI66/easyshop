@@ -1,4 +1,4 @@
-package com.pika.gstore.order.vo;
+package com.pika.gstore.common.to.pay;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

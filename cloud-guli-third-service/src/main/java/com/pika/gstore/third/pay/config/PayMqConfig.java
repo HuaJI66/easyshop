@@ -1,4 +1,4 @@
-package com.pika.gstore.third.config;
+package com.pika.gstore.third.pay.config;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.Message;

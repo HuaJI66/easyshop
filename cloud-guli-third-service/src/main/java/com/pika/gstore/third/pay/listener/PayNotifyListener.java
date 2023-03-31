@@ -1,10 +1,10 @@
-package com.pika.gstore.third.listener;
+package com.pika.gstore.third.pay.listener;
 
 import com.pika.gstore.common.constant.DomainConstant;
 import com.pika.gstore.common.enums.PayType;
-import com.pika.gstore.third.service.pay.SimplePayFactory;
-import com.pika.gstore.third.service.pay.PayService;
-import com.pika.gstore.third.vo.PayAsyncVo;
+import com.pika.gstore.common.to.pay.PayAsyncVo;
+import com.pika.gstore.third.pay.service.PayService;
+import com.pika.gstore.third.pay.service.SimplePayFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

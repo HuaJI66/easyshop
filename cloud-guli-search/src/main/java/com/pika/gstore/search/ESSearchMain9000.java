@@ -9,7 +9,6 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 @EnableDiscoveryClient
 @EnableFeignClients
 public class ESSearchMain9000 {
-
     public static void main(String[] args) {
         SpringApplication.run(ESSearchMain9000.class, args);
     }

@@ -1,4 +1,4 @@
-package com.pika.gstore.third.controller;
+package com.pika.gstore.third.sms.controller;
 
 import com.aliyun.dysmsapi20170525.Client;
 import com.aliyun.sdk.service.dysmsapi20170525.AsyncClient;
@@ -7,7 +7,6 @@ import com.aliyun.sdk.service.dysmsapi20170525.models.SendSmsResponse;
 import com.aliyun.sdk.service.dysmsapi20170525.models.SendSmsResponseBody;
 import com.pika.gstore.common.exception.BaseException;
 import com.pika.gstore.common.utils.R;
-import com.pika.gstore.common.constant.ThirdServiceConstant;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;

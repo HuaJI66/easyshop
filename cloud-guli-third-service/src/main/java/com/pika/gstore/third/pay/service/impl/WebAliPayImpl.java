@@ -1,13 +1,12 @@
-package com.pika.gstore.third.service.pay.impl;
+package com.pika.gstore.third.pay.service.impl;
 
 import com.alipay.api.AlipayApiException;
 import com.alipay.api.internal.util.AlipaySignature;
 import com.pika.gstore.common.constant.MqConstant;
-import com.pika.gstore.third.config.AlipayTemplate;
-import com.pika.gstore.third.enums.AlipayStatusEnum;
 import com.pika.gstore.common.to.PaymentInfoTo;
-import com.pika.gstore.third.vo.PayAsyncVo;
-import com.pika.gstore.third.vo.PayVo;
+import com.pika.gstore.common.to.pay.PayAsyncVo;
+import com.pika.gstore.third.pay.config.AlipayTemplate;
+import com.pika.gstore.third.pay.enums.AlipayStatusEnum;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Service;
 
@@ -25,7 +24,7 @@ import java.util.Map;
  * @since 2023/2/27 9:09
  */
 @Service
-public class WebAliPayImpl extends AbstractAliPayAdapter {
+public class WebAliPayImpl extends AbstractPayAdapter {
     @Resource
     private AlipayTemplate alipayTemplate;
     @Resource

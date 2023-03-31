@@ -1,9 +1,12 @@
-package com.pika.gstore.third.service.pay;
+package com.pika.gstore.third.pay.service;
 
-import com.pika.gstore.third.service.pay.impl.*;
+import com.pika.gstore.common.to.pay.PayAsyncVo;
+import com.pika.gstore.third.pay.service.impl.WebAliPayImpl;
+import com.pika.gstore.third.pay.service.impl.WebUnionPayImpl;
 
 /**
  * 聚合支付接口
+ *
  * @author pi'ka'chu
  */
 public interface PayService {
@@ -14,6 +17,7 @@ public interface PayService {
      * @return {@link Object}数组
      */
     Object beforePay(Object... objects);
+
 
     /**
      * <div>
@@ -29,7 +33,7 @@ public interface PayService {
      * 返回: {@link String} 支付form表单,可直接返回进行跳转
      * </li>
      * <br>
-     *  <li>实现类:{@link WebUnionPayImpl}<br>
+     * <li>实现类:{@link WebUnionPayImpl}<br>
      * 参数: {@link java.util.LinkedHashMap}<br>
      * 返回: {@link String} 支付form表单,可直接返回进行跳转
      * </li>
@@ -47,7 +51,7 @@ public interface PayService {
      * <li>实现类:{@link WebAliPayImpl}<br>
      * 参数: <br>
      * -{@link javax.servlet.http.HttpServletRequest}<br>
-     * -{@link com.pika.gstore.third.vo.PayAsyncVo}<br>
+     * -{@link PayAsyncVo}<br>
      * 返回: {@link String} 校验成功后在response中返回"success"并发送订单状态更新消，校验失败返回"failure"
      * </li>
      * <br>

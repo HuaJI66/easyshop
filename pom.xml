@@ -28,6 +28,7 @@
         <module>cloud-guli-cart</module>
         <module>cloud-sso-server</module>
         <module>cloud-guli-seckill</module>
+        <module>unionpay-spring-boot-starter</module>
     </modules>
 
     <!--统一管理jar包版本-->

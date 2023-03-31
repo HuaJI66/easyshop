@@ -1,10 +1,9 @@
-package com.pika.gstore.third.service.pay.impl;
+package com.pika.gstore.third.pay.service.impl;
 
 import cn.hutool.json.JSONUtil;
 import com.pika.gstore.common.constant.MqConstant;
 import com.pika.gstore.common.to.PaymentInfoTo;
 import com.pika.utils.UnionPayTemplate;
-import com.pika.vo.UnionPayVo;
 import com.unionpay.acp.sdk.SDKConstants;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -24,7 +23,7 @@ import java.util.Map;
  */
 @Service
 @Slf4j
-public class WebUnionPayImpl extends AbstractUnionPayAdapter {
+public class WebUnionPayImpl extends AbstractPayAdapter {
     @Resource
     private UnionPayTemplate unionPayTemplate;
     @Resource

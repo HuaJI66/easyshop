@@ -1,4 +1,4 @@
-package com.pika.gstore.third.config;
+package com.pika.gstore.third.pay.config;
 
 import com.alibaba.fastjson.JSON;
 import com.alipay.api.AlipayApiException;
@@ -8,7 +8,6 @@ import com.alipay.api.domain.AlipayTradeCloseModel;
 import com.alipay.api.request.AlipayTradeCloseRequest;
 import com.alipay.api.request.AlipayTradePagePayRequest;
 import com.alipay.api.response.AlipayTradeCloseResponse;
-import com.pika.gstore.third.vo.PayVo;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
@@ -66,9 +65,7 @@ public class AlipayTemplate {
     /**
      * 支付
      *
-     * @param vo
      * @return 会收到支付宝的响应，响应的是一个页面，只要浏览器显示这个页面，就会自动来到支付宝的收银台页面
-     * @see PayVo
      */
     public String pay(LinkedHashMap<String, String> vo) throws AlipayApiException {
         System.out.println("app_id = " + appId);

@@ -18,6 +18,8 @@ import com.pika.gstore.common.to.MemberInfoTo;
 import com.pika.gstore.common.to.OrderTo;
 import com.pika.gstore.common.to.SkuHasStockVo;
 import com.pika.gstore.common.to.es.SeckillOrderTo;
+import com.pika.gstore.common.to.pay.PayVo;
+import com.pika.gstore.common.to.pay.UnionPayVo;
 import com.pika.gstore.common.utils.PageUtils;
 import com.pika.gstore.common.utils.Query;
 import com.pika.gstore.common.utils.R;
@@ -217,6 +219,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
 
     @Override
     public Object getPayVo(String orderSn, Integer payType) {
+        // TODO: 2023/3/29 返回通用payVo对象
         OrderEntity order = getOrderByOrderSn(orderSn);
         Integer status = order.getStatus();
         if (status.equals(OrderStatusEnum.CANCELED.getCode())) {
