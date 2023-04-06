@@ -14,7 +14,7 @@ gulimall 项目是一套电商项目，包括前台商城系统以及后台管�
 Docker 容器化部署。前台商城系统包括：用户登录、注册、商品搜索、商品详情、购物车、下订单流程、秒杀活动等模块。后台管理系统包括：系统管理、商品系统、优惠营销、库存系统、订单系统、用户系统、内容管理等七大模块。
 
 ### 项目演示
-
+换了一下 logo (京东，谷粒) ──>京粒
 #### **前台部分功能演示效果**
 
 ![UUvLAU.png](imgs/193421_2e595b5f_4914148.png)
@@ -95,17 +95,17 @@ gulimall
 
 #### 开发工具
 
-| 工具            | 说明           | 官网                                                                                                                                         |
-|---------------|--------------|--------------------------------------------------------------------------------------------------------------------------------------------|
-| IDEA          | 开发Java程序     | [https://www.jetbrains.com/idea/download](https://gitee.com/link?target=https%3A%2F%2Fwww.jetbrains.com%2Fidea%2Fdownload)                 |
-| RedisDesktop  | redis客户端连接工具 | [https://redisdesktop.com/download](https://gitee.com/link?target=https%3A%2F%2Fredisdesktop.com%2Fdownload)                               |
-| SwitchHosts   | 本地host管理     | [https://oldj.github.io/SwitchHosts](https://gitee.com/link?target=https%3A%2F%2Foldj.github.io%2FSwitchHosts)                             |
-| X-shell       | Linux远程连接工具  | [http://www.netsarang.com/download/software.html](https://gitee.com/link?target=http%3A%2F%2Fwww.netsarang.com%2Fdownload%2Fsoftware.html) |
-| Navicat       | 数据库连接工具      | [http://www.formysql.com/xiazai.html](https://gitee.com/link?target=http%3A%2F%2Fwww.formysql.com%2Fxiazai.html)                           |
-| PowerDesigner | 数据库设计工具      | [http://powerdesigner.de](https://gitee.com/link?target=http%3A%2F%2Fpowerdesigner.de)                                                     |
-| Postman       | API接口调试工具    | [https://www.postman.com](https://gitee.com/link?target=https%3A%2F%2Fwww.postman.com)                                                     |
-| Jmeter        | 性能压测工具       | [https://jmeter.apache.org](https://gitee.com/link?target=https%3A%2F%2Fjmeter.apache.org)                                                 |
-| Typora        | Markdown编辑器  | [https://typora.io](https://gitee.com/link?target=https%3A%2F%2Ftypora.io)                                                                 |
+| 工具            | 说明           | 官网                                                                                                                         |
+|---------------|--------------|----------------------------------------------------------------------------------------------------------------------------|
+| IDEA          | 开发Java程序     | [https://www.jetbrains.com/idea/download](https://gitee.com/link?target=https%3A%2F%2Fwww.jetbrains.com%2Fidea%2Fdownload) |
+| RedisDesktop  | redis客户端连接工具 | [https://redisdesktop.com/download](https://gitee.com/link?target=https%3A%2F%2Fredisdesktop.com%2Fdownload)               |
+| SwitchHosts   | 本地host管理     | [https://oldj.github.io/SwitchHosts](https://gitee.com/link?target=https%3A%2F%2Foldj.github.io%2FSwitchHosts)             |
+| FinalShell    | Linux远程连接工具  | [http://www.hostbuf.com/t/988.html](https://gitee.com/link?target=http://www.hostbuf.com/t/988.html)                       |
+| Navicat       | 数据库连接工具      | [http://www.formysql.com/xiazai.html](https://gitee.com/link?target=http%3A%2F%2Fwww.formysql.com%2Fxiazai.html)           |
+| PowerDesigner | 数据库设计工具      | [http://powerdesigner.de](https://gitee.com/link?target=http%3A%2F%2Fpowerdesigner.de)                                     |
+| Postman       | API接口调试工具    | [https://www.postman.com](https://gitee.com/link?target=https%3A%2F%2Fwww.postman.com)                                     |
+| Jmeter        | 性能压测工具       | [https://jmeter.apache.org](https://gitee.com/link?target=https%3A%2F%2Fjmeter.apache.org)                                 |
+| Typora        | Markdown编辑器  | [https://typora.io](https://gitee.com/link?target=https%3A%2F%2Ftypora.io)                                                 |
 
 #### 开发环境
 
@@ -194,3 +194,4 @@ server {
 
 - 克隆前端项目 `renren-fast-vue` 以 `npm run dev` 方式去运行
 - 克隆整个后端项目 `gulimall` ，并导入 IDEA 中完成编译
+- 运行docker-compose up (可选)
