@@ -109,16 +109,17 @@ gulimall
 
 #### 开发环境
 
-| 工具            | 版本号     | 下载                                                                                                                                                                                                   |
-|---------------|---------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| WSL           | Linux环境 | [https://learn.microsoft.com/zh-cn/windows/wsl/install](https://gitee.com/link?target=https://learn.microsoft.com/zh-cn/windows/wsl/install)                                                         |
-| JDK           | 1.8     | [https://www.oracle.com/java/technologies/javase/javase-jdk8-downloads.html](https://gitee.com/link?target=https%3A%2F%2Fwww.oracle.com%2Fjava%2Ftechnologies%2Fjavase%2Fjavase-jdk8-downloads.html) |
-| Mysql         | 5.7     | [https://www.mysql.com](https://gitee.com/link?target=https%3A%2F%2Fwww.mysql.com)                                                                                                                   |
-| Redis         | Redis   | [https://redis.io/download](https://gitee.com/link?target=https%3A%2F%2Fredis.io%2Fdownload)                                                                                                         |
-| Elasticsearch | 7.6.2   | [https://www.elastic.co/downloads](https://gitee.com/link?target=https%3A%2F%2Fwww.elastic.co%2Fdownloads)                                                                                           |
-| Kibana        | 7.6.2   | [https://www.elastic.co/cn/kibana](https://gitee.com/link?target=https%3A%2F%2Fwww.elastic.co%2Fcn%2Fkibana)                                                                                         |
-| RabbitMQ      | 3.8.5   | [http://www.rabbitmq.com/download.html](https://gitee.com/link?target=http%3A%2F%2Fwww.rabbitmq.com%2Fdownload.html)                                                                                 |
-| Nginx         | 1.1.6   | [http://nginx.org/en/download.html](https://gitee.com/link?target=http%3A%2F%2Fnginx.org%2Fen%2Fdownload.html)                                                                                       |
+| 工具             | 版本号         | 下载                                                                                                                                                                                                   |
+|----------------|-------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| WSL            | Linux环境     | [https://learn.microsoft.com/zh-cn/windows/wsl/install](https://gitee.com/link?target=https://learn.microsoft.com/zh-cn/windows/wsl/install)                                                         |
+| Docker Desktop | Docker桌面客户端 | [https://docs.docker.com/desktop/install/windows-install](https://gitee.com/link?target=https://docs.docker.com/desktop/install/windows-install)                                                     |
+| JDK            | 1.8         | [https://www.oracle.com/java/technologies/javase/javase-jdk8-downloads.html](https://gitee.com/link?target=https%3A%2F%2Fwww.oracle.com%2Fjava%2Ftechnologies%2Fjavase%2Fjavase-jdk8-downloads.html) |
+| Mysql          | 5.7         | [https://www.mysql.com](https://gitee.com/link?target=https%3A%2F%2Fwww.mysql.com)                                                                                                                   |
+| Redis          | Redis       | [https://redis.io/download](https://gitee.com/link?target=https%3A%2F%2Fredis.io%2Fdownload)                                                                                                         |
+| Elasticsearch  | 7.6.2       | [https://www.elastic.co/downloads](https://gitee.com/link?target=https%3A%2F%2Fwww.elastic.co%2Fdownloads)                                                                                           |
+| Kibana         | 7.6.2       | [https://www.elastic.co/cn/kibana](https://gitee.com/link?target=https%3A%2F%2Fwww.elastic.co%2Fcn%2Fkibana)                                                                                         |
+| RabbitMQ       | 3.8.5       | [http://www.rabbitmq.com/download.html](https://gitee.com/link?target=http%3A%2F%2Fwww.rabbitmq.com%2Fdownload.html)                                                                                 |
+| Nginx          | 1.1.6       | [http://nginx.org/en/download.html](https://gitee.com/link?target=http%3A%2F%2Fnginx.org%2Fen%2Fdownload.html)                                                                                       |
 
 注意：以上的除了jdk都是采用docker方式进行安装，详细安装步骤可参考百度!!!
 
@@ -129,14 +130,17 @@ gulimall
 - 修改本机的host文件，映射域名端口(WSL环境与主机会共用端口)
 
 ```
-localhost	gulimall.com
-localhost	search.gulimall.com
-localhost  item.gulimall.com
-localhost  auth.gulimall.com
-localhost  cart.gulimall.com
-localhost  order.gulimall.com
-localhost  member.gulimall.com
-localhost  seckill.gulimall.com
+#gulimall
+localhost gulimall.com
+localhost search.gulimall.com
+localhost member.gulimall.com
+localhost ware.gulimall.com
+localhost item.gulimall.com
+localhost auth.gulimall.com
+localhost cart.gulimall.com
+localhost order.gulimall.com
+localhost seckill.gulimall.com
+localhost third.gulimall.com
 以上端口换成自己Linux的ip地址
 ```
 
