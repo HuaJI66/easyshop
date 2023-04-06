@@ -6,7 +6,8 @@ gulimall 项目致力于打造一个完整的电商系统，采用现阶段流�
 
 ### 项目API接口文档
 
-- 文档地址：[https://easydoc.xyz/s/78237135/ZUqEdvA4/hKJTcbfd]()
+-
+文档地址：[https://easydoc.xyz/s/78237135/ZUqEdvA4/hKJTcbfd](https://gitee.com/link?target=https://easydoc.xyz/s/78237135/ZUqEdvA4/hKJTcbfd)
 
 ### 项目介绍
 
