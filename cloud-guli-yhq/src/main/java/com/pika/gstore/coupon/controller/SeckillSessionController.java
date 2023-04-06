@@ -1,16 +1,15 @@
 package com.pika.gstore.coupon.controller;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-
+import com.pika.gstore.common.utils.PageUtils;
+import com.pika.gstore.common.utils.R;
+import com.pika.gstore.coupon.entity.SmsSeckillSessionEntity;
+import com.pika.gstore.coupon.service.SmsSeckillSessionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import com.pika.gstore.coupon.entity.SmsSeckillSessionEntity;
-import com.pika.gstore.coupon.service.SmsSeckillSessionService;
-import com.pika.gstore.common.utils.PageUtils;
-import com.pika.gstore.common.utils.R;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -26,9 +25,12 @@ public class SeckillSessionController {
     @Autowired
     private SmsSeckillSessionService smsSeckillSessionService;
 
+    /**
+     * 过去未来3天秒杀商品
+     */
     @GetMapping("get3lds")
     public R get3LDS() {
-        List<SmsSeckillSessionEntity> list= smsSeckillSessionService.get3LDS();
+        List<SmsSeckillSessionEntity> list = smsSeckillSessionService.get3LDS();
         return R.ok().setData(list);
     }
 

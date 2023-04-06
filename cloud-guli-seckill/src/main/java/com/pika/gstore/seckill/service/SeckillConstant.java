@@ -15,9 +15,9 @@ public class SeckillConstant {
      */
     public static final String SECKILL_DATEFORMAT = "yyyy-MM-dd";
     /**
-     * key: 当前日期 + 开始时间-结束时间
-     * value: 参与秒杀的场次id
-     * ex: 2023-02-02:1675267680000-1677513600000 -> 1
+     * <p>key: 当前日期 + 开始时间-结束时间</p>
+     * <p>value: 参与秒杀的场次id</p>
+     * <p>ex: 2023-02-02:1675267680000-1677513600000 -> 1</p>
      */
     public static final String SESSION_CACHE_PREFIX = "seckill:sessions:";
     /**

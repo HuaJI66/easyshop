@@ -44,7 +44,9 @@ public class SmsSeckillSessionServiceImpl extends ServiceImpl<SmsSeckillSessionD
         LocalDateTime endTime = LocalDateTime.of(now.plusDays(2), LocalTime.MAX);
         String start = startTime.format(DateTimeFormatter.ofPattern("yyyy:MM:dd HH:mm:ss"));
         String end = endTime.format(DateTimeFormatter.ofPattern("yyyy:MM:dd HH:mm:ss"));
-        List<SmsSeckillSessionEntity> list = list(new LambdaQueryWrapper<SmsSeckillSessionEntity>().between(SmsSeckillSessionEntity::getStartTime, start, end));
+        List<SmsSeckillSessionEntity> list = list(new LambdaQueryWrapper<SmsSeckillSessionEntity>()
+                .between(SmsSeckillSessionEntity::getStartTime, start, end)
+        );
         if (list != null && list.size() > 0) {
             list.forEach(item -> {
                 List<SmsSeckillSkuRelationEntity> entities = seckillSkuRelationService.list(new LambdaQueryWrapper<SmsSeckillSkuRelationEntity>().eq(SmsSeckillSkuRelationEntity::getPromotionSessionId, item.getId()));

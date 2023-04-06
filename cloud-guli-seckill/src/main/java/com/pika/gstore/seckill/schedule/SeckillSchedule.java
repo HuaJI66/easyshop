@@ -7,7 +7,7 @@ import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 import java.util.concurrent.TimeUnit;
@@ -18,9 +18,9 @@ import java.util.concurrent.TimeUnit;
  * @author pikachu
  * @since 2023/2/1 23:01
  */
-@Service
+@Component
 @Slf4j
-public class SeckillScheduleService {
+public class SeckillSchedule {
     @Resource
     private SeckillService seckillService;
     @Resource
@@ -30,7 +30,7 @@ public class SeckillScheduleService {
      * 每天晚上3点,,上架最近3天要秒杀的商品
      */
     @Async
-    @Scheduled(cron = "0 3 * * * ?")
+    @Scheduled(cron = "0 * * * * ?")
     public void uploadL3DProuct() {
         RLock lock = redissonClient.getLock(SeckillConstant.SECKILL_UPLOAD_LOCK);
         lock.lock(10, TimeUnit.MINUTES);

@@ -651,7 +651,7 @@
                         <a th:if="${seckillInfo.startTime<=now&&seckillInfo.getEndTime()>=now}"
                            th:onclick="doSeckill([[${seckillInfo}]]);" href="#">立即抢购</a>
                     </div>
-                    <div class="box-btns-two" th:else="${item.skuRedisTo!=null&&item.skuRedisTo.size()>0}">
+                    <div class="box-btns-two" th:if="${item.skuRedisTo==null||item.skuRedisTo.size()==0}">
                         <a id="addCartA" th:attr="skuId=${skuId}" href="#">加入购物车</a>
                     </div>
                     <div class="box-btns-three">
