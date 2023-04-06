@@ -17,7 +17,13 @@ import org.springframework.stereotype.Service;
 public class SeckillFeignServiceImpl implements SeckillFeignService {
     @Override
     public R getSkuSeckillInfo(String skuId) {
-      log.warn("调用熔断方法: getSkuSeckillInfo");
+        log.warn("调用熔断方法: getSkuSeckillInfo");
+        return R.error(BaseException.TOO_MANY_REQUESTS.getCode(), BaseException.TOO_MANY_REQUESTS.getMsg());
+    }
+
+    @Override
+    public R getCurrSeckillSkus() {
+        log.warn("调用熔断方法: getSkuSeckillInfo");
         return R.error(BaseException.TOO_MANY_REQUESTS.getCode(), BaseException.TOO_MANY_REQUESTS.getMsg());
     }
 }

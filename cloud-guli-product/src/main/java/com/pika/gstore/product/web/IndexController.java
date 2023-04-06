@@ -1,8 +1,12 @@
 package com.pika.gstore.product.web;
 
+import cn.hutool.core.lang.TypeReference;
 import cn.hutool.core.util.IdUtil;
+import com.pika.gstore.common.utils.R;
 import com.pika.gstore.product.entity.CategoryEntity;
+import com.pika.gstore.product.feign.SeckillFeignService;
 import com.pika.gstore.product.service.CategoryService;
+import com.pika.gstore.product.to.SeckillSkuRedisTo;
 import com.pika.gstore.product.vo.Category2Vo;
 import lombok.extern.slf4j.Slf4j;
 import org.redisson.api.*;
@@ -35,10 +39,22 @@ public class IndexController {
     private RedissonClient redissonClient;
     @Resource
     private StringRedisTemplate stringRedisTemplate;
+    @Resource
+    private SeckillFeignService seckillFeignService;
 
     @GetMapping(value = {"index.html", "/"})
     public String index(Model model) {
         //查询所有一级分类
+        try {
+            R r = seckillFeignService.getCurrSeckillSkus();
+            if (r.getCode() == 0) {
+                List<SeckillSkuRedisTo> skuRedisTos = r.getData(new TypeReference<List<SeckillSkuRedisTo>>() {
+                });
+                model.addAttribute("seckill_skus", skuRedisTos);
+            }
+        } catch (Exception e) {
+            log.info("获取当前秒杀商品信息失败:" + e.getMessage());
+        }
         List<CategoryEntity> categoryEntities = categoryService.getFirstLevel();
         model.addAttribute("first_category", categoryEntities);
         return "index";

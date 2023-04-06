@@ -229,8 +229,8 @@ base_url=${MAIN_DOMAIN+#httpServletRequest.requestURI+(#httpServletRequest.getQu
                         </div>
                     </div>
                     <div class="swiper-pagination"></div>
-                    <div class="swiper-button-next swiper-button-white"></div>
                     <div class="swiper-button-prev swiper-button-white"></div>
+                    <div class="swiper-button-next swiper-button-white"></div>
                 </div>
                 <div class="header_main_center_b">
                     <a href="#"><img src="/static/index/img/5a13bf0bNe1606e58.jpg"/></a>
@@ -525,8 +525,20 @@ base_url=${MAIN_DOMAIN+#httpServletRequest.requestURI+(#httpServletRequest.getQu
             <div class="swiper-wrapper">
                 <div class="swiper-slide">
                     <!-- 动态拼装秒杀商品信息 -->
-                    <ul id="seckillSkuContent"></ul>
+                    <ul id="seckillSkuContent" th:if="${seckill_skus!=null}">
+                        <li th:each="item:${seckill_skus}">
+                            <a th:href="${ITEM_DOMAIN+item.skuId+'.html'}">
+                                <img style="width: 130px; height: 130px" th:src="${item.skuInfoTo.skuDefaultImg}"/>
+                                <p th:text="${item.skuInfoTo.skuTitle}"></p>
+                                <span th:text="${item.seckillPrice}">999</span>
+                                <s th:text="${item.skuInfoTo.price}">4999</s>
+                            </a>
+                        </li>
+
+                    </ul>
                 </div>
+
+
             </div>
             <div class="swiper-button-prev second_list">
                 <p></p>
@@ -556,23 +568,6 @@ base_url=${MAIN_DOMAIN+#httpServletRequest.requestURI+(#httpServletRequest.getQu
     function search() {
         var keyword = $("#searchText").val();
         window.location.href = "[[${SEARCH_DOMAIN}]]" + "list.html?keyword=" + keyword;
-    }
-
-    $.get("[[${SECKILL_DOMAIN}]]" + "getCurrSkus", function (res) {
-        if (res.data.length > 0) {
-            res.data.forEach(function (item) {
-                $("<li onclick='toDetail(" + item.skuId + ")'></li>")
-                    .append($("<img style='width: 130px; height: 130px' src='" + item.skuInfoTo.skuDefaultImg + "' />"))
-                    .append($("<p>" + item.skuInfoTo.skuTitle + "</p>"))
-                    .append($("<span>" + item.seckillPrice + "</span>"))
-                    .append($("<s>" + item.skuInfoTo.price + "</s>"))
-                    .appendTo("#seckillSkuContent");
-            })
-        }
-    })
-
-    function toDetail(skuId) {
-        location.href = "[[${ITEM_DOMAIN}]]" + skuId + ".html";
     }
 </script>
 <script type="text/javascript" src="/static/index/js/text.js"></script>

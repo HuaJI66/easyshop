@@ -1,5 +1,6 @@
 package com.pika.gstore.product.to;
 
+import com.pika.gstore.common.to.SkuInfoTo;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -40,6 +41,7 @@ public class SeckillSkuRedisTo {
      * 排序
      */
     private Integer seckillSort;
+    private SkuInfoTo skuInfoTo;
     private Long startTime;
     private Long endTime;
     /**

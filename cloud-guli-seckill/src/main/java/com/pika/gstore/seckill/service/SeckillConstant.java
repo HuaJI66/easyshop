@@ -21,20 +21,20 @@ public class SeckillConstant {
      */
     public static final String SESSION_CACHE_PREFIX = "seckill:sessions:";
     /**
-     * key: {sessionId}
-     * value: hash{skuId: {skuInfo}}
+     * <p>key: {sessionId}</p>
+     * <p>value: hash{skuId: {skuInfo}}</p>
      */
     public static final String SESSION_SKUS_CACHE_PREFIX = "seckill:skus:";
     /**
-     * 信息量
-     * key: 商品随机码uuid
-     * value: 秒杀数量
+     * <p>信息量</p>
+     * <p>key: 商品随机码uuid</p>
+     * <p>value: 秒杀数量</p>
      */
     public static final String SECKILL_SEMAPHORE_PREFIX = "seckill:stock:";
     /**
-     * 信号量
-     * key: sessionId:userId:skuId
-     * value: limit(sku每人限购数量)
+     * <p>信号量</p>
+     * <p>key: sessionId:userId:skuId</p>
+     * <p>value: limit(sku每人限购数量)</p>
      */
     public static final String SECKILL_SUCCESS = "seckill:";
     /**
