@@ -1,0 +1,266 @@
+[
+  {
+    "_index": "new_product",
+    "_type": "_doc",
+    "_id": "7",
+    "_score": 1.0,
+    "_source": {
+      "skuId": 7,
+      "spuId": 2,
+      "brandId": 3,
+      "catalogId": 225,
+      "skuImg": "https://gstore-piks.oss-cn-hangzhou.aliyuncs.com/2022/12/04/5c2bc7a3-4826-4a4e-8345-36ea4969d9f1_8bf441260bffa42f.jpg",
+      "catalogName": "手机",
+      "attrs": [
+        {
+          "attrName": "CPU品牌",
+          "attrValue": "海思",
+          "attrId": 16
+        },
+        {
+          "attrName": "CPU型号",
+          "attrValue": "麒麟990",
+          "attrId": 17
+        }
+      ],
+      "skuPrice": 4999,
+      "saleCount": 0,
+      "hotScore": 0,
+      "brandName": "华为",
+      "skuTitle": "华为HUAWEI Mate 50 曜金黑 8+128",
+      "brandImg": "https://gstore-piks.oss-cn-hangzhou.aliyuncs.com/2023/04/05/a70d70e0-7939-46b1-8151-538de2fd2f7a_huawei.png",
+      "hasStock": true
+    }
+  },
+  {
+    "_index": "new_product",
+    "_type": "_doc",
+    "_id": "8",
+    "_score": 1.0,
+    "_source": {
+      "skuId": 8,
+      "spuId": 2,
+      "brandId": 3,
+      "catalogId": 225,
+      "skuImg": "https://gstore-piks.oss-cn-hangzhou.aliyuncs.com/2022/12/04/5c2bc7a3-4826-4a4e-8345-36ea4969d9f1_8bf441260bffa42f.jpg",
+      "catalogName": "手机",
+      "attrs": [
+        {
+          "attrName": "CPU品牌",
+          "attrValue": "海思",
+          "attrId": 16
+        },
+        {
+          "attrName": "CPU型号",
+          "attrValue": "麒麟990",
+          "attrId": 17
+        }
+      ],
+      "skuPrice": 6999,
+      "saleCount": 0,
+      "hotScore": 0,
+      "brandName": "华为",
+      "skuTitle": "华为HUAWEI Mate 50 曜金黑 12+512",
+      "brandImg": "https://gstore-piks.oss-cn-hangzhou.aliyuncs.com/2023/04/05/a70d70e0-7939-46b1-8151-538de2fd2f7a_huawei.png",
+      "hasStock": true
+    }
+  },
+  {
+    "_index": "new_product",
+    "_type": "_doc",
+    "_id": "9",
+    "_score": 1.0,
+    "_source": {
+      "skuId": 9,
+      "spuId": 2,
+      "brandId": 3,
+      "catalogId": 225,
+      "skuImg": "https://gstore-piks.oss-cn-hangzhou.aliyuncs.com/2022/12/04/d51d37ab-ece2-480d-8e35-167549ed3d50_919c850652e98031.jpg",
+      "catalogName": "手机",
+      "attrs": [
+        {
+          "attrName": "CPU品牌",
+          "attrValue": "海思",
+          "attrId": 16
+        },
+        {
+          "attrName": "CPU型号",
+          "attrValue": "麒麟990",
+          "attrId": 17
+        }
+      ],
+      "skuPrice": 4999,
+      "saleCount": 0,
+      "hotScore": 0,
+      "brandName": "华为",
+      "skuTitle": "华为HUAWEI Mate 50 昆仑霞光 8+128",
+      "brandImg": "https://gstore-piks.oss-cn-hangzhou.aliyuncs.com/2023/04/05/a70d70e0-7939-46b1-8151-538de2fd2f7a_huawei.png",
+      "hasStock": true
+    }
+  },
+  {
+    "_index": "new_product",
+    "_type": "_doc",
+    "_id": "10",
+    "_score": 1.0,
+    "_source": {
+      "skuId": 10,
+      "spuId": 2,
+      "brandId": 3,
+      "catalogId": 225,
+      "skuImg": "https://gstore-piks.oss-cn-hangzhou.aliyuncs.com/2022/12/04/d51d37ab-ece2-480d-8e35-167549ed3d50_919c850652e98031.jpg",
+      "catalogName": "手机",
+      "attrs": [
+        {
+          "attrName": "CPU品牌",
+          "attrValue": "海思",
+          "attrId": 16
+        },
+        {
+          "attrName": "CPU型号",
+          "attrValue": "麒麟990",
+          "attrId": 17
+        }
+      ],
+      "skuPrice": 6999,
+      "saleCount": 0,
+      "hotScore": 0,
+      "brandName": "华为",
+      "skuTitle": "华为HUAWEI Mate 50 昆仑霞光 12+512",
+      "brandImg": "https://gstore-piks.oss-cn-hangzhou.aliyuncs.com/2023/04/05/a70d70e0-7939-46b1-8151-538de2fd2f7a_huawei.png",
+      "hasStock": true
+    }
+  },
+  {
+    "_index": "new_product",
+    "_type": "_doc",
+    "_id": "11",
+    "_score": 1.0,
+    "_source": {
+      "skuId": 11,
+      "spuId": 2,
+      "brandId": 3,
+      "catalogId": 225,
+      "skuImg": "https://gstore-piks.oss-cn-hangzhou.aliyuncs.com/2022/12/04/9b166a83-bb0b-4592-8e83-75263050bae7_Snipaste_2022-12-04_20-13-43.png",
+      "catalogName": "手机",
+      "attrs": [
+        {
+          "attrName": "CPU品牌",
+          "attrValue": "海思",
+          "attrId": 16
+        },
+        {
+          "attrName": "CPU型号",
+          "attrValue": "麒麟990",
+          "attrId": 17
+        }
+      ],
+      "skuPrice": 4999,
+      "saleCount": 0,
+      "hotScore": 0,
+      "brandName": "华为",
+      "skuTitle": "华为HUAWEI Mate 50 流光紫  8+128",
+      "brandImg": "https://gstore-piks.oss-cn-hangzhou.aliyuncs.com/2023/04/05/a70d70e0-7939-46b1-8151-538de2fd2f7a_huawei.png",
+      "hasStock": true
+    }
+  },
+  {
+    "_index": "new_product",
+    "_type": "_doc",
+    "_id": "12",
+    "_score": 1.0,
+    "_source": {
+      "skuId": 12,
+      "spuId": 2,
+      "brandId": 3,
+      "catalogId": 225,
+      "skuImg": "https://gstore-piks.oss-cn-hangzhou.aliyuncs.com/2022/12/04/9b166a83-bb0b-4592-8e83-75263050bae7_Snipaste_2022-12-04_20-13-43.png",
+      "catalogName": "手机",
+      "attrs": [
+        {
+          "attrName": "CPU品牌",
+          "attrValue": "海思",
+          "attrId": 16
+        },
+        {
+          "attrName": "CPU型号",
+          "attrValue": "麒麟990",
+          "attrId": 17
+        }
+      ],
+      "skuPrice": 6999,
+      "saleCount": 0,
+      "hotScore": 0,
+      "brandName": "华为",
+      "skuTitle": "华为HUAWEI Mate 50 流光紫  12+512",
+      "brandImg": "https://gstore-piks.oss-cn-hangzhou.aliyuncs.com/2023/04/05/a70d70e0-7939-46b1-8151-538de2fd2f7a_huawei.png",
+      "hasStock": true
+    }
+  },
+  {
+    "_index": "new_product",
+    "_type": "_doc",
+    "_id": "13",
+    "_score": 1.0,
+    "_source": {
+      "skuId": 13,
+      "spuId": 2,
+      "brandId": 3,
+      "catalogId": 225,
+      "skuImg": "https://gstore-piks.oss-cn-hangzhou.aliyuncs.com/2022/12/04/7e542699-7f28-4166-8779-f87869823526_23d9fbb256ea5d4a.jpg",
+      "catalogName": "手机",
+      "attrs": [
+        {
+          "attrName": "CPU品牌",
+          "attrValue": "海思",
+          "attrId": 16
+        },
+        {
+          "attrName": "CPU型号",
+          "attrValue": "麒麟990",
+          "attrId": 17
+        }
+      ],
+      "skuPrice": 4999,
+      "saleCount": 0,
+      "hotScore": 0,
+      "brandName": "华为",
+      "skuTitle": "华为HUAWEI Mate 50 昆仑破晓 8+128",
+      "brandImg": "https://gstore-piks.oss-cn-hangzhou.aliyuncs.com/2023/04/05/a70d70e0-7939-46b1-8151-538de2fd2f7a_huawei.png",
+      "hasStock": true
+    }
+  },
+  {
+    "_index": "new_product",
+    "_type": "_doc",
+    "_id": "14",
+    "_score": 1.0,
+    "_source": {
+      "skuId": 14,
+      "spuId": 2,
+      "brandId": 3,
+      "catalogId": 225,
+      "skuImg": "https://gstore-piks.oss-cn-hangzhou.aliyuncs.com/2022/12/04/7e542699-7f28-4166-8779-f87869823526_23d9fbb256ea5d4a.jpg",
+      "catalogName": "手机",
+      "attrs": [
+        {
+          "attrName": "CPU品牌",
+          "attrValue": "海思",
+          "attrId": 16
+        },
+        {
+          "attrName": "CPU型号",
+          "attrValue": "麒麟990",
+          "attrId": 17
+        }
+      ],
+      "skuPrice": 6999,
+      "saleCount": 0,
+      "hotScore": 0,
+      "brandName": "华为",
+      "skuTitle": "华为HUAWEI Mate 50 昆仑破晓 12+512",
+      "brandImg": "https://gstore-piks.oss-cn-hangzhou.aliyuncs.com/2023/04/05/a70d70e0-7939-46b1-8151-538de2fd2f7a_huawei.png",
+      "hasStock": true
+    }
+  }
+]

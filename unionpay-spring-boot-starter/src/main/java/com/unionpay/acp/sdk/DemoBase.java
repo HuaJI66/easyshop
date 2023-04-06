@@ -59,10 +59,11 @@ public class DemoBase {
 			Entry<String, String> en = it.next();
 			String key = en.getKey();
 			String value =  en.getValue();
-			if("respCode".equals(key)){
-				sf.append("<b>"+key + SDKConstants.EQUAL + value+"</br></b>");
-			}else
-				sf.append(key + SDKConstants.EQUAL + value+"</br>");
+			if ("respCode".equals(key)) {
+                sf.append("<b>" + key + SDKConstants.EQUAL + value + "</br></b>");
+            } else {
+                sf.append(key + SDKConstants.EQUAL + value + "</br>");
+            }
 		}
 		return sf.toString();
     }

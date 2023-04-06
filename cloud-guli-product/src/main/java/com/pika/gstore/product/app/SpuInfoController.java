@@ -1,19 +1,16 @@
 package com.pika.gstore.product.app;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.pika.gstore.common.utils.PageUtils;
+import com.pika.gstore.common.utils.R;
+import com.pika.gstore.product.entity.SpuInfoEntity;
+import com.pika.gstore.product.service.SpuInfoService;
 import com.pika.gstore.product.vo.SpuSaveVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
-import com.pika.gstore.product.entity.SpuInfoEntity;
-import com.pika.gstore.product.service.SpuInfoService;
-import com.pika.gstore.common.utils.PageUtils;
-import com.pika.gstore.common.utils.R;
+import java.util.Arrays;
+import java.util.Map;
 
 
 /**
@@ -29,6 +26,9 @@ public class SpuInfoController {
     @Autowired
     private SpuInfoService spuInfoService;
 
+    /**
+     * todo 如何同步更新 ES信息
+     */
     @GetMapping("/skuId/{id}")
     public R getSpuBySkuId(@PathVariable("id") Long skuId) {
         SpuInfoEntity spuInfo = spuInfoService.getSpuBySkuId(skuId);

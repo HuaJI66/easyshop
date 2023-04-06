@@ -16,10 +16,11 @@
 package com.unionpay.acp.sdk;
 
 import org.apache.commons.codec.DecoderException;
+import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.binary.Hex;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.apache.commons.codec.binary.Base64;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -211,19 +212,22 @@ public class SDKUtil {
 	            logger.error("secureKey is null. verifySha256 fail.");
 	            return false;
 	    	}
-	        String sign = resData.remove(param_signature);
-	    	if(isEmpty(sign)) {
-	            logger.error("signature is null. verifySha256 fail.");
-	            return false;
-	    	}
-	        logger.info("签名原文：[" + sign + "]");
-	        String sorted = createLinkString(resData, true, false, encoding);
-	        logger.info("排序串：[" + sorted + "]");
-	        String expectedSign = calcSignSha256(sorted, secureKey, encoding);
-	        boolean result = sign.equals(expectedSign);
-	        if(!result) logger.error("验签失败，签名预期：" + expectedSign + "， 签名实际：" + sign);
-	        else logger.info("验签成功");
-	        return result;
+            String sign = resData.remove(param_signature);
+            if (isEmpty(sign)) {
+                logger.error("signature is null. verifySha256 fail.");
+                return false;
+            }
+            logger.info("签名原文：[" + sign + "]");
+            String sorted = createLinkString(resData, true, false, encoding);
+            logger.info("排序串：[" + sorted + "]");
+            String expectedSign = calcSignSha256(sorted, secureKey, encoding);
+            boolean result = sign.equals(expectedSign);
+            if (!result) {
+                logger.error("验签失败，签名预期：" + expectedSign + "， 签名实际：" + sign);
+            } else {
+                logger.info("验签成功");
+            }
+            return result;
         } catch (Exception e) {
             logger.error("verifySha256 fail." + e.getMessage(), e);
             return false;
@@ -236,20 +240,23 @@ public class SDKUtil {
 	            logger.error("secureKey is null. verifySm3 fail.");
 	            return false;
 	    	}
-	        String sign = resData.remove(param_signature);
-	    	if(isEmpty(sign)) {
-	            logger.error("signature is null. verifySm3 fail.");
-	            return false;
-	    	}
-	        logger.info("签名原文：[" + sign + "]");
-			String sorted = createLinkString(resData, true, false, encoding);
-	        logger.info("排序串：[" + sorted + "]");
-	        String expectedSign = calcSignSm3(sorted, secureKey, encoding);
-	        boolean result = sign.equals(expectedSign);
-	        if(!result) logger.error("验签失败，签名预期：" + expectedSign + "， 签名实际：" + sign);
-	        else logger.info("验签成功");
-	        return result;
-	    } catch (Exception e) {
+            String sign = resData.remove(param_signature);
+            if (isEmpty(sign)) {
+                logger.error("signature is null. verifySm3 fail.");
+                return false;
+            }
+            logger.info("签名原文：[" + sign + "]");
+            String sorted = createLinkString(resData, true, false, encoding);
+            logger.info("排序串：[" + sorted + "]");
+            String expectedSign = calcSignSm3(sorted, secureKey, encoding);
+            boolean result = sign.equals(expectedSign);
+            if (!result) {
+                logger.error("验签失败，签名预期：" + expectedSign + "， 签名实际：" + sign);
+            } else {
+                logger.info("验签成功");
+            }
+            return result;
+        } catch (Exception e) {
 	        logger.error("verifySm3 fail." + e.getMessage(), e);
 	        return false;
 	    }
@@ -270,8 +277,9 @@ public class SDKUtil {
 
 		List<String> keys = new ArrayList<String>(para.keySet());
 
-		if (sort)
-			Collections.sort(keys);
+        if (sort) {
+            Collections.sort(keys);
+        }
 
 		StringBuilder sb = new StringBuilder();
 		for (int i = 0; i < keys.size(); i++) {
@@ -304,16 +312,18 @@ public class SDKUtil {
 	 * @throws UnsupportedEncodingException
 	 */
 	public static Map<String, String> parseQString(String str, String charset) {
-		if (str == null || str.length() == 0 ) return new HashMap<String, String>();
-		Map<String, String> map = new HashMap<String, String>();
-		int len = str.length();
-		StringBuilder temp = new StringBuilder();
-		char curChar;
-		String key = null;
-		boolean isKey = true;
+        if (str == null || str.length() == 0) {
+            return new HashMap<String, String>();
+        }
+        Map<String, String> map = new HashMap<String, String>();
+        int len = str.length();
+        StringBuilder temp = new StringBuilder();
+        char curChar;
+        String key = null;
+        boolean isKey = true;
 
-		for (int i = 0; i < len; i++) {// 遍历整个带解析的字符串
-			curChar = str.charAt(i);// 取当前字符
+        for (int i = 0; i < len; i++) {// 遍历整个带解析的字符串
+            curChar = str.charAt(i);// 取当前字符
 
 			if (curChar == '&') {// 如果读取到&分割符
 				putKeyValueToMap(temp, isKey, key, map, true, charset);
@@ -347,17 +357,19 @@ public class SDKUtil {
 	 * @throws UnsupportedEncodingException
 	 */
 	public static Map<String, String> parseRespString(String str) {
-		if (str == null || str.length() == 0 ) return new HashMap<String, String>();
-		Map<String, String> map = new HashMap<String, String>();
-		int len = str.length();
-		StringBuilder temp = new StringBuilder();
-		char curChar;
-		String key = null;
-		boolean isKey = true;
-		boolean isOpen = false;//值里有嵌套
-		char openName = 0;
-		for (int i = 0; i < len; i++) {// 遍历整个带解析的字符串
-			curChar = str.charAt(i);// 取当前字符
+        if (str == null || str.length() == 0) {
+            return new HashMap<String, String>();
+        }
+        Map<String, String> map = new HashMap<String, String>();
+        int len = str.length();
+        StringBuilder temp = new StringBuilder();
+        char curChar;
+        String key = null;
+        boolean isKey = true;
+        boolean isOpen = false;//值里有嵌套
+        char openName = 0;
+        for (int i = 0; i < len; i++) {// 遍历整个带解析的字符串
+            curChar = str.charAt(i);// 取当前字符
 			if (isKey) {// 如果当前生成的是key
 
 				if (curChar == '=') {// 如果读取到=分隔符
@@ -429,16 +441,17 @@ public class SDKUtil {
      * @return
      */
 	public static int updateEncryptCert(String strCert, String certType ) {
-		if (isEmpty(strCert) || isEmpty(certType))
-			return -1;
-		if (CERTTYPE_01.equals(certType)) {
-			// 更新敏感信息加密公钥
+        if (isEmpty(strCert) || isEmpty(certType)) {
+            return -1;
+        }
+        if (CERTTYPE_01.equals(certType)) {
+            // 更新敏感信息加密公钥
             return CertUtil.resetEncryptCertPublicKey(strCert);
-		} else if (CERTTYPE_02.equals(certType)) {
-			// 更新pin敏感信息加密公钥
-			return CertUtil.resetPinEncryptCertPublicKey(strCert);
-		} else {
-			logger.info("unknown cerType:"+certType);
+        } else if (CERTTYPE_02.equals(certType)) {
+            // 更新pin敏感信息加密公钥
+            return CertUtil.resetPinEncryptCertPublicKey(strCert);
+        } else {
+            logger.info("unknown cerType:" + certType);
 			return -1;
 		}
 	}

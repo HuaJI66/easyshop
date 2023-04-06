@@ -27,7 +27,10 @@ import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
-import java.util.*;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 
@@ -232,7 +235,7 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
                     return attrs;
                 }).collect(Collectors.toList());
 
-        // TODO: 2022/12/29 1. 远程调用库存系统,查询是否有库存
+        // 1. 远程调用库存系统,查询是否有库存
         Map<Long, Boolean> map = null;
         try {
             R skuHasStock = wareFeignService.getSkuHasStock(skus.stream().map(SkuInfoEntity::getSkuId).collect(Collectors.toList()));
@@ -253,10 +256,10 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
             //设置是否有库存,默认有
             skuEsModel.setHasStock(finalMap == null ? Boolean.TRUE : finalMap.get(sku.getSkuId()));
 
-            // TODO: 2022/12/29 2. 默认热度评分 0
+            // 2. 默认热度评分 0
             skuEsModel.setHotScore(0L);
 
-            // TODO: 2022/12/29 查询品牌和分类的名字
+            // 查询品牌和分类的名字
             BrandEntity brand = brandService.getById(sku.getBrandId());
             skuEsModel.setBrandName(brand.getName());
             skuEsModel.setBrandImg(brand.getLogo());
@@ -267,7 +270,7 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
             return skuEsModel;
         }).collect(Collectors.toList());
 
-        // TODO: 2022/12/29 5. 将数据保存到es
+        // 5. 将数据保存到es
         R r = esFeignService.saveEs(collect);
         if (r.getCode() == 0) {
             // TODO: 2022/12/30 6. 修改商品商家状态
@@ -287,7 +290,7 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
                 .eq(SkuInfoEntity::getSkuId, skuId)
                 .last("limit 1"));
         return getOne(new LambdaQueryWrapper<SpuInfoEntity>()
-                .eq(SpuInfoEntity::getId,skuInfo.getSpuId())
+                .eq(SpuInfoEntity::getId, skuInfo.getSpuId())
                 .last("limit 1"));
     }
 }

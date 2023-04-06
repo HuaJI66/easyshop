@@ -28,7 +28,9 @@ import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.elasticsearch.search.aggregations.Aggregations;
 import org.elasticsearch.search.aggregations.bucket.MultiBucketsAggregation;
 import org.elasticsearch.search.aggregations.bucket.nested.ParsedNested;
-import org.elasticsearch.search.aggregations.bucket.terms.*;
+import org.elasticsearch.search.aggregations.bucket.terms.ParsedLongTerms;
+import org.elasticsearch.search.aggregations.bucket.terms.ParsedStringTerms;
+import org.elasticsearch.search.aggregations.bucket.terms.Terms;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.elasticsearch.search.fetch.subphase.highlight.HighlightField;
 import org.elasticsearch.search.sort.SortOrder;
@@ -95,7 +97,7 @@ public class MallSearchServiceImpl implements MallSearchService {
                             skuEsModel.setSkuTitle(skuTitle.getFragments()[0].string());
                         }
                         return skuEsModel;
-                    }).collect(Collectors.toList());
+                    }).filter(i -> i.getSkuId() != null).collect(Collectors.toList());
             result.setProduct(esModels);
         }
 
@@ -201,7 +203,7 @@ public class MallSearchServiceImpl implements MallSearchService {
             SearchResult.NavVo navVo = new SearchResult.NavVo();
             navVo.setNavName("分类");
             R r = productFeignService.getCategoryById(catalog3Id);
-            if (r.getCode()==0) {
+            if (r.getCode() == 0) {
                 CategoryVo data = r.getData(new TypeReference<CategoryVo>() {
                 });
                 navVo.setNavValue(data.getName());
@@ -235,6 +237,7 @@ public class MallSearchServiceImpl implements MallSearchService {
         SearchSourceBuilder sourceBuilder = new SearchSourceBuilder();
         //开启布尔查询操作
         BoolQueryBuilder boolQuery = QueryBuilders.boolQuery();
+        boolQuery.must(QueryBuilders.existsQuery("skuId"));
         //1.1 全文匹配
         String keyword = searchParams.getKeyword();
         if (!StringUtils.isEmpty(keyword)) {

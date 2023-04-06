@@ -104,8 +104,12 @@ public class GmUtil {
      * @return
      */
     public static boolean verifySm3WithSm2(byte[] msg, byte[] userId, byte[] rs, PublicKey publicKey){
-    	if(rs == null || msg == null || userId == null) return false;
-        if(rs.length != RS_LEN * 2) return false;
+        if (rs == null || msg == null || userId == null) {
+            return false;
+        }
+        if (rs.length != RS_LEN * 2) {
+            return false;
+        }
         return verifySm3WithSm2Asn1Rs(msg, userId, rsPlainByteArrayToAsn1(rs), publicKey);
     }
 
@@ -225,9 +229,13 @@ public class GmUtil {
         }
     }
 
-    public static byte[] sm4EncryptECB(byte[] keyBytes, byte[] plain, String algo){
-        if(keyBytes.length != 16) throw new RuntimeException("err key length");
-        if(plain.length % 16 != 0) throw new RuntimeException("err data length");
+    public static byte[] sm4EncryptECB(byte[] keyBytes, byte[] plain, String algo) {
+        if (keyBytes.length != 16) {
+            throw new RuntimeException("err key length");
+        }
+        if (plain.length % 16 != 0) {
+            throw new RuntimeException("err data length");
+        }
 
         try {
             Key key = new SecretKeySpec(keyBytes, "SM4");
@@ -243,9 +251,13 @@ public class GmUtil {
 //    	return sm4Decrypt(keyBytes, cipher, NO_PADDING);
 //    }
 
-    public static byte[] sm4DecryptECB(byte[] keyBytes, byte[] cipher, String algo){
-        if(keyBytes.length != 16) throw new RuntimeException("err key length");
-        if(cipher.length % 16 != 0) throw new RuntimeException("err data length");
+    public static byte[] sm4DecryptECB(byte[] keyBytes, byte[] cipher, String algo) {
+        if (keyBytes.length != 16) {
+            throw new RuntimeException("err key length");
+        }
+        if (cipher.length % 16 != 0) {
+            throw new RuntimeException("err data length");
+        }
 
         try {
             Key key = new SecretKeySpec(keyBytes, "SM4");
@@ -255,7 +267,7 @@ public class GmUtil {
 
         } catch (Exception e) {
 //            throw new RuntimeException(e);
-			return null;
+            return null;
         }
 
     }
@@ -274,15 +286,17 @@ public class GmUtil {
 
     private final static int RS_LEN = 32;
 
-    private static byte[] bigIntToFixexLengthBytes(BigInteger rOrS){
+    private static byte[] bigIntToFixexLengthBytes(BigInteger rOrS) {
         // for sm2p256v1, n is 00fffffffeffffffffffffffffffffffff7203df6b21c6052b53bbf40939d54123,
         // r and s are the result of mod n, so they should be less than n and have length<=32
         byte[] rs = rOrS.toByteArray();
-        if(rs.length == RS_LEN) return rs;
-        else if(rs.length == RS_LEN + 1 && rs[0] == 0) return Arrays.copyOfRange(rs, 1, RS_LEN + 1);
-        else if(rs.length < RS_LEN) {
+        if (rs.length == RS_LEN) {
+            return rs;
+        } else if (rs.length == RS_LEN + 1 && rs[0] == 0) {
+            return Arrays.copyOfRange(rs, 1, RS_LEN + 1);
+        } else if (rs.length < RS_LEN) {
             byte[] result = new byte[RS_LEN];
-            Arrays.fill(result, (byte)0);
+            Arrays.fill(result, (byte) 0);
             System.arraycopy(rs, 0, result, RS_LEN - rs.length, rs.length);
             return result;
         } else {
@@ -310,8 +324,10 @@ public class GmUtil {
      * @param sign in plain byte array
      * @return rs result in asn1 format
      */
-    private static byte[] rsPlainByteArrayToAsn1(byte[] sign){
-        if(sign.length != RS_LEN * 2) throw new RuntimeException("err rs. ");
+    private static byte[] rsPlainByteArrayToAsn1(byte[] sign) {
+        if (sign.length != RS_LEN * 2) {
+            throw new RuntimeException("err rs. ");
+        }
         BigInteger r = new BigInteger(1, Arrays.copyOfRange(sign, 0, RS_LEN));
         BigInteger s = new BigInteger(1, Arrays.copyOfRange(sign, RS_LEN, RS_LEN * 2));
         ASN1EncodableVector v = new ASN1EncodableVector();
@@ -429,8 +445,9 @@ public class GmUtil {
             byte[] last = GmUtil.sm3(join(Z, toByteArray(ct)));
             if (klen % 32 == 0) {
                 baos.write(last);
-            } else
+            } else {
                 baos.write(last, 0, klen % 32);
+            }
             return baos.toByteArray();
         } catch (Exception e) {
             e.printStackTrace();
@@ -446,7 +463,9 @@ public class GmUtil {
         try {
             Key key = new SecretKeySpec(keyBytes, "SM4");
             Cipher in = Cipher.getInstance(algo, "BC");
-			if(iv == null) iv = zeroIv(algo);
+            if (iv == null) {
+                iv = zeroIv(algo);
+            }
             in.init(Cipher.DECRYPT_MODE, key, getIV(iv));
             return in.doFinal(cipher);
 
@@ -464,7 +483,9 @@ public class GmUtil {
         try {
             Key key = new SecretKeySpec(keyBytes, "SM4");
             Cipher in = Cipher.getInstance(algo, "BC"); //
-			if(iv == null) iv = zeroIv(algo);
+            if (iv == null) {
+                iv = zeroIv(algo);
+            }
             in.init(Cipher.ENCRYPT_MODE, key, getIV(iv));
             return in.doFinal(data);
         } catch (Exception e) {
@@ -557,12 +578,13 @@ public class GmUtil {
 	 * @param value
 	 * @return
 	 */
-	public static byte[] rightPadZero(byte[] value, final int unitLength){
-		if (value.length % unitLength == 0)
-			return value;
-		int len = (value.length/unitLength + 1) * unitLength;
-		return Arrays.copyOf(value, len);
-	}
+	public static byte[] rightPadZero(byte[] value, final int unitLength) {
+        if (value.length % unitLength == 0) {
+            return value;
+        }
+        int len = (value.length / unitLength + 1) * unitLength;
+        return Arrays.copyOf(value, len);
+    }
 
     public static void main(String[] args) throws IOException, NoSuchAlgorithmException, NoSuchProviderException, InvalidAlgorithmParameterException, CertPathBuilderException, InvalidKeyException, SignatureException, CertificateException {
 

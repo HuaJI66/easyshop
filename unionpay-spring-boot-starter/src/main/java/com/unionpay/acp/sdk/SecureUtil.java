@@ -244,16 +244,17 @@ public class SecureUtil {
 	public static byte[] tripleDesEncryptECBPKCS5Padding(byte[] key, byte[] data) {
 
 		try {
-			if(data == null || data.length % 8 != 0)
-				throw new IllegalArgumentException("data is null or error data length.");
+            if (data == null || data.length % 8 != 0) {
+                throw new IllegalArgumentException("data is null or error data length.");
+            }
 
-			SecretKey sk = getTripleDesKey(key);
+            SecretKey sk = getTripleDesKey(key);
 
-			Cipher cipher = Cipher.getInstance("DESede/ECB/PKCS5Padding");
-			cipher.init(Cipher.ENCRYPT_MODE, sk);
-			return cipher.doFinal(data);
+            Cipher cipher = Cipher.getInstance("DESede/ECB/PKCS5Padding");
+            cipher.init(Cipher.ENCRYPT_MODE, sk);
+            return cipher.doFinal(data);
 
-		} catch (Exception e) {
+        } catch (Exception e) {
 	        logger.error("加密失败", e);
 	        return null;
 		}
@@ -264,12 +265,13 @@ public class SecureUtil {
 	 * @param value
 	 * @return
 	 */
-	public static byte[] rightPadZero(byte[] value, final int unitLength){
-		if (value.length % unitLength == 0)
-			return value;
-		int len = (value.length/unitLength + 1) * unitLength;
-		return Arrays.copyOf(value, len);
-	}
+	public static byte[] rightPadZero(byte[] value, final int unitLength) {
+        if (value.length % unitLength == 0) {
+            return value;
+        }
+        int len = (value.length / unitLength + 1) * unitLength;
+        return Arrays.copyOf(value, len);
+    }
 
 	/**
 	 * 通过byte数组得到SecretKey类型的密钥
@@ -279,18 +281,19 @@ public class SecureUtil {
 	 */
 	private static SecretKey getTripleDesKey(byte[] key) {
 
-		if (key == null || !(key.length== 8||key.length== 16||key.length== 24))
-			throw new IllegalArgumentException("key is null or error key length.");
+        if (key == null || !(key.length == 8 || key.length == 16 || key.length == 24)) {
+            throw new IllegalArgumentException("key is null or error key length.");
+        }
 
-		byte[] specKey = new byte[24];
+        byte[] specKey = new byte[24];
 
-		try {
-			switch (key.length) {
-			case 16:
-				System.arraycopy(key, 0, specKey, 0, 16);
-				System.arraycopy(key, 0, specKey, 16, 8);
-				break;
-			case 8:
+        try {
+            switch (key.length) {
+                case 16:
+                    System.arraycopy(key, 0, specKey, 0, 16);
+                    System.arraycopy(key, 0, specKey, 16, 8);
+                    break;
+                case 8:
 				System.arraycopy(key, 0, specKey, 0, 8);
 				System.arraycopy(key, 0, specKey, 8, 8);
 				System.arraycopy(key, 0, specKey, 16, 8);

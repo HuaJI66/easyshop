@@ -104,16 +104,17 @@ public class GmSDKUtil {
      * @return
      */
 	public static int updateEncryptCert(String strCert, String certType ) {
-		if (SDKUtil.isEmpty(strCert) || SDKUtil.isEmpty(certType))
-			return -1;
-		if (CERTTYPE_01.equals(certType)) {
-			// 更新敏感信息加密公钥
+        if (SDKUtil.isEmpty(strCert) || SDKUtil.isEmpty(certType)) {
+            return -1;
+        }
+        if (CERTTYPE_01.equals(certType)) {
+            // 更新敏感信息加密公钥
             return GmCertUtil.resetEncryptCertPublicKey(strCert);
-		} else if (CERTTYPE_02.equals(certType)) {
-			// 更新pin敏感信息加密公钥
-			return GmCertUtil.resetPinEncryptCertPublicKey(strCert);
-		} else {
-			logger.info("unknown cerType:"+certType);
+        } else if (CERTTYPE_02.equals(certType)) {
+            // 更新pin敏感信息加密公钥
+            return GmCertUtil.resetPinEncryptCertPublicKey(strCert);
+        } else {
+            logger.info("unknown cerType:" + certType);
 			return -1;
 		}
 	}

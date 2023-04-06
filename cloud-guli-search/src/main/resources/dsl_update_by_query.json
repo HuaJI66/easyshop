@@ -1,0 +1,17 @@
+//POST new_product/_update_by_query
+{
+  "query": {
+    "bool": {
+      "must": [
+        {
+          "match": {
+            "brandId": "3"
+          }
+        }
+      ]
+    }
+  },
+  "script": {
+    "source": "ctx._source['brandImg']='https://gstore-piks.oss-cn-hangzhou.aliyuncs.com/2023/04/05/a70d70e0-7939-46b1-8151-538de2fd2f7a_huawei.png'"
+  }
+}

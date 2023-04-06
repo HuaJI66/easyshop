@@ -170,28 +170,29 @@ public class AcpService {
 
         try {
         	if(VERSION_5_1_0.equals(version)){
-        		if( SIGNMETHOD_SHA256.equals(signMethod))
-        			return SDKUtil.verifySha256(data, UnionPayAutoConfiguration.getConfig().getSecureKey(), encoding);
-        		else if(SIGNMETHOD_SM3.equals(signMethod))
-        			return SDKUtil.verifySm3(data, UnionPayAutoConfiguration.getConfig().getSecureKey(), encoding);
+                if (SIGNMETHOD_SHA256.equals(signMethod)) {
+                    return SDKUtil.verifySha256(data, UnionPayAutoConfiguration.getConfig().getSecureKey(), encoding);
+                } else if (SIGNMETHOD_SM3.equals(signMethod)) {
+                    return SDKUtil.verifySm3(data, UnionPayAutoConfiguration.getConfig().getSecureKey(), encoding);
+                }
             }
             if(SIGNMETHOD_RSA.equals(signMethod)) {
                 String strCert = data.get(param_signPubKeyCert);
                 String certId = data.get(param_certId);
                 PublicKey verifyKey = null;
-                if(!SDKUtil.isEmpty(strCert))
-                	verifyKey = CertUtil.verifyAndGetVerifyPubKey(strCert);
-                else if(!SDKUtil.isEmpty(certId)){
+                if (!SDKUtil.isEmpty(strCert)) {
+                    verifyKey = CertUtil.verifyAndGetVerifyPubKey(strCert);
+                } else if (!SDKUtil.isEmpty(certId)) {
                     logger.info("对返回报文串验签使用的验签公钥序列号：[" + certId + "]");
                     verifyKey = CertUtil.getValidatePublicKey(certId);
                 }
-                if(verifyKey == null) {
-                	logger.error("未成功获取验签公钥，验签失败。");
+                if (verifyKey == null) {
+                    logger.error("未成功获取验签公钥，验签失败。");
                     return false;
                 }
-            	if(VERSION_5_0_0.equals(version) || VERSION_5_0_1.equals(version) ) {
+                if (VERSION_5_0_0.equals(version) || VERSION_5_0_1.equals(version)) {
                     boolean result = SDKUtil.verifyRsa(data, verifyKey, encoding);
-					logger.info("验签" + (result? "成功":"失败") + "。");
+                    logger.info("验签" + (result ? "成功" : "失败") + "。");
 					return result;
             	} else if(VERSION_5_1_0.equals(version)) {
 					boolean result = SDKUtil.verifyRsa2(data, verifyKey, encoding);
@@ -253,34 +254,40 @@ public class AcpService {
 	 * @return 是否成功
 	 */
 	public static boolean validateAppResponse(String jsonData, String encoding) {
-		logger.info("控件应答信息验签处理开始：[" + jsonData + "]");
-		if (SDKUtil.isEmpty(encoding)) {
-			encoding = "UTF-8";
-		}
+        logger.info("控件应答信息验签处理开始：[" + jsonData + "]");
+        if (SDKUtil.isEmpty(encoding)) {
+            encoding = "UTF-8";
+        }
 
         Pattern p = Pattern.compile("\\s*\"sign\"\\s*:\\s*\"([^\"]*)\"\\s*");
-		Matcher m = p.matcher(jsonData);
-		if(!m.find()) return false;
-		String sign = m.group(1);
+        Matcher m = p.matcher(jsonData);
+        if (!m.find()) {
+            return false;
+        }
+        String sign = m.group(1);
 
-		p = Pattern.compile("\\s*\"data\"\\s*:\\s*\"([^\"]*)\"\\s*");
-		m = p.matcher(jsonData);
-		if(!m.find()) return false;
-		String data = m.group(1);
+        p = Pattern.compile("\\s*\"data\"\\s*:\\s*\"([^\"]*)\"\\s*");
+        m = p.matcher(jsonData);
+        if (!m.find()) {
+            return false;
+        }
+        String data = m.group(1);
 
-		p = Pattern.compile("cert_id=(\\d*)");
-		m = p.matcher(jsonData);
-		if(!m.find()) return false;
-		String certId = m.group(1);
+        p = Pattern.compile("cert_id=(\\d*)");
+        m = p.matcher(jsonData);
+        if (!m.find()) {
+            return false;
+        }
+        String certId = m.group(1);
 
-		try {
-			// 验证签名需要用银联发给商户的公钥证书.
-			return SecureUtil.verifySignature(CertUtil
-					.getValidatePublicKey(certId), Base64.decodeBase64(sign),
+        try {
+            // 验证签名需要用银联发给商户的公钥证书.
+            return SecureUtil.verifySignature(CertUtil
+                            .getValidatePublicKey(certId), Base64.decodeBase64(sign),
                     SDKUtil.byteArrayToHexString(SecureUtil.sha1(data.getBytes(encoding))).getBytes(encoding));
-		} catch (UnsupportedEncodingException e) {
-			logger.error(e.getMessage(), e);
-		} catch (Exception e) {
+        } catch (UnsupportedEncodingException e) {
+            logger.error(e.getMessage(), e);
+        } catch (Exception e) {
 			logger.error(e.getMessage(), e);
 		}
 		return false;
@@ -507,8 +514,9 @@ public class AcpService {
 	 */
 	public static String getCustomerInfo(Map<String,String> customerInfoMap,String accNo,String encoding) {
 
-		if(customerInfoMap.isEmpty())
-			return "{}";
+        if (customerInfoMap.isEmpty()) {
+            return "{}";
+        }
 		StringBuffer sf = new StringBuffer("{");
 		for(Iterator<String> it = customerInfoMap.keySet().iterator(); it.hasNext();){
 			String key = it.next();
@@ -522,8 +530,9 @@ public class AcpService {
 				}
 			}
 			sf.append(key).append(EQUAL).append(value);
-			if(it.hasNext())
-				sf.append(AMPERSAND);
+            if (it.hasNext()) {
+                sf.append(AMPERSAND);
+            }
 		}
 		String customerInfo = sf.append("}").toString();
 		logger.info("组装的customerInfo明文："+customerInfo);
@@ -552,8 +561,9 @@ public class AcpService {
 	 * @return base64后的持卡人信息域字段 <br>
 	 */
 	public static String getCustomerInfoWithEncrypt(Map<String,String> customerInfoMap,String accNo,String encoding) {
-		if(customerInfoMap.isEmpty())
-			return "{}";
+        if (customerInfoMap.isEmpty()) {
+            return "{}";
+        }
 		StringBuffer sf = new StringBuffer("{");
 		//敏感信息加密域
 		StringBuffer encryptedInfoSb = new StringBuffer("");
@@ -832,10 +842,12 @@ public class AcpService {
 	 * @param data
 	 * @return
 	 */
-	public static Map<String, String> parseKVField(String data){
-		if(data.length() <= 2) return null;
-		data = data.substring(1, data.length() - 1);
-		return SDKUtil.parseRespString(data);
-	}
+	public static Map<String, String> parseKVField(String data) {
+        if (data.length() <= 2) {
+            return null;
+        }
+        data = data.substring(1, data.length() - 1);
+        return SDKUtil.parseRespString(data);
+    }
 
 }
