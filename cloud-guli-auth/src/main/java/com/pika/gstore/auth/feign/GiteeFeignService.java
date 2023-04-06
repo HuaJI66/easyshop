@@ -1,10 +1,10 @@
 package com.pika.gstore.auth.feign;
 
+import com.pika.gstore.auth.config.TestFeignClientConfig;
 import com.pika.gstore.auth.vo.GiteeAccessTokenRepVo;
 import com.pika.gstore.auth.vo.GiteeAccessTokenReqVo;
 import com.pika.gstore.auth.vo.GiteeEmailVo;
 import com.pika.gstore.common.to.GiteeUserInfoTo;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,11 +16,15 @@ import java.util.List;
 /**
  * @author pi'ka'chu
  */
-@FeignClient(name = "https://gitee.com", url = "https://gitee.com")
+@FeignClient(name = "https://gitee.com", url = "https://gitee.com", configuration = TestFeignClientConfig.class)
 public interface GiteeFeignService {
     String ACCESS_TOKEN = "access_token";
     String GRANT_TYPE = "grant_type";
     String REFRESH_TOKEN = "refresh_token";
+    String CODE = "code";
+    String CLIENT_ID = "client_id";
+    String REDIRECT_URI = "redirect_uri";
+    String CLIENT_SECRET = "client_secret";
 
     /**
      * 获取授权用户的全部邮箱

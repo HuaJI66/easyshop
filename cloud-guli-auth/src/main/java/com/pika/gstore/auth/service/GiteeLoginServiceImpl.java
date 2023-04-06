@@ -66,6 +66,7 @@ public class GiteeLoginServiceImpl implements Oauth2Service {
         reqVo.setClient_id(giteeClientId);
         reqVo.setRedirect_uri(redirectUrl);
         reqVo.setClient_secret(giteeClientSecret);
+        System.out.println("reqVo = " + reqVo);
         return giteeFeignService.getAccessToken(reqVo);
     }
 
