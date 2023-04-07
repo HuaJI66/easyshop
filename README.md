@@ -4,9 +4,14 @@
 
 gulimall 项目致力于打造一个完整的电商系统，采用现阶段流行技术来实现，采用前后端分离继续编写。
 
+注：跟练项目，代码实现与教程有差异，仅供参考。
+
+[个人笔记](./笔记/zero.md)
+
 ### 项目API接口文档
 
 -
+
 文档地址：[https://easydoc.xyz/s/78237135/ZUqEdvA4/hKJTcbfd](https://gitee.com/link?target=https://easydoc.xyz/s/78237135/ZUqEdvA4/hKJTcbfd)
 
 ### 项目介绍
@@ -96,17 +101,18 @@ gulimall
 
 #### 开发工具
 
-| 工具            | 说明           | 官网                                                                                                                         |
-|---------------|--------------|----------------------------------------------------------------------------------------------------------------------------|
-| IDEA          | 开发Java程序     | [https://www.jetbrains.com/idea/download](https://gitee.com/link?target=https%3A%2F%2Fwww.jetbrains.com%2Fidea%2Fdownload) |
-| RedisDesktop  | redis客户端连接工具 | [https://redisdesktop.com/download](https://gitee.com/link?target=https%3A%2F%2Fredisdesktop.com%2Fdownload)               |
-| SwitchHosts   | 本地host管理     | [https://oldj.github.io/SwitchHosts](https://gitee.com/link?target=https%3A%2F%2Foldj.github.io%2FSwitchHosts)             |
-| FinalShell    | Linux远程连接工具  | [http://www.hostbuf.com/t/988.html](https://gitee.com/link?target=http://www.hostbuf.com/t/988.html)                       |
-| Navicat       | 数据库连接工具      | [http://www.formysql.com/xiazai.html](https://gitee.com/link?target=http%3A%2F%2Fwww.formysql.com%2Fxiazai.html)           |
-| PowerDesigner | 数据库设计工具      | [http://powerdesigner.de](https://gitee.com/link?target=http%3A%2F%2Fpowerdesigner.de)                                     |
-| Postman       | API接口调试工具    | [https://www.postman.com](https://gitee.com/link?target=https%3A%2F%2Fwww.postman.com)                                     |
-| Jmeter        | 性能压测工具       | [https://jmeter.apache.org](https://gitee.com/link?target=https%3A%2F%2Fjmeter.apache.org)                                 |
-| Typora        | Markdown编辑器  | [https://typora.io](https://gitee.com/link?target=https%3A%2F%2Ftypora.io)                                                 |
+| 工具            | 说明           | 官网                                                                                                                                   |
+|---------------|--------------|--------------------------------------------------------------------------------------------------------------------------------------|
+| IDEA          | 开发Java程序     | [https://www.jetbrains.com/idea/download](https://gitee.com/link?target=https%3A%2F%2Fwww.jetbrains.com%2Fidea%2Fdownload)           |
+| RedisInsight  | redis客户端连接工具 | [https://redis.com/redis-enterprise/redis-insight/](https://gitee.com/link?target=https://redis.com/redis-enterprise/redis-insight/) |
+| SwitchHosts   | 本地host管理     | [https://oldj.github.io/SwitchHosts](https://gitee.com/link?target=https%3A%2F%2Foldj.github.io%2FSwitchHosts)                       |
+| FinalShell    | Linux远程连接工具  | [http://www.hostbuf.com/t/988.html](https://gitee.com/link?target=http://www.hostbuf.com/t/988.html)                                 |
+| Navicat       | 数据库连接工具      | [http://www.formysql.com/xiazai.html](https://gitee.com/link?target=http%3A%2F%2Fwww.formysql.com%2Fxiazai.html)                     |
+| PowerDesigner | 数据库设计工具      | [http://powerdesigner.de](https://gitee.com/link?target=http%3A%2F%2Fpowerdesigner.de)                                               |
+| Postman       | API接口调试工具    | [https://www.postman.com](https://gitee.com/link?target=https%3A%2F%2Fwww.postman.com)                                               |
+| Jmeter        | 性能压测工具       | [https://jmeter.apache.org](https://gitee.com/link?target=https%3A%2F%2Fjmeter.apache.org)                                           |
+| Typora        | Markdown编辑器  | [https://typora.io](https://gitee.com/link?target=https%3A%2F%2Ftypora.io)                                                           |
+| Cpolar        | 内网穿透         | [https://www.cpolar.com](https://gitee.com/link?target=https://www.cpolar.com)                                                       |
 
 #### 开发环境
 

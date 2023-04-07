@@ -1,12 +1,16 @@
 package com.pika.gstore.auth.config;
 
 import feign.Client;
+import feign.Logger;
+import feign.RequestInterceptor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.cloud.netflix.ribbon.SpringClientFactory;
 import org.springframework.cloud.openfeign.ribbon.CachingSpringLoadBalancerFactory;
 import org.springframework.cloud.openfeign.ribbon.LoadBalancerFeignClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
@@ -24,6 +28,25 @@ import java.security.cert.X509Certificate;
  */
 @Configuration
 public class FeignConfiguration {
+    @Bean
+    public Logger.Level level() {
+        return Logger.Level.BASIC;
+    }
+
+    @Bean
+    public RequestInterceptor requestInterceptor() {
+        return template -> {
+            // 解决seata的xid未传递
+//            String xid = RootContext.getXID();
+//            template.header(RootContext.KEY_XID, xid);
+
+            ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+            if (attributes != null) {
+                String cookie = attributes.getRequest().getHeader("Cookie");
+                template.header("Cookie", cookie);
+            }
+        };
+    }
 
     @Bean
     public CachingSpringLoadBalancerFactory cachingFactory(SpringClientFactory clientFactory) {

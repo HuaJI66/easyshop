@@ -1,6 +1,6 @@
 package com.pika.gstore.auth.feign;
 
-import com.pika.gstore.auth.config.TestFeignClientConfig;
+import com.pika.gstore.auth.config.FeignConfiguration;
 import com.pika.gstore.auth.vo.GiteeAccessTokenRepVo;
 import com.pika.gstore.auth.vo.GiteeAccessTokenReqVo;
 import com.pika.gstore.auth.vo.GiteeEmailVo;
@@ -16,7 +16,7 @@ import java.util.List;
 /**
  * @author pi'ka'chu
  */
-@FeignClient(name = "https://gitee.com", url = "https://gitee.com", configuration = TestFeignClientConfig.class)
+@FeignClient(name = "https://gitee.com", url = "https://gitee.com", configuration = FeignConfiguration.class)
 public interface GiteeFeignService {
     String ACCESS_TOKEN = "access_token";
     String GRANT_TYPE = "grant_type";
