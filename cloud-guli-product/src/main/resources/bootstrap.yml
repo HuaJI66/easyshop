@@ -58,3 +58,6 @@ gulimall:
     maximum-pool-size: 200
     keep-alive-time: 10
     unit: seconds
+ribbon:
+  ReadTimeout: 60000
+  ConnectTimeout: 60000
