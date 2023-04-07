@@ -5,7 +5,7 @@
     <title></title>
     <script type="text/javascript" th:src="${CART_DOMAIN}+'static/cart/js/jquery-3.1.1.min.js'"></script>
     <script type="text/javascript" th:src="${CART_DOMAIN}+'static/cart/bootstrap/js/bootstrap.js'"></script>
-    <script type="text/javascript" th:src="${CART_DOMAIN}+static/cart/js/swiper.min.js'"></script>
+    <script th:src="${CART_DOMAIN}+'static/cart/js/swiper.min.js'" type="text/javascript"></script>
     <script th:src="${CART_DOMAIN}+'static/cart/js/swiper.min.js'"></script>
     <link rel="stylesheet" type="text/css" href="/static/cart/css/swiper.min.css"/>
     <link rel="stylesheet" type="text/css" href="/static/cart/bootstrap/css/bootstrap.css"/>
@@ -26,16 +26,17 @@
 
         <ul class="hd_wrap_right">
             <li class="forel">
-                <a th:text="'你好'+${login_user!=null?login_user.username:'请登录'}"
+                <a th:href="${AUTH_DOMAIN+'login.html?redirect_url='+base_url}"
                    class="link_login"
-                   th:href="${AUTH_DOMAIN+'login.html?redirect_url='+${base_url}}"></a>&nbsp;
-                <a th:href="${AUTH_DOMAIN}+'reg.html'" class="link_regist">免费注册</a>
+                   th:text="${login_user!=null?login_user.username:'请登录'}"></a>&nbsp;
+                <a class="link_regist" th:href="${AUTH_DOMAIN}+'reg.html'" th:if="${login_user==null}">免费注册</a>
             </li>
             <li class="spacer"></li>
 
             <li>
                 <a th:href="${MEMBER_DOMAIN}+'memberOrder.html'">我的订单</a>
             </li>
+
         </ul>
 
     </div>
@@ -46,7 +47,7 @@
 
         <div class="nav_top">
             <div class="nav_top_one">
-                <a href="/static/cart//#"><img th:src="${CART_DOMAIN}+'static/cart/img/logo1.jpg'"
+                <a href="/static/cart//#"><img th:src="${MAIN_DOMAIN}+'static/index/img/logo.jpg'"
                                                style="height: 60px;width:180px;"/></a>
             </div>
             <div class="nav_top_two"><input type="text"/>
@@ -68,12 +69,14 @@
                         <h1 th:text="${'秒杀成功! 订单号: '+orderSn}"></h1>
                         <div class="clr"></div>
                         <div class="bg_shop">
-                            <a class="btn-addtocart" th:href="${ORDER_DOMAIN}+'payOrder?orderSn='+${orderSn}"><b></b>去支付</a>
+                            <a class="btn-addtocart"
+                               th:href="${ORDER_DOMAIN}+'payOrder?orderSn='+${orderSn}+'&payType='+${payType}"
+                               th:with="payType=${T(com.pika.gstore.common.enums.PayType).ALI_WEB.ordinal()}">去支付</a>
                         </div>
                     </div>
                 </div>
                 <div th:if="${orderSn==null}" class="mc success-cont">
-                    <h1>秒杀失败,请稍后再试</h1>
+                    <h1 style="color: red;margin-right: 485px;float: right">秒杀失败,超出商品可购买数量!</h1>
                 </div>
             </div>
         </div>

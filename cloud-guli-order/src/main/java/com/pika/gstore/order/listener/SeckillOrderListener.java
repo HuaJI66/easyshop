@@ -14,7 +14,7 @@ import javax.annotation.Resource;
 import java.io.IOException;
 
 /**
- * Desc:
+ * Desc: 监听秒杀成功的订单
  *
  * @author pikachu
  * @since 2023/2/4 13:58

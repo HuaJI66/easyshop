@@ -1,16 +1,18 @@
 package com.pika.gstore.order.controller;
 
-import java.util.Arrays;
-import java.util.Map;
-
+import com.pika.gstore.common.constant.DomainConstant;
 import com.pika.gstore.common.exception.BaseException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
-import com.pika.gstore.order.entity.OrderEntity;
-import com.pika.gstore.order.service.OrderService;
 import com.pika.gstore.common.utils.PageUtils;
 import com.pika.gstore.common.utils.R;
+import com.pika.gstore.order.entity.OrderEntity;
+import com.pika.gstore.order.service.OrderService;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.view.RedirectView;
+
+import java.util.Arrays;
+import java.util.Map;
 
 
 /**
@@ -22,6 +24,7 @@ import com.pika.gstore.common.utils.R;
  */
 @RestController
 @RequestMapping("order/order")
+@Slf4j
 public class OrderController {
     @Autowired
     private OrderService orderService;
@@ -94,4 +97,14 @@ public class OrderController {
         return R.ok();
     }
 
+    @GetMapping("/del")
+    public RedirectView delOrderByOrderSn(@RequestParam String orderSn, RedirectView redirectView) {
+        try {
+            boolean result = orderService.delOrderByOrderSn(orderSn);
+            log.info("删除订单" + orderSn + " :" + result);
+        } catch (Exception ignore) {
+        }
+        redirectView.setUrl(DomainConstant.MEMBER_DOMAIN + "/memberOrder.html");
+        return redirectView;
+    }
 }

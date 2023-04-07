@@ -5,7 +5,9 @@ import com.pika.gstore.common.to.OrderTo;
 import com.pika.gstore.common.to.es.SeckillOrderTo;
 import com.pika.gstore.common.utils.PageUtils;
 import com.pika.gstore.order.entity.OrderEntity;
-import com.pika.gstore.order.vo.*;
+import com.pika.gstore.order.vo.OrderConfirmVo;
+import com.pika.gstore.order.vo.OrderSubmitRepVo;
+import com.pika.gstore.order.vo.OrderSubmitVo;
 
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
@@ -36,5 +38,7 @@ public interface OrderService extends IService<OrderEntity> {
     void updateOrderStatus(String orderSn, Integer status);
 
     Boolean createSeckillOrder(SeckillOrderTo order);
+
+    boolean delOrderByOrderSn(String orderSn);
 }
 

@@ -29,7 +29,10 @@ import org.springframework.util.StringUtils;
 import javax.annotation.Resource;
 import java.time.Duration;
 import java.time.LocalDate;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -208,11 +211,11 @@ public class SeckillServiceImpl implements SeckillService {
                             String orderSn = IdUtil.fastSimpleUUID();
                             SeckillOrderTo seckillOrderTo = new SeckillOrderTo(orderSn, memberInfoTo.getId(),
                                     redisTo.getPromotionSessionId(), Long.parseLong(skuId), redisTo.getSeckillPrice(), num);
-                            rabbitTemplate.convertAndSend(MqConstant.ORDER_EVENT_EXCHANGE,MqConstant.ORDER_SECKILL_KEY,seckillOrderTo);
+                            rabbitTemplate.convertAndSend(MqConstant.ORDER_EVENT_EXCHANGE, MqConstant.ORDER_SECKILL_KEY, seckillOrderTo);
                             return orderSn;
                         }
                     }
-                } catch (InterruptedException e) {
+                } catch (InterruptedException ignored) {
 
                 }
 

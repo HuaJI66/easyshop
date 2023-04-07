@@ -10,7 +10,7 @@
 base_url=${ORDER_DOMAIN+#httpServletRequest.requestURI+(#httpServletRequest.getQueryString()==null?'':'?'+#httpServletRequest.getQueryString())}">
 <div class="One_Jdbox">
     <div class="Jdbox_head">
-        <img src="/static/order/pay/img\logo1.jpg" alt=""><span class="bank">收银台</span>
+        <span class="bank">收银台</span>
         <ul>
             <li style="border: 0;">
                 <a th:if="${loginUser==null}"
@@ -20,7 +20,7 @@ base_url=${ORDER_DOMAIN+#httpServletRequest.requestURI+(#httpServletRequest.getQ
             <li th:if="${loginUser==null}"><a th:href="AUTH_DOMAIN+'reg.html'"
                                               style="color: red;">免费注册</a> |
             </li>
-            <li>我的订单</li>
+            <li><a th:href="${MEMBER_DOMAIN}+'memberOrder.html'">我的订单</a></li>
             <li>支付帮助</li>
         </ul>
     </div>

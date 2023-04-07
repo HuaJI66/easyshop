@@ -20,7 +20,7 @@ base_url=${MEMBER_DOMAIN+#httpServletRequest.requestURI+(#httpServletRequest.get
     <nav>
 
         <div class="myjd">
-            <h3>我的商城</h3>
+            <h3>我的订单</h3>
             <a th:href="${MAIN_DOMAIN}">返回商城首页</a>
         </div>
         <ul class="nav_ul">
@@ -209,7 +209,7 @@ base_url=${MEMBER_DOMAIN+#httpServletRequest.requestURI+(#httpServletRequest.get
                     <td colspan="7" style="background:#F7F7F7">
                         <span th:text="${order.modifyTime}" style="color:#AAAAAA">2017-12-09 20:50:10</span>
                         <span><ruby style="color:#AAAAAA">订单号:</ruby> [[${order.orderSn}]]</span>
-                        <span>pikachu官方旗舰店<i class="table_i"></i></span>
+                        <span>京粒官方旗舰店<i class="table_i"></i></span>
                         <i class="table_i5 isShow"></i>
                     </td>
                 </tr>
@@ -270,10 +270,14 @@ base_url=${MEMBER_DOMAIN+#httpServletRequest.requestURI+(#httpServletRequest.get
                         </ul>
                     </td>
                     <td th:if="${itemStatus.index==0}" th:rowspan="${itemStatus.size}">
-                        <button th:if="${order.status==0}">去支付</button>
+                        <button th:if="${order.status==0}"
+                                th:with="payType=${T(com.pika.gstore.common.enums.PayType).ALI_WEB.ordinal()}">
+                            <a th:href="${ORDER_DOMAIN+'payOrder?orderSn='+order.orderSn+'&payType='+payType}">去支付</a>
+                        </button>
                         <button th:if="${order.status==1||order.status==2}">取消订单</button>
                         <button th:if="${order.status==3}">确认收货</button>
-                        <button th:if="${order.status==4}">删除订单</button>
+                        <button th:if="${order.status==4}" th:onclick="delOrder([[${order.orderSn}]]);">删除订单
+                        </button>
                         <p th:if="${order.status==1||order.status==2}">催单</p>
                     </td>
                 </tr>
@@ -683,5 +687,9 @@ base_url=${MEMBER_DOMAIN+#httpServletRequest.requestURI+(#httpServletRequest.get
 </body>
 <script src="/static/member/list/js/jquery-3.1.1.min.js"></script>
 <script src="/static/member/list/js/index.js"></script>
-
+<script>
+    function delOrder(orderSn) {
+        location.href = '[[${ORDER_DOMAIN}]]' + 'order/order/del?orderSn=' + orderSn;
+    }
+</script>
 </html>

@@ -17,6 +17,7 @@ import com.pika.gstore.common.exception.NoStockException;
 import com.pika.gstore.common.to.MemberInfoTo;
 import com.pika.gstore.common.to.OrderTo;
 import com.pika.gstore.common.to.SkuHasStockVo;
+import com.pika.gstore.common.to.SkuInfoTo;
 import com.pika.gstore.common.to.es.SeckillOrderTo;
 import com.pika.gstore.common.to.pay.PayVo;
 import com.pika.gstore.common.to.pay.UnionPayVo;
@@ -248,12 +249,12 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
     public PageUtils currUserOrderItemList(Map<String, Object> params) {
         MemberInfoTo memberInfoTo = LoginInterceptor.threadLocal.get();
         IPage<OrderEntity> page = page(new Query<OrderEntity>().getPage(params),
-                new LambdaQueryWrapper<OrderEntity>().eq(OrderEntity::getMemberId, memberInfoTo.getId())
+                new LambdaQueryWrapper<OrderEntity>().eq(OrderEntity::getMemberId, memberInfoTo.getId()).orderByDesc(OrderEntity::getId)
         );
         List<OrderEntity> collect = page.getRecords().stream().peek(item -> {
             item.setItems(orderItemService.list(new LambdaQueryWrapper<OrderItemEntity>()
                     .eq(OrderItemEntity::getOrderSn, item.getOrderSn())
-                    .orderByDesc(OrderItemEntity::getOrderSn)
+                    .orderByDesc(OrderItemEntity::getId)
             ));
         }).collect(Collectors.toList());
         page.setRecords(collect);
@@ -391,7 +392,8 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
 
     @Override
     public Boolean createSeckillOrder(SeckillOrderTo order) {
-        //订单
+        // TODO: 2023/4/7 进一步完善秒杀订单信息
+        //1. 订单
         OrderEntity entity = new OrderEntity();
         entity.setOrderSn(order.getOrderSn());
         entity.setMemberId(order.getMemberId());
@@ -402,22 +404,40 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
         Date date = new Date();
         entity.setModifyTime(date);
         entity.setCreateTime(date);
+        entity.setDeleteStatus(0);
         save(entity);
-        //订单项
+        //2. 订单项
         OrderItemEntity orderItem = new OrderItemEntity();
         orderItem.setRealAmount(multiply);
         orderItem.setOrderSn(order.getOrderSn());
         orderItem.setSkuQuantity(order.getNum());
         orderItem.setSkuPrice(order.getSeckillPrice());
         orderItem.setSkuId(order.getSkuId());
+        // 进一步完善订单项信息
         try {
+            List<String> saleAttrs = productFeignService.getSaleAttrs(orderItem.getSkuId());
+            String skuAttrsVals = StringUtils.collectionToDelimitedString(saleAttrs, ";");
+            orderItem.setSkuAttrsVals(skuAttrsVals);
             buildSpuToOrderItem(orderItem, order.getSkuId());
+            buildSkuToOrderItem(orderItem, order.getSkuId());
         } catch (Exception ignored) {
 
         }
         orderItemService.save(orderItem);
         return Boolean.FALSE;
     }
+
+    private void buildSkuToOrderItem(OrderItemEntity orderItem, Long skuId) {
+        R r = productFeignService.getSkuById(skuId);
+        if (r.getCode() == 0) {
+            SkuInfoTo skuInfoTo = r.getData("skuInfo", new TypeReference<SkuInfoTo>() {
+            });
+            orderItem.setSkuPic(skuInfoTo.getSkuDefaultImg());
+            orderItem.setSkuName(skuInfoTo.getSkuName());
+
+        }
+    }
+
 
     private void buildSpuToOrderItem(OrderItemEntity orderItem, Long skuId) {
         R r = productFeignService.getSpuBySkuId(skuId);
@@ -429,5 +449,11 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
             orderItem.setSpuName(data.getSpuName());
             orderItem.setCategoryId(data.getCatalogId());
         }
+    }
+
+    @Override
+    public boolean delOrderByOrderSn(String orderSn) {
+        return remove(new LambdaQueryWrapper<OrderEntity>().eq(OrderEntity::getOrderSn, orderSn)
+                .and(item -> item.in(OrderEntity::getStatus, OrderStatusEnum.CREATE_NEW.getCode(), OrderStatusEnum.CANCELED.getCode())));
     }
 }

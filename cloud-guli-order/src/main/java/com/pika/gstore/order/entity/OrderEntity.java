@@ -2,14 +2,14 @@ package com.pika.gstore.order.entity;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Data;
 
-import java.math.BigDecimal;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
-
-import lombok.Data;
 
 /**
  * 订单
@@ -167,6 +167,7 @@ public class OrderEntity implements Serializable {
     /**
      * 删除状态【0->未删除；1->已删除】
      */
+    @TableLogic(delval = "1")
     private Integer deleteStatus;
     /**
      * 下单时使用的积分

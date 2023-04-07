@@ -8,6 +8,17 @@ gulimall 项目致力于打造一个完整的电商系统，采用现阶段流�
 
 [个人笔记](./笔记/zero.md)
 
+### 开源代码与组件使用情况说明
+
+[renren-generator](https://gitee.com/link?target=https://gitee.com/renrenio/renren-generator)
+是人人开源项目的代码生成器，可在线生成entity、xml、dao、service、html、js、sql代码，减少70%以上的开发任务
+
+[renren-fast-vue](https://gitee.com/link?target=https://gitee.com/renrenio/renren-fast)
+基于vue、element-ui构建开发，实现renren-fast后台管理前端功能，提供一套更优的前端解决方案
+
+[Hutool](https://gitee.com/link?target=https://gitee.com/dromara/hutool)
+是项目中“util”包友好的替代，它节省了开发人员对项目中公用类和公用工具方法的封装时间，使开发专注于业务，同时可以最大限度的避免封装不完善带来的bug。
+
 ### 项目API接口文档
 
 -
@@ -20,7 +31,8 @@ gulimall 项目是一套电商项目，包括前台商城系统以及后台管�
 Docker 容器化部署。前台商城系统包括：用户登录、注册、商品搜索、商品详情、购物车、下订单流程、秒杀活动等模块。后台管理系统包括：系统管理、商品系统、优惠营销、库存系统、订单系统、用户系统、内容管理等七大模块。
 
 ### 项目演示
-换了一下 logo (京东，谷粒) ──>京粒
+
+更换 logo (京东，谷粒) ──>京粒
 #### **前台部分功能演示效果**
 
 ![UUvLAU.png](imgs/193421_2e595b5f_4914148.png)

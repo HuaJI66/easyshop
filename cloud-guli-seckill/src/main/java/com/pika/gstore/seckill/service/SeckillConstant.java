@@ -28,7 +28,7 @@ public class SeckillConstant {
     /**
      * <p>信息量</p>
      * <p>key: 商品随机码uuid</p>
-     * <p>value: 秒杀数量</p>
+     * <p>value: 商品参与秒杀的数量</p>
      */
     public static final String SECKILL_SEMAPHORE_PREFIX = "seckill:stock:";
     /**
