@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title></title>
-    <link rel="stylesheet" href="/static/order/pay/css\style.css">
-    <script src="/static/order/pay/js\jquery-3.1.1.min.js" charset="utf-8"></script>
+    <link href="https://mall-pika.oss-cn-guangzhou.aliyuncs.com/html/static/order/pay/css/style.css" rel="stylesheet">
+    <script charset="utf-8"
+            src="https://mall-pika.oss-cn-guangzhou.aliyuncs.com/html/static/order/pay/js/jquery-3.1.1.min.js"></script>
 </head>
 <body th:with="loginUser=${session.get('login_user')},
 base_url=${ORDER_DOMAIN+#httpServletRequest.requestURI+(#httpServletRequest.getQueryString()==null?'':'?'+#httpServletRequest.getQueryString())}">
@@ -26,7 +27,8 @@ base_url=${ORDER_DOMAIN+#httpServletRequest.requestURI+(#httpServletRequest.getQ
     </div>
     <div class="Jdbox_BuySuc">
         <dl>
-            <dt><img src="/static/order/pay/img\saoyisao.png" alt=""></dt>
+            <dt><img alt=""
+                     src="https://mall-pika.oss-cn-guangzhou.aliyuncs.com/html/static/order/pay/img\saoyisao.png"></dt>
             <dd>
                 <span>订单提交成功，请尽快付款！订单号：<b th:text="${OrderSubmitRepVo.order.orderSn}"></b></span>
                 <span>应付金额<font
@@ -40,10 +42,13 @@ base_url=${ORDER_DOMAIN+#httpServletRequest.requestURI+(#httpServletRequest.getQ
         </dl>
     </div>
     <div class="Jd_Con">
-        <p class="JdCon_title"><img src="/static/order/pay/img\title.png" alt=""></p>
+        <p class="JdCon_title"><img
+                alt="" src="https://mall-pika.oss-cn-guangzhou.aliyuncs.com/html/static/order/pay/img\title.png"></p>
         <div class="Jd_Fenqi">
             <ul>
-                <li><img src="/static/order/pay/img\BAITIAO_2.0.png" alt="">打白条</li>
+                <li><img alt=""
+                         src="https://mall-pika.oss-cn-guangzhou.aliyuncs.com/html/static/order/pay/img\BAITIAO_2.0.png">打白条
+                </li>
                 <li>
                     <span>可用额度 7275.38元</span>
                     <span>白条还款日 2018-01-27</span>
@@ -78,13 +83,14 @@ base_url=${ORDER_DOMAIN+#httpServletRequest.requestURI+(#httpServletRequest.getQ
             <ul>
                 <li>
               <span>
-                <img alt="" src="/static/order/pay/img\XJKCONSUME.png">学院小金库
+                <img alt=""
+                     src="https://mall-pika.oss-cn-guangzhou.aliyuncs.com/html/static/order/pay/img\XJKCONSUME.png">学院小金库
               </span>
                     <span>未开通小金库</span>
                 </li>
                 <li>
               <span>
-                <img src="/static/order/pay/img\CMB.png" alt="">招商银行
+                <img alt="" src="https://mall-pika.oss-cn-guangzhou.aliyuncs.com/html/static/order/pay/img\CMB.png">招商银行
               </span>
                     <span>信用卡(4337)</span>
                     <span><font>优惠</font>单单减最高99元</span>
@@ -106,18 +112,20 @@ base_url=${ORDER_DOMAIN+#httpServletRequest.requestURI+(#httpServletRequest.getQ
     <div class="Jd_footer">
         <ul>
             <li>
-                <img src="/static/order/pay/img/weixin.png" alt="">微信支付(暂不支持)
+                <img alt="" src="https://mall-pika.oss-cn-guangzhou.aliyuncs.com/html/static/order/pay/img/weixin.png">微信支付(暂不支持)
             </li>
             <li>
                 <a th:with="payType=${T(com.pika.gstore.common.enums.PayType).ALI_WEB.ordinal()}"
                    th:href="${ORDER_DOMAIN+'payOrder?orderSn='+OrderSubmitRepVo.order.orderSn+'&payType='+payType}">
-                    <img src="/static/order/pay/img/zhifubao.png" style="weight:auto;height:30px;" alt="">支付宝
+                    <img alt=""
+                         src="https://mall-pika.oss-cn-guangzhou.aliyuncs.com/html/static/order/pay/img/zhifubao.png" style="weight:auto;height:30px;">支付宝
                 </a>
             </li>
             <li>
                 <a th:with="payType=${T(com.pika.gstore.common.enums.PayType).UNIONPAY_WEB.ordinal()}"
                    th:href="${ORDER_DOMAIN+'payOrder?orderSn='+OrderSubmitRepVo.order.orderSn+'&payType='+payType}">
-                    <img src="/static/order/pay/img/unionpay.png" style="weight:auto;height:30px;" alt="">银联支付
+                    <img alt=""
+                         src="https://mall-pika.oss-cn-guangzhou.aliyuncs.com/html/static/order/pay/img/unionpay.png" style="weight:auto;height:30px;">银联支付
                 </a>
             </li>
         </ul>
@@ -126,7 +134,7 @@ base_url=${ORDER_DOMAIN+#httpServletRequest.requestURI+(#httpServletRequest.getQ
         <p>
             <span>Copyright @2004-2017 学院gulimall.com 版权所有</span>
             <span>
-            <img src="/static/order/pay/img/foots.png" alt="">
+            <img alt="" src="https://mall-pika.oss-cn-guangzhou.aliyuncs.com/html/static/order/pay/img/foots.png">
           </span>
         </p>
     </div>

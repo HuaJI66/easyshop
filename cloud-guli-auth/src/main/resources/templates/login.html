@@ -2,9 +2,12 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8"/>
-    <link rel="stylesheet" type="text/css" href="/static/login/JD_sass/JD1.css"/>
-    <script src="/static/login/JD_js/jquery-3.1.1.min.js" type="text/javascript" charset="utf-8"></script>
-    <script src="/static/login/JD_js/bcrypt.js" type="text/javascript" charset="utf-8"></script>
+    <link href="https://mall-pika.oss-cn-guangzhou.aliyuncs.com/html/static/login/JD_sass/JD1.css" rel="stylesheet"
+          type="text/css"/>
+    <script charset="utf-8"
+            src="https://mall-pika.oss-cn-guangzhou.aliyuncs.com/html/static/login/JD_js/jquery-3.1.1.min.js" type="text/javascript"></script>
+    <script charset="utf-8"
+            src="https://mall-pika.oss-cn-guangzhou.aliyuncs.com/html/static/login/JD_js/bcrypt.js" type="text/javascript"></script>
     <title>gulimall</title>
 </head>
 <body>
@@ -21,7 +24,7 @@
 <!--大图-->
 <div class="top-3">
     <div class="img_1">
-        <!--        <img src="/static/login/JD_img/background.png"/>-->
+        <!--        <img src="https://mall-pika.oss-cn-guangzhou.aliyuncs.com/html/static/login/JD_img/background.png"/>-->
     </div>
     <div id="sign">
         <div class="si_top"
@@ -36,16 +39,18 @@
             <h2 class="btn1">账户登录</h2>
         </div>
         <div class="si_bom tab">
-            <img src="/static/login/JD_img/show.png" class="bom_1"/>
-            <a href="/static/login/#"><img src="/static/login/JD_img/phone-orange.png" class="bom_2"/></a>
+            <img class="bom_1" src="https://mall-pika.oss-cn-guangzhou.aliyuncs.com/html/static/login/JD_img/show.png"/>
+            <a href="https://mall-pika.oss-cn-guangzhou.aliyuncs.com/html/static/login/#"><img
+                    class="bom_2"
+                    src="https://mall-pika.oss-cn-guangzhou.aliyuncs.com/html/static/login/JD_img/phone-orange.png"/></a>
             <h6>打开<span class="red">手机商城</span> 扫描二维码</h6>
             <p>
-                <img src="/static/login/JD_img/4de5019d2404d347897dee637895d02b_15.png"/>
-                <span><a href="/static/login/#">免输入</a></span>
-                <img src="/static/login/JD_img/4de5019d2404d347897dee637895d02b_17.png"/>
-                <span><a href="/static/login/#">更快</a></span>
-                <img src="/static/login/JD_img/4de5019d2404d347897dee637895d02b_19.png"/>
-                <span><a href="/static/login/#">更安全</a></span>
+                <img src="https://mall-pika.oss-cn-guangzhou.aliyuncs.com/html/static/login/JD_img/4de5019d2404d347897dee637895d02b_15.png"/>
+                <span><a href="https://mall-pika.oss-cn-guangzhou.aliyuncs.com/html/static/login/#">免输入</a></span>
+                <img src="https://mall-pika.oss-cn-guangzhou.aliyuncs.com/html/static/login/JD_img/4de5019d2404d347897dee637895d02b_17.png"/>
+                <span><a href="https://mall-pika.oss-cn-guangzhou.aliyuncs.com/html/static/login/#">更快</a></span>
+                <img src="https://mall-pika.oss-cn-guangzhou.aliyuncs.com/html/static/login/JD_img/4de5019d2404d347897dee637895d02b_19.png"/>
+                <span><a href="https://mall-pika.oss-cn-guangzhou.aliyuncs.com/html/static/login/#">更安全</a></span>
             </p>
         </div>
         <div class="si_bom1 tab" style="display: none;">
@@ -57,15 +62,18 @@
                 <input name="redirect_url" type="hidden" th:value="${redirect_url}">
                 <ul>
                     <li class="top_1">
-                        <img src="/static/login/JD_img/user_03.png" class="err_img1"/>
-                        <input name="account" type="text" placeholder=" 邮箱/用户名/已验证手机" class="user"/>
+                        <img class="err_img1"
+                             src="https://mall-pika.oss-cn-guangzhou.aliyuncs.com/html/static/login/JD_img/user_03.png"/>
+                        <input class="user" name="account" placeholder=" 邮箱/用户名/已验证手机" type="text"
+                               value="pikachu"/>
                     </li>
                     <li>
-                        <img src="/static/login/JD_img/user_06.png" class="err_img2"/>
-                        <input name="password" type="password" placeholder=" 密码" class="password"/>
+                        <img class="err_img2"
+                             src="https://mall-pika.oss-cn-guangzhou.aliyuncs.com/html/static/login/JD_img/user_06.png"/>
+                        <input class="password" name="password" placeholder=" 密码" type="password" value="123456"/>
                     </li>
                     <li class="bri">
-                        <a href="/static/login/">忘记密码</a>
+                        <a href="https://mall-pika.oss-cn-guangzhou.aliyuncs.com/html/static/login/">忘记密码</a>
                     </li>
                     <li class="ent">
                         <button class="btn2"><a>登 &nbsp; &nbsp;录</a></button>
@@ -78,14 +86,14 @@
             <ul>
                 <li>
                     <a href="#">
-                        <img src="/static/login/JD_img/qq.png"/>
+                        <img src="https://mall-pika.oss-cn-guangzhou.aliyuncs.com/html/static/login/JD_img/qq.png"/>
                         <span>QQ</span>
                     </a>
                 </li>
                 <li class="f4"> |</li>
                 <li>
                     <a href="#">
-                        <img src="/static/login/JD_img/weixin.png"/>
+                        <img src="https://mall-pika.oss-cn-guangzhou.aliyuncs.com/html/static/login/JD_img/weixin.png"/>
                         <span>微信</span>
                     </a>
                 </li>
@@ -97,7 +105,7 @@
                 </li>
             </ul>
             <h5 class="rig">
-                <img src="/static/login/JD_img/4de5019d2404d347897dee637895d02b_25.png"/>
+                <img src="https://mall-pika.oss-cn-guangzhou.aliyuncs.com/html/static/login/JD_img/4de5019d2404d347897dee637895d02b_25.png"/>
                 <span><a th:href="${AUTH_DOMAIN}+'reg.html'">立即注册</a></span>
             </h5>
         </div>
@@ -108,27 +116,27 @@
 <!--底部-->
 <footer>
     <ul>
-        <li><a href="/static/login/#">关于我们</a></li>
+        <li><a href="https://mall-pika.oss-cn-guangzhou.aliyuncs.com/html/static/login/#">关于我们</a></li>
         <li class="little">|</li>
-        <li><a href="/static/login/#">联系我们</a></li>
+        <li><a href="https://mall-pika.oss-cn-guangzhou.aliyuncs.com/html/static/login/#">联系我们</a></li>
         <li class="little">|</li>
-        <li><a href="/static/login/#">人才招聘</a></li>
+        <li><a href="https://mall-pika.oss-cn-guangzhou.aliyuncs.com/html/static/login/#">人才招聘</a></li>
         <li class="little">|</li>
-        <li><a href="/static/login/#">商家入驻</a></li>
+        <li><a href="https://mall-pika.oss-cn-guangzhou.aliyuncs.com/html/static/login/#">商家入驻</a></li>
         <li class="little">|</li>
-        <li><a href="/static/login/#">广告服务</a></li>
+        <li><a href="https://mall-pika.oss-cn-guangzhou.aliyuncs.com/html/static/login/#">广告服务</a></li>
         <li class="little">|</li>
-        <li><a href="/static/login/#">手机商城</a></li>
+        <li><a href="https://mall-pika.oss-cn-guangzhou.aliyuncs.com/html/static/login/#">手机商城</a></li>
         <li class="little">|</li>
-        <li><a href="/static/login/#">友情链接</a></li>
+        <li><a href="https://mall-pika.oss-cn-guangzhou.aliyuncs.com/html/static/login/#">友情链接</a></li>
         <li class="little">|</li>
-        <li><a href="/static/login/#">销售联盟</a></li>
+        <li><a href="https://mall-pika.oss-cn-guangzhou.aliyuncs.com/html/static/login/#">销售联盟</a></li>
         <li class="little">|</li>
-        <li><a href="/static/login/#">商城社区</a></li>
+        <li><a href="https://mall-pika.oss-cn-guangzhou.aliyuncs.com/html/static/login/#">商城社区</a></li>
         <li class="little">|</li>
-        <li><a href="/static/login/#">商城公益</a></li>
+        <li><a href="https://mall-pika.oss-cn-guangzhou.aliyuncs.com/html/static/login/#">商城公益</a></li>
         <li class="little">|</li>
-        <li><a href="/static/login/#">English Site</a></li>
+        <li><a href="https://mall-pika.oss-cn-guangzhou.aliyuncs.com/html/static/login/#">English Site</a></li>
     </ul>
     <span>Copyright &copy; 2022-2023 版权所有</span>
 </footer>

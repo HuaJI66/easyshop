@@ -1,0 +1,8 @@
+FROM anapsix/alpine-java:8_server-jre_unlimited
+ENV THIS_PROJECT_NAME=cloud-guli-auth
+ADD target/cloud-guli-cart-0.0.1-SNAPSHOT.jar /opt/jar
+EXPOSE 9900
+CMD java -jar -Dfile.encoding=utf-8 -Xms256m -Xmx500m \
+-Dspring.application.name=cloud-guli-cart -Dspring.cloud.nacos.server-addr=nacos:8848 -Dspring.cloud.nacos.discovery=cloud-guli-cart \
+-Dspring.redis.host=redis -Dspring.rabbitmq.host=rabbitmq \
+/opt/jar/cloud-guli-cart-0.0.1-SNAPSHOT.jar

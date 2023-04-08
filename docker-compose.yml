@@ -89,7 +89,7 @@ services:
     environment:
       - STORE_MODE=db
       # 以SEATA_IP作为host注册seata server(docker下不要写localhost/127.0.0.1/seata等容器内部网络ip,可填填写网关地址)
-      - SEATA_IP=192.168.10.1
+      - SEATA_IP=host.docker.internal
       - SEATA_PORT=8091
     networks:
       server:
@@ -102,41 +102,41 @@ services:
       - nacos
     extra_hosts:
       - "host.docker.internal:host-gateway"
-  oap:
-    image: apache/skywalking-oap-server:9.3.0
-    ports:
-      - "11800:11800"
-      - "12800:12800"
-      - "1234:1234"
-    volumes:
-      - "/opt/docker/skywalking/ext-config:/skywalking/ext-config"
-      - "/opt/docker/skywalking/ext-libs:/skywalking/ext-libs"
-    networks:
-      server:
-        aliases:
-          - oap
-    privileged: true
-    restart: always
-    container_name: oap
-    depends_on:
-      - mysql
-      - redis
-      - es
-  oap-ui:
-    image: apache/skywalking-ui:9.3.0
-    ports:
-      - "8086:8080"
-    environment:
-      SW_OAP_ADDRESS: "http://oap:12800"
-    networks:
-      server:
-        aliases:
-          - oap-ui
-    privileged: true
-    restart: always
-    container_name: oap-ui
-    depends_on:
-      - oap
+  #  oap:
+  #    image: apache/skywalking-oap-server:9.3.0
+  #    ports:
+  #      - "11800:11800"
+  #      - "12800:12800"
+  #      - "1234:1234"
+  #    volumes:
+  #      - "/opt/docker/skywalking/ext-config:/skywalking/ext-config"
+  #      - "/opt/docker/skywalking/ext-libs:/skywalking/ext-libs"
+  #    networks:
+  #      server:
+  #        aliases:
+  #          - oap
+  #    privileged: true
+  #    restart: always
+  #    container_name: oap
+  #    depends_on:
+  #      - mysql
+  #      - redis
+  #      - es
+  #  oap-ui:
+  #    image: apache/skywalking-ui:9.3.0
+  #    ports:
+  #      - "8086:8080"
+  #    environment:
+  #      SW_OAP_ADDRESS: "http://oap:12800"
+  #    networks:
+  #      server:
+  #        aliases:
+  #          - oap-ui
+  #    privileged: true
+  #    restart: always
+  #    container_name: oap-ui
+  #    depends_on:
+  #      - oap
   es:
     image: elasticsearch:7.4.2
     ports:
@@ -212,7 +212,6 @@ services:
     #在container内使用host.docker.internal:PORT来访问宿主机服务
     extra_hosts:
       - "host.docker.internal:host-gateway"
-
 networks:
   # bridge：默认，需要单独配置ports映射主机port和服务的port，并且开启了容器间通信
   server:

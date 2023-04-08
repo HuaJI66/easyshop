@@ -44,7 +44,6 @@ public class IndexController {
 
     @GetMapping(value = {"index.html", "/"})
     public String index(Model model) {
-        //查询所有一级分类
         try {
             R r = seckillFeignService.getCurrSeckillSkus();
             if (r.getCode() == 0) {
@@ -55,6 +54,7 @@ public class IndexController {
         } catch (Exception e) {
             log.info("获取当前秒杀商品信息失败:" + e.getMessage());
         }
+        //查询所有一级分类
         List<CategoryEntity> categoryEntities = categoryService.getFirstLevel();
         model.addAttribute("first_category", categoryEntities);
         return "index";

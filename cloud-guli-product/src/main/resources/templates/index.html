@@ -1,30 +1,45 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-
+<!--https://mall-pika.oss-cn-guangzhou.aliyuncs.com/htmlhttps://mall-pika.oss-cn-guangzhou.aliyuncs.com/html/static/index/img/01.png-->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>商城首页</title>
-    <link rel="stylesheet" href="/static/index/css/swiper-3.4.2.min.css">
-    <link rel="stylesheet" href="/static/index/css/GL.css">
-    <script src="/static/index/js/jquery-3.1.1.min.js" type="text/javascript" charset="utf-8"></script>
-
-    <script src="/static/index/js/swiper-3.4.2.jquery.min.js" type="text/javascript" charset="utf-8"></script>
-
-    <script src="/static/index/js/swiper-3.4.2.min.js"></script>
-
+    <link href="https://mall-pika.oss-cn-guangzhou.aliyuncs.com/html/static/index/css/swiper-3.4.2.min.css"
+          rel="stylesheet">
+    <link href="https://mall-pika.oss-cn-guangzhou.aliyuncs.com/html/static/index/css/GL.css" rel="stylesheet">
+    <script charset="utf-8"
+            src="https://mall-pika.oss-cn-guangzhou.aliyuncs.com/html/static/index/js/jquery-3.1.1.min.js" type="text/javascript"></script>
+    <script charset="utf-8"
+            src="https://mall-pika.oss-cn-guangzhou.aliyuncs.com/html/static/index/js/swiper-3.4.2.jquery.min.js" type="text/javascript"></script>
+    <script src="https://mall-pika.oss-cn-guangzhou.aliyuncs.com/html/static/index/js/swiper-3.4.2.min.js"></script>
+    <script src="https://mall-pika.oss-cn-guangzhou.aliyuncs.com/html/static/index/js/text.js"
+            type="text/javascript"></script>
+    <script src="https://mall-pika.oss-cn-guangzhou.aliyuncs.com/html/static/index/js/header.js"
+            type="text/javascript"></script>
+    <script src="https://mall-pika.oss-cn-guangzhou.aliyuncs.com/html/static/index/js/secend.js"
+            type="text/javascript"></script>
+    <script src="https://mall-pika.oss-cn-guangzhou.aliyuncs.com/html/static/index/js/zz.js"
+            type="text/javascript"></script>
+    <script src="https://mall-pika.oss-cn-guangzhou.aliyuncs.com/html/static/index/js/index.js"
+            type="text/javascript"></script>
+    <script src="https://mall-pika.oss-cn-guangzhou.aliyuncs.com/html/static/index/js/left,top.js"
+            type="text/javascript"></script>
+    <script src="https://mall-pika.oss-cn-guangzhou.aliyuncs.com/html/static/index/js/catalogLoader.js"
+            type="text/javascript"></script>
 </head>
 
 <body th:with="loginUser=${session.get('login_user')},
 base_url=${MAIN_DOMAIN+#httpServletRequest.requestURI+(#httpServletRequest.getQueryString()==null?'':'?'+#httpServletRequest.getQueryString())}">
 <div class="top_find">
     <div class="top_find_son">
-        <img src="/static/index/img/top_find_logo.png" alt="">
+        <img alt="" src="https://mall-pika.oss-cn-guangzhou.aliyuncs.com/html/static/index/img/top_find_logo.png">
         <div class="input_find">
             <input type="text" placeholder="卸妆水"/>
-            <span style="background: url(../static/index/img/img_12.png) 0 -1px;"></span>
-            <a href="#"><img src="/static/index/img/img_09.png"/></a>
+            <span style="background: url('https://mall-pika.oss-cn-guangzhou.aliyuncs.com/html/static/index/img/img_12.png') 0 -1px;"></span>
+            <a href="#"><img
+                    src="https://mall-pika.oss-cn-guangzhou.aliyuncs.com/html/static/index/img/img_09.png"/></a>
         </div>
     </div>
 </div>
@@ -44,16 +59,18 @@ base_url=${MAIN_DOMAIN+#httpServletRequest.requestURI+(#httpServletRequest.getQu
 </ul>
 <header>
     <!--    <div class="head">-->
-    <!--        <a href="#"><img src="/static/index/img/img_01.png"/></a>-->
+    <!--        <a href="#"><img src="https://mall-pika.oss-cn-guangzhou.aliyuncs.com/html/static/index/img/img_01.png"/></a>-->
     <!--        <p>X</p>-->
     <!--    </div>-->
     <!--头部-->
     <div class="header_head">
         <div class="header_head_box">
-            <a class="img" href="#"><img src="/static/index/img/logo.jpg"/></a>
+            <a class="img" href="#"><img
+                    src="https://mall-pika.oss-cn-guangzhou.aliyuncs.com/html/static/index/img/logo.jpg"/></a>
             <b class="header_head_p">
                 <a href="#">
-                    <img src="/static/index/img/img_05.png" style="border-radius: 50%;"/>
+                    <img src="https://mall-pika.oss-cn-guangzhou.aliyuncs.com/html/static/index/img/img_05.png"
+                         style="border-radius: 50%;"/>
                     <!--<span class="glyphicon glyphicon-map-marker"></span>-->
                     广东</a>
                 <div class="header_head_p_cs">
@@ -115,13 +132,14 @@ base_url=${MAIN_DOMAIN+#httpServletRequest.requestURI+(#httpServletRequest.getQu
     <div class="header_sous">
         <div class="header_form">
             <input id="searchText" type="text" placeholder=""/>
-            <span style="background: url(../static/index/img/img_12.png) 0 -1px;"></span>
+            <span style="background: url(https://mall-pika.oss-cn-guangzhou.aliyuncs.com/html/static/index/img/img_12.png) 0 -1px;"></span>
             <!--<button><i class="glyphicon"></i></button>-->
-            <a href="javascript:search()"><img src="/static/index/img/img_09.png"/></a>
+            <a href="javascript:search()"><img
+                    src="https://mall-pika.oss-cn-guangzhou.aliyuncs.com/html/static/index/img/img_09.png"/></a>
         </div>
         <div class="header_ico">
             <div class="header_gw">
-                <img src="/static/index/img/img_15.png"/>
+                <img src="https://mall-pika.oss-cn-guangzhou.aliyuncs.com/html/static/index/img/img_15.png"/>
                 <span><a th:href="${CART_DOMAIN}+'cart.html'">我的购物车</a></span>
                 <span>0</span>
             </div>
@@ -195,7 +213,8 @@ base_url=${MAIN_DOMAIN+#httpServletRequest.requestURI+(#httpServletRequest.getQu
             </ul>
         </nav>
         <div class="right">
-            <a href="#"><img src="/static/index/img/img_21.png"/></a>
+            <a href="#"><img
+                    src="https://mall-pika.oss-cn-guangzhou.aliyuncs.com/html/static/index/img/img_21.png"/></a>
         </div>
     </div>
     <!--轮播主体内容-->
@@ -214,18 +233,22 @@ base_url=${MAIN_DOMAIN+#httpServletRequest.requestURI+(#httpServletRequest.getQu
                 <div class="swiper-container swiper1">
                     <div class="swiper-wrapper">
                         <div class="swiper-slide">
-                            <a href="#"><img src="/static/index/img/lunbo.png"/></a>
+                            <a href="#"><img
+                                    src="https://mall-pika.oss-cn-guangzhou.aliyuncs.com/html/static/index/img/lunbo.png"/></a>
                         </div>
 
                         <div class="swiper-slide">
-                            <a href="#"><img src="/static/index/img/lunbo3.png"/></a>
+                            <a href="#"><img
+                                    src="https://mall-pika.oss-cn-guangzhou.aliyuncs.com/html/static/index/img/lunbo3.png"/></a>
                         </div>
 
                         <div class="swiper-slide">
-                            <a href="#"><img src="/static/index/img/lunbo6.png"/></a>
+                            <a href="#"><img
+                                    src="https://mall-pika.oss-cn-guangzhou.aliyuncs.com/html/static/index/img/lunbo6.png"/></a>
                         </div>
                         <div class="swiper-slide">
-                            <a href="#"><img src="/static/index/img/lunbo7.png"/></a>
+                            <a href="#"><img
+                                    src="https://mall-pika.oss-cn-guangzhou.aliyuncs.com/html/static/index/img/lunbo7.png"/></a>
                         </div>
                     </div>
                     <div class="swiper-pagination"></div>
@@ -233,15 +256,18 @@ base_url=${MAIN_DOMAIN+#httpServletRequest.requestURI+(#httpServletRequest.getQu
                     <div class="swiper-button-next swiper-button-white"></div>
                 </div>
                 <div class="header_main_center_b">
-                    <a href="#"><img src="/static/index/img/5a13bf0bNe1606e58.jpg"/></a>
-                    <a href="#"><img src="/static/index/img/5a154759N5385d5d6.jpg"/></a>
+                    <a href="#"><img
+                            src="https://mall-pika.oss-cn-guangzhou.aliyuncs.com/html/static/index/img/5a13bf0bNe1606e58.jpg"/></a>
+                    <a href="#"><img
+                            src="https://mall-pika.oss-cn-guangzhou.aliyuncs.com/html/static/index/img/5a154759N5385d5d6.jpg"/></a>
                 </div>
             </div>
             <div class="header_main_right">
                 <div class="header_main_right_user">
                     <div class="user_info">
                         <div class="user_info_tou">
-                            <a href="#"><img class="" src="/static/index/img/touxiang.png"></a>
+                            <a href="#"><img class=""
+                                             src="https://mall-pika.oss-cn-guangzhou.aliyuncs.com/html/static/index/img/touxiang.png"></a>
                         </div>
                         <div class="user_info_show">
                             <p class="">Hi, 欢迎来到京粒!</p>
@@ -308,73 +334,77 @@ base_url=${MAIN_DOMAIN+#httpServletRequest.requestURI+(#httpServletRequest.getQu
                         <ul>
                             <li class="ser_box_item">
                                 <a href="#">
-                                    <img src="/static/index/img/huafei.png"/>
+                                    <img src="https://mall-pika.oss-cn-guangzhou.aliyuncs.com/html/static/index/img/huafei.png"/>
                                     <span>话费</span>
                                 </a>
                             </li>
                             <li class="ser_box_item">
                                 <a href="#">
-                                    <img src="/static/index/img/jipiao.png"/>
+                                    <img src="https://mall-pika.oss-cn-guangzhou.aliyuncs.com/html/static/index/img/jipiao.png"/>
                                     <span>机票</span>
                                 </a>
                             </li>
                             <li class="ser_box_item">
                                 <a href="#">
-                                    <img src="/static/index/img/jiudian.png"/>
+                                    <img src="https://mall-pika.oss-cn-guangzhou.aliyuncs.com/html/static/index/img/jiudian.png"/>
                                     <span>酒店</span>
                                 </a>
                             </li>
                             <li class="ser_box_item">
                                 <a href="#">
-                                    <img src="/static/index/img/youxi.png"/>
+                                    <img src="https://mall-pika.oss-cn-guangzhou.aliyuncs.com/html/static/index/img/youxi.png"/>
                                     <span>游戏</span>
                                 </a>
                             </li>
                             <li class="ser_box_item1">
                                 <a href="#">
-                                    <img src="/static/index/img/qiyegou.png"/>
+                                    <img src="https://mall-pika.oss-cn-guangzhou.aliyuncs.com/html/static/index/img/qiyegou.png"/>
                                     <span>企业购</span>
                                 </a>
                             </li>
                             <li class="ser_box_item1">
                                 <a href="#">
-                                    <img src="/static/index/img/jiayouka.png"/>
+                                    <img src="https://mall-pika.oss-cn-guangzhou.aliyuncs.com/html/static/index/img/jiayouka.png"/>
                                     <span>加油卡</span>
                                 </a>
                             </li>
                             <li class="ser_box_item1">
                                 <a href="#">
-                                    <img src="/static/index/img/dianyingpiao.png"/>
+                                    <img src="https://mall-pika.oss-cn-guangzhou.aliyuncs.com/html/static/index/img/dianyingpiao.png"/>
                                     <span>电影票</span>
                                 </a>
                             </li>
                             <li class="ser_box_item1">
                                 <a href="#">
-                                    <img src="/static/index/img/huochepiao.png" style="height:20px;"/>
+                                    <img src="https://mall-pika.oss-cn-guangzhou.aliyuncs.com/html/static/index/img/huochepiao.png"
+                                         style="height:20px;"/>
                                     <span>火车票</span>
                                 </a>
                             </li>
                             <li class="ser_box_item1">
                                 <a href="#">
-                                    <img src="/static/index/img/zhongchou.png"/>
+                                    <img src="https://mall-pika.oss-cn-guangzhou.aliyuncs.com/html/static/index/img/zhongchou.png"/>
                                     <span>众筹</span>
                                 </a>
                             </li>
                             <li class="ser_box_item1">
                                 <a href="#">
-                                    <img src="/static/index/img/licai.png" style="height:22px;"/>
+                                    <img src="https://mall-pika.oss-cn-guangzhou.aliyuncs.com/html/static/index/img/licai.png"
+                                         style="height:22px;"/>
                                     <span>理财</span>
                                 </a>
                             </li>
                             <li class="ser_box_item1">
                                 <a href="#">
-                                    <img src="/static/index/img/lipinka.png" style="height:14px;"/>
+                                    <img src="https://mall-pika.oss-cn-guangzhou.aliyuncs.com/html/static/index/img/lipinka.png"
+                                         style="height:14px;"/>
                                     <span>礼品卡</span>
                                 </a>
                             </li>
                             <li class="ser_box_item1">
                                 <a href="#">
-                                    <img src="/static/index/img/baitiao.png" style="height:20px;"/>
+                                    <img src="https://mall-pika.oss-cn-guangzhou.aliyuncs.com/html/static/index/img/baitiao.png"
+                                         style="height:20px;"/>
                                     <span>白条</span>
                                 </a>
                             </li>
@@ -490,7 +520,8 @@ base_url=${MAIN_DOMAIN+#httpServletRequest.requestURI+(#httpServletRequest.getQu
         </div>
         <div class="header_banner1">
             <a class="a" href="#">
-                <img src="/static/index/img/5a1e5ce2N034ce344.png" class="aa"/>
+                <img class="aa"
+                     src="https://mall-pika.oss-cn-guangzhou.aliyuncs.com/html/static/index/img/5a1e5ce2N034ce344.png"/>
             </a>
             <div class="header_banner1_div">
                 <p>X</p>
@@ -549,10 +580,12 @@ base_url=${MAIN_DOMAIN+#httpServletRequest.requestURI+(#httpServletRequest.getQu
         </div>
         <ul class="section_second_list_right">
             <li>
-                <img src="/static/index/img/section_second_list_right_img.jpg" alt="">
+                <img alt=""
+                     src="https://mall-pika.oss-cn-guangzhou.aliyuncs.com/html/static/index/img/section_second_list_right_img.jpg">
             </li>
             <li>
-                <img src="/static/index/img/section_second_list_right_img.png" alt="">
+                <img alt=""
+                     src="https://mall-pika.oss-cn-guangzhou.aliyuncs.com/html/static/index/img/section_second_list_right_img.png">
             </li>
             <div class="section_second_list_right_button">
                 <p class="section_second_list_right_button_active"></p>
@@ -570,11 +603,4 @@ base_url=${MAIN_DOMAIN+#httpServletRequest.requestURI+(#httpServletRequest.getQu
         window.location.href = "[[${SEARCH_DOMAIN}]]" + "list.html?keyword=" + keyword;
     }
 </script>
-<script type="text/javascript" src="/static/index/js/text.js"></script>
-<script type="text/javascript" src="/static/index/js/header.js"></script>
-<script type="text/javascript" src="/static/index/js/secend.js"></script>
-<script type="text/javascript" src="/static/index/js/zz.js"></script>
-<script type="text/javascript" src="/static/index/js/index.js"></script>
-<script type="text/javascript" src="/static/index/js/left,top.js"></script>
-<script type="text/javascript" src="/static/index/js/catalogLoader.js"></script>
 </html>

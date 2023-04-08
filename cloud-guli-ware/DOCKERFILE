@@ -1,0 +1,7 @@
+FROM anapsix/alpine-java:8_server-jre_unlimited
+ADD target/cloud-guli-ware-0.0.1-SNAPSHOT.jar /opt/jar/cloud-guli-ware-0.0.1-SNAPSHOT.jar
+EXPOSE 6000
+CMD java -jar -Dfile.encoding=utf-8 -Xms256m -Xmx500m \
+-Dspring.application.name=cloud-guli-ware -Dspring.cloud.nacos.server-addr=nacos:8848 -Dspring.cloud.nacos.discovery=cloud-guli-ware \
+-Dspring.redis.host=redis -Dspring.rabbitmq.host=rabbitmq \
+/opt/jar/cloud-guli-ware-0.0.1-SNAPSHOT.jar

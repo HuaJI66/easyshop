@@ -31,17 +31,17 @@ public abstract class AbstractPayAdapter implements PayService {
     }
 
     @Override
+    public Object afterPaidFrontNotify(Object... objects) {
+        throw new UnsupportedOperationException("Unsupported method");
+    }
+
+    @Override
     public Object checkPay(Object... objects) {
         throw new UnsupportedOperationException("Unsupported method");
     }
 
     @Override
     public Object refund(Object... objects) {
-        throw new UnsupportedOperationException("Unsupported method");
-    }
-
-    @Override
-    public Object afterPaidFrontNotify(Object... objects) {
         throw new UnsupportedOperationException("Unsupported method");
     }
 }

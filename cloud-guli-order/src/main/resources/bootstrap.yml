@@ -30,6 +30,10 @@ spring:
           - data-id: sentinel.yaml
             group: dev
             refresh: true
+
+          - data-id: datasource.yaml
+            group: dev
+            refresh: true
   rabbitmq:
     host: localhost
     port: 5672
