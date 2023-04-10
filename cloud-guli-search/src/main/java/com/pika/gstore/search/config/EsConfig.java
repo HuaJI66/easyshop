@@ -2,8 +2,12 @@ package com.pika.gstore.search.config;
 
 import lombok.Data;
 import org.apache.http.HttpHost;
-import org.elasticsearch.client.*;
+import org.elasticsearch.client.RequestOptions;
+import org.elasticsearch.client.RestClient;
+import org.elasticsearch.client.RestClientBuilder;
+import org.elasticsearch.client.RestHighLevelClient;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -15,6 +19,7 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 @Data
+@RefreshScope
 public class EsConfig {
     @Value(("${elasticsearch.host}"))
     private String esHost;
@@ -32,7 +37,7 @@ public class EsConfig {
     }
 
     @Bean
-    public RestHighLevelClient esRestClient() {
+    public RestHighLevelClient restHighLevelClient() {
         RestClientBuilder builder = RestClient.builder(new HttpHost(esHost, esPort, "http"));
         return new RestHighLevelClient(builder);
     }

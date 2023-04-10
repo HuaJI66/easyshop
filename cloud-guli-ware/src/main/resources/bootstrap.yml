@@ -28,17 +28,9 @@ spring:
           - data-id: sentinel.yaml
             group: dev
             refresh: true
-  rabbitmq:
-    host: localhost
-    port: 5672
-    virtual-host: /
-    listener:
-      simple:
-        acknowledge-mode: manual # 接收消息手动确认
-    publisher-returns: true #开启息成功入队回调
-    publisher-confirm-type: simple
-    template:
-      mandatory: true
+          - data-id: rabbitmq.yaml
+            group: dev
+            refresh: true
 #logging:
 #  level:
 #    com.pika.gstore: info

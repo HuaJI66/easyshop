@@ -5,15 +5,8 @@ spring:
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
-  mvc:
-    date-format: yyyy-MM-dd HH:mm:ss
   application:
     name: cloud-guli-order
-  datasource:
-    username: root
-    password: root
-    url: jdbc:mysql://localhost:3306/gulimall_oms
-    driver-class-name: com.mysql.cj.jdbc.Driver
   cloud:
     nacos:
       server-addr: localhost:8848
@@ -34,23 +27,20 @@ spring:
           - data-id: datasource.yaml
             group: dev
             refresh: true
-  rabbitmq:
-    host: localhost
-    port: 5672
-    virtual-host: /
-    listener:
-      simple:
-        acknowledge-mode: manual # 接收消息手动确认
-    publisher-returns: true #开启息成功入队回调
-    publisher-confirm-type: simple
-    template:
-      mandatory: true
+
+          - data-id: redis.yaml
+            group: dev
+            refresh: true
+
+          - data-id: rabbitmq.yaml
+            group: dev
+            refresh: true
   session:
     store-type: redis
     timeout: 30m
-  redis:
-    host: localhost
-    port: 6379
+  mvc:
+    format:
+      date: yyyy-MM-dd HH:mm:ss
 ribbon:
   ReadTimeout: 60000
   ConnectTimeout: 60000

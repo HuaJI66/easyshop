@@ -1,4 +1,7 @@
 spring:
+  # 环境 dev|test|prod
+  profiles:
+    active: dev
   application:
     name: cloud-guli-fast
   cloud:
@@ -14,3 +17,9 @@ spring:
           - data-id: sentinel.yaml
             group: dev
             refresh: true
+#          - data-id: datasource.yaml
+#            group: dev
+#            refresh: true
+#          - data-id: application-dev.yaml
+#            group: dev
+#            refresh: true

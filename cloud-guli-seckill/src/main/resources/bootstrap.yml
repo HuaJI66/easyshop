@@ -19,8 +19,13 @@ spring:
           - data-id: seata.yaml
             group: dev
             refresh: true
-
           - data-id: sentinel.yaml
+            group: dev
+            refresh: true
+          - data-id: rabbitmq.yaml
+            group: dev
+            refresh: true
+          - data-id: redis.yaml
             group: dev
             refresh: true
   jackson:
@@ -28,9 +33,6 @@ spring:
     date-format: yyyy-MM-dd HH:mm:ss
   thymeleaf:
     cache: false
-  redis:
-    host: localhost
-    port: 6379
   #缓存
   cache:
     type: redis
@@ -40,17 +42,6 @@ spring:
       cache-null-values: true #是否缓存空值
       key-prefix: 'cache:seckill:'  #use-key-prefix=true时作为键前缀,此项为配置时使用缓存名作为前缀
       use-key-prefix: true  #是否使用指定前缀
-  rabbitmq:
-    host: localhost
-    port: 5672
-    virtual-host: /
-    listener:
-      simple:
-        acknowledge-mode: manual # 接收消息手动确认
-    publisher-returns: true #开启息成功入队回调
-    publisher-confirm-type: simple
-    template:
-      mandatory: true
   #异步线程池配置
   task:
     execution:

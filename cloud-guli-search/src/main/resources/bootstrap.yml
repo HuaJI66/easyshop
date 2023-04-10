@@ -2,9 +2,6 @@ server:
   port: 9000
 #数据源
 spring:
-  redis:
-    host: localhost
-    port: 6379
   session:
     store-type: redis
     timeout: 30m
@@ -22,12 +19,15 @@ spring:
           - data-id: sentinel.yaml
             group: dev
             refresh: true
+          - data-id: redis.yaml
+            group: dev
+            refresh: true
+          - data-id: es.yaml
+            group: dev
+            refresh: true
   jackson:
     time-zone: GMT+8
     date-format: yyyy-MM-dd HH:mm:ss
 logging:
   level:
     com.pika.gstore: debug
-elasticsearch:
-  host: localhost
-  port: 9200

@@ -30,6 +30,9 @@ spring:
           - data-id: sentinel.yaml
             group: dev
             refresh: true
+          - data-id: redis.yaml
+            group: dev
+            refresh: true
 ribbon:
   ReadTimeout: 60000
   ConnectTimeout: 60000
