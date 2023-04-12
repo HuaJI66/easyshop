@@ -9,7 +9,9 @@ services:
       - "gulimall_server"
     ports:
       - "10000:10000"
-    command: java -jar -Dfile.encoding=utf-8 -Xms256m -Xmx500m -Dspring.cloud.nacos.server-addr=nacos:8848 -Dspring.cloud.nacos.discovery.ip=cloud-guli-auth /opt/jar/cloud-guli-auth-0.0.1-SNAPSHOT.jar
+    # 设置时区
+    #    command: apk add tzdata && cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && echo "Asia/Shanghai" > /etc/timezone && apk del tzdata
+    entrypoint: java -jar -Dfile.encoding=utf-8 -Xms256m -Xmx500m -Dspring.cloud.nacos.server-addr=nacos:8848 -Dspring.cloud.nacos.username=nacos -Dspring.cloud.nacos.password=pikachu -Dspring.cloud.nacos.discovery.ip=cloud-guli-auth /opt/jar/cloud-guli-auth-0.0.1-SNAPSHOT.jar
     privileged: true
     extra_hosts:
       - "host.docker.internal:host-gateway"
@@ -33,44 +35,24 @@ services:
       - gulimall_server
     ports:
       - "9900:9900"
-    command: java -jar -Dfile.encoding=utf-8 -Xms256m -Xmx500m -Dspring.cloud.nacos.server-addr=nacos:8848 -Dspring.cloud.nacos.discovery.ip=cloud-guli-cart /opt/jar/cloud-guli-cart-0.0.1-SNAPSHOT.jar
+    command: java -jar -Dfile.encoding=utf-8 -Xms256m -Xmx500m -Dspring.cloud.nacos.server-addr=nacos:8848 -Dspring.cloud.nacos.username=nacos -Dspring.cloud.nacos.password=pikachu -Dspring.cloud.nacos.discovery.ip=cloud-guli-cart /opt/jar/cloud-guli-cart-0.0.1-SNAPSHOT.jar
     privileged: true
     extra_hosts:
       - "host.docker.internal:host-gateway"
-      - "gulimall.com:host-gateway"
-      - "search.gulimall.com:host-gateway"
-      - "member.gulimall.com:host-gateway"
-      - "ware.gulimall.com:host-gateway"
-      - "item.gulimall.com:host-gateway"
-      - "auth.gulimall.com:host-gateway"
-      - "cart.gulimall.com:host-gateway"
-      - "order.gulimall.com:host-gateway"
-      - "seckill.gulimall.com:host-gateway"
-      - "third.gulimall.com:host-gateway"
 
-  cloud-guli-fast:
-    container_name: cloud-guli-fast
-    image: anapsix/alpine-java:8_server-jre_unlimited
-    volumes:
-      - "/opt/docker/gulimall/jar:/opt/jar"
-    networks:
-      - gulimall_server
-    ports:
-      - "8080:8080"
-    command: java -jar -Dspring.datasource.druid.url=jdbc:mysql://mysql:3306/gulimall_admin?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai -Dfile.encoding=utf-8 -Xms256m -Xmx500m -Dspring.application.name=cloud-guli-fast -Dspring.cloud.nacos.server-addr=nacos:8848 -Dspring.cloud.nacos.discovery.ip=cloud-guli-fast  /opt/jar/cloud-guli-fast-0.0.1-SNAPSHOT.jar
-    privileged: true
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
-      - "gulimall.com:host-gateway"
-      - "search.gulimall.com:host-gateway"
-      - "member.gulimall.com:host-gateway"
-      - "ware.gulimall.com:host-gateway"
-      - "item.gulimall.com:host-gateway"
-      - "auth.gulimall.com:host-gateway"
-      - "cart.gulimall.com:host-gateway"
-      - "order.gulimall.com:host-gateway"
-      - "seckill.gulimall.com:host-gateway"
-      - "third.gulimall.com:host-gateway"
+  #  cloud-guli-fast:
+  #    container_name: cloud-guli-fast
+  #    image: anapsix/alpine-java:8_server-jre_unlimited
+  #    volumes:
+  #      - "/opt/docker/gulimall/jar:/opt/jar"
+  #    networks:
+  #      - gulimall_server
+  #    ports:
+  #      - "8080:8080"
+  #    command: java -jar -Dfile.encoding=utf-8 -Xms256m -Xmx500m -Dspring.application.name=cloud-guli-fast -Dspring.cloud.nacos.server-addr=nacos:8848 -Dspring.cloud.nacos.username=nacos -Dspring.cloud.nacos.password=pikachu -Dspring.cloud.nacos.discovery.ip=cloud-guli-fast  /opt/jar/cloud-guli-fast-0.0.1-SNAPSHOT.jar
+  #    privileged: true
+  #    extra_hosts:
+  #      - "host.docker.internal:host-gateway"
 
   cloud-guli-gateway:
     container_name: cloud-guli-gateway
@@ -81,20 +63,10 @@ services:
       - gulimall_server
     ports:
       - "6000:6000"
-    command: java -jar -Dfile.encoding=utf-8 -Xms256m -Xmx500m -Dspring.application.name=cloud-guli-gateway -Dspring.cloud.nacos.server-addr=nacos:8848 -Dspring.cloud.nacos.discovery.ip=cloud-guli-gateway  /opt/jar/cloud-guli-gateway-0.0.1-SNAPSHOT.jar
+    command: java -jar -Dfile.encoding=utf-8 -Xms256m -Xmx500m -Dspring.cloud.nacos.server-addr=nacos:8848 -Dspring.cloud.nacos.username=nacos -Dspring.cloud.nacos.password=pikachu -Dspring.cloud.nacos.discovery.ip=cloud-guli-gateway  /opt/jar/cloud-guli-gateway-0.0.1-SNAPSHOT.jar
     privileged: true
     extra_hosts:
       - "host.docker.internal:host-gateway"
-      - "gulimall.com:host-gateway"
-      - "search.gulimall.com:host-gateway"
-      - "member.gulimall.com:host-gateway"
-      - "ware.gulimall.com:host-gateway"
-      - "item.gulimall.com:host-gateway"
-      - "auth.gulimall.com:host-gateway"
-      - "cart.gulimall.com:host-gateway"
-      - "order.gulimall.com:host-gateway"
-      - "seckill.gulimall.com:host-gateway"
-      - "third.gulimall.com:host-gateway"
 
   cloud-guli-member:
     container_name: cloud-guli-member
@@ -105,20 +77,10 @@ services:
       - gulimall_server
     ports:
       - "2000:2000"
-    command: java -jar -Dfile.encoding=utf-8 -Xms256m -Xmx500m -Dspring.application.name=cloud-guli-member -Dspring.cloud.nacos.server-addr=nacos:8848 -Dspring.cloud.nacos.discovery.ip=cloud-guli-member  /opt/jar/cloud-guli-member-0.0.1-SNAPSHOT.jar
+    command: java -jar -Dfile.encoding=utf-8 -Xms256m -Xmx500m -Dspring.cloud.nacos.server-addr=nacos:8848 -Dspring.cloud.nacos.username=nacos -Dspring.cloud.nacos.password=pikachu -Dspring.cloud.nacos.discovery.ip=cloud-guli-member  /opt/jar/cloud-guli-member-0.0.1-SNAPSHOT.jar
     privileged: true
     extra_hosts:
       - "host.docker.internal:host-gateway"
-      - "gulimall.com:host-gateway"
-      - "search.gulimall.com:host-gateway"
-      - "member.gulimall.com:host-gateway"
-      - "ware.gulimall.com:host-gateway"
-      - "item.gulimall.com:host-gateway"
-      - "auth.gulimall.com:host-gateway"
-      - "cart.gulimall.com:host-gateway"
-      - "order.gulimall.com:host-gateway"
-      - "seckill.gulimall.com:host-gateway"
-      - "third.gulimall.com:host-gateway"
 
   cloud-guli-order:
     container_name: cloud-guli-order
@@ -129,20 +91,10 @@ services:
       - gulimall_server
     ports:
       - "4010:4010"
-    command: java -jar -Dspring.datasource.url=jdbc:mysql://mysql:3306/gulimall_oms -Dfile.encoding=utf-8 -Xms256m -Xmx500m -Dspring.application.name=cloud-guli-order -Dspring.cloud.nacos.server-addr=nacos:8848 -Dspring.cloud.nacos.discovery.ip=cloud-guli-order  /opt/jar/cloud-guli-order-0.0.1-SNAPSHOT.jar
+    command: java -jar -Dfile.encoding=utf-8 -Xms256m -Xmx500m -Dspring.cloud.nacos.server-addr=nacos:8848 -Dspring.cloud.nacos.username=nacos -Dspring.cloud.nacos.password=pikachu -Dspring.cloud.nacos.discovery.ip=cloud-guli-order  /opt/jar/cloud-guli-order-0.0.1-SNAPSHOT.jar
     privileged: true
     extra_hosts:
       - "host.docker.internal:host-gateway"
-      - "gulimall.com:host-gateway"
-      - "search.gulimall.com:host-gateway"
-      - "member.gulimall.com:host-gateway"
-      - "ware.gulimall.com:host-gateway"
-      - "item.gulimall.com:host-gateway"
-      - "auth.gulimall.com:host-gateway"
-      - "cart.gulimall.com:host-gateway"
-      - "order.gulimall.com:host-gateway"
-      - "seckill.gulimall.com:host-gateway"
-      - "third.gulimall.com:host-gateway"
 
   cloud-guli-product:
     container_name: cloud-guli-product
@@ -153,20 +105,10 @@ services:
       - gulimall_server
     ports:
       - "5000:5000"
-    command: java -jar -Dfile.encoding=utf-8 -Xms256m -Xmx500m -Dspring.application.name=cloud-guli-product -Dspring.cloud.nacos.server-addr=nacos:8848 -Dspring.cloud.nacos.discovery.ip=cloud-guli-product  /opt/jar/cloud-guli-product-0.0.1-SNAPSHOT.jar
+    command: java -jar -Dfile.encoding=utf-8 -Xms256m -Xmx500m -Dspring.cloud.nacos.server-addr=nacos:8848 -Dspring.cloud.nacos.username=nacos -Dspring.cloud.nacos.password=pikachu -Dspring.cloud.nacos.discovery.ip=cloud-guli-product  /opt/jar/cloud-guli-product-0.0.1-SNAPSHOT.jar
     privileged: true
     extra_hosts:
       - "host.docker.internal:host-gateway"
-      - "gulimall.com:host-gateway"
-      - "search.gulimall.com:host-gateway"
-      - "member.gulimall.com:host-gateway"
-      - "ware.gulimall.com:host-gateway"
-      - "item.gulimall.com:host-gateway"
-      - "auth.gulimall.com:host-gateway"
-      - "cart.gulimall.com:host-gateway"
-      - "order.gulimall.com:host-gateway"
-      - "seckill.gulimall.com:host-gateway"
-      - "third.gulimall.com:host-gateway"
 
   cloud-guli-search:
     container_name: cloud-guli-search
@@ -177,20 +119,10 @@ services:
       - gulimall_server
     ports:
       - "9000:9000"
-    command: java -jar -Delasticsearch.host=es -Dfile.encoding=utf-8 -Xms256m -Xmx500m -Dspring.application.name=cloud-guli-search -Dspring.cloud.nacos.server-addr=nacos:8848 -Dspring.cloud.nacos.discovery.ip=cloud-guli-search  /opt/jar/cloud-guli-search-0.0.1-SNAPSHOT.jar
+    command: java -jar -Delasticsearch.host=es -Dfile.encoding=utf-8 -Xms256m -Xmx500m -Dspring.cloud.nacos.server-addr=nacos:8848 -Dspring.cloud.nacos.username=nacos -Dspring.cloud.nacos.password=pikachu -Dspring.cloud.nacos.discovery.ip=cloud-guli-search  /opt/jar/cloud-guli-search-0.0.1-SNAPSHOT.jar
     privileged: true
     extra_hosts:
       - "host.docker.internal:host-gateway"
-      - "gulimall.com:host-gateway"
-      - "search.gulimall.com:host-gateway"
-      - "member.gulimall.com:host-gateway"
-      - "ware.gulimall.com:host-gateway"
-      - "item.gulimall.com:host-gateway"
-      - "auth.gulimall.com:host-gateway"
-      - "cart.gulimall.com:host-gateway"
-      - "order.gulimall.com:host-gateway"
-      - "seckill.gulimall.com:host-gateway"
-      - "third.gulimall.com:host-gateway"
 
   cloud-guli-seckill:
     container_name: cloud-guli-seckill
@@ -201,20 +133,10 @@ services:
       - gulimall_server
     ports:
       - "8030:8030"
-    command: java -jar -Delasticsearch.host=es -Dfile.encoding=utf-8 -Xms256m -Xmx500m -Dspring.application.name=cloud-guli-seckill -Dspring.cloud.nacos.server-addr=nacos:8848 -Dspring.cloud.nacos.discovery.ip=cloud-guli-seckill  /opt/jar/cloud-guli-seckill-0.0.1-SNAPSHOT.jar
+    command: java -jar -Delasticsearch.host=es -Dfile.encoding=utf-8 -Xms256m -Xmx500m -Dspring.cloud.nacos.server-addr=nacos:8848 -Dspring.cloud.nacos.username=nacos -Dspring.cloud.nacos.password=pikachu -Dspring.cloud.nacos.discovery.ip=cloud-guli-seckill  /opt/jar/cloud-guli-seckill-0.0.1-SNAPSHOT.jar
     privileged: true
     extra_hosts:
       - "host.docker.internal:host-gateway"
-      - "gulimall.com:host-gateway"
-      - "search.gulimall.com:host-gateway"
-      - "member.gulimall.com:host-gateway"
-      - "ware.gulimall.com:host-gateway"
-      - "item.gulimall.com:host-gateway"
-      - "auth.gulimall.com:host-gateway"
-      - "cart.gulimall.com:host-gateway"
-      - "order.gulimall.com:host-gateway"
-      - "seckill.gulimall.com:host-gateway"
-      - "third.gulimall.com:host-gateway"
 
   cloud-guli-third-service:
     container_name: cloud-guli-third-service
@@ -225,20 +147,10 @@ services:
       - gulimall_server
     ports:
       - "7000:7000"
-    command: java -jar -Delasticsearch.host=es -Dfile.encoding=utf-8 -Xms256m -Xmx500m -Dspring.application.name=cloud-guli-third-service -Dspring.cloud.nacos.server-addr=nacos:8848 -Dspring.cloud.nacos.discovery.ip=cloud-guli-third-service  /opt/jar/cloud-guli-third-service-0.0.1-SNAPSHOT.jar
+    command: java -jar -Delasticsearch.host=es -Dfile.encoding=utf-8 -Xms256m -Xmx500m -Dspring.cloud.nacos.server-addr=nacos:8848 -Dspring.cloud.nacos.username=nacos -Dspring.cloud.nacos.password=pikachu -Dspring.cloud.nacos.discovery.ip=cloud-guli-third-service  /opt/jar/cloud-guli-third-service-0.0.1-SNAPSHOT.jar
     privileged: true
     extra_hosts:
       - "host.docker.internal:host-gateway"
-      - "gulimall.com:host-gateway"
-      - "search.gulimall.com:host-gateway"
-      - "member.gulimall.com:host-gateway"
-      - "ware.gulimall.com:host-gateway"
-      - "item.gulimall.com:host-gateway"
-      - "auth.gulimall.com:host-gateway"
-      - "cart.gulimall.com:host-gateway"
-      - "order.gulimall.com:host-gateway"
-      - "seckill.gulimall.com:host-gateway"
-      - "third.gulimall.com:host-gateway"
 
   cloud-guli-ware:
     container_name: cloud-guli-ware
@@ -248,21 +160,11 @@ services:
     networks:
       - gulimall_server
     ports:
-      - "6000:6000"
-    command: java -jar -Dfile.encoding=utf-8 -Xms256m -Xmx500m -Dspring.application.name=cloud-guli-ware -Dspring.cloud.nacos.server-addr=nacos:8848 -Dspring.cloud.nacos.discovery.ip=cloud-guli-ware  /opt/jar/cloud-guli-ware-0.0.1-SNAPSHOT.jar
+      - "8001:8001"
+    command: java -jar -Dfile.encoding=utf-8 -Xms256m -Xmx500m -Dserver.port=8001 -Dspring.cloud.nacos.server-addr=nacos:8848 -Dspring.cloud.nacos.username=nacos -Dspring.cloud.nacos.password=pikachu -Dspring.cloud.nacos.discovery.ip=cloud-guli-ware  /opt/jar/cloud-guli-ware-0.0.1-SNAPSHOT.jar
     privileged: true
     extra_hosts:
       - "host.docker.internal:host-gateway"
-      - "gulimall.com:host-gateway"
-      - "search.gulimall.com:host-gateway"
-      - "member.gulimall.com:host-gateway"
-      - "ware.gulimall.com:host-gateway"
-      - "item.gulimall.com:host-gateway"
-      - "auth.gulimall.com:host-gateway"
-      - "cart.gulimall.com:host-gateway"
-      - "order.gulimall.com:host-gateway"
-      - "seckill.gulimall.com:host-gateway"
-      - "third.gulimall.com:host-gateway"
 
   cloud-guli-yhq:
     container_name: cloud-guli-yhq
@@ -273,20 +175,10 @@ services:
       - gulimall_server
     ports:
       - "3000:3000"
-    command: java -jar -Dfile.encoding=utf-8 -Xms256m -Xmx500m -Dspring.application.name=cloud-guli-yhq -Dspring.cloud.nacos.server-addr=nacos:8848 -Dspring.cloud.nacos.discovery.ip=cloud-guli-yhq  /opt/jar/cloud-guli-yhq-0.0.1-SNAPSHOT.jar
+    command: java -jar -Dfile.encoding=utf-8 -Xms256m -Xmx500m -Dspring.cloud.nacos.server-addr=nacos:8848 -Dspring.cloud.nacos.username=nacos -Dspring.cloud.nacos.password=pikachu -Dspring.cloud.nacos.discovery.ip=cloud-guli-yhq  /opt/jar/cloud-guli-yhq-0.0.1-SNAPSHOT.jar
     privileged: true
     extra_hosts:
       - "host.docker.internal:host-gateway"
-      - "gulimall.com:host-gateway"
-      - "search.gulimall.com:host-gateway"
-      - "member.gulimall.com:host-gateway"
-      - "ware.gulimall.com:host-gateway"
-      - "item.gulimall.com:host-gateway"
-      - "auth.gulimall.com:host-gateway"
-      - "cart.gulimall.com:host-gateway"
-      - "order.gulimall.com:host-gateway"
-      - "seckill.gulimall.com:host-gateway"
-      - "third.gulimall.com:host-gateway"
 
 networks:
   gulimall_server:

@@ -1,21 +1,30 @@
-#server:
-#  port: 6000
-#spring:
-#  application:
-#    name: cloud-guli-gateway
-#  cloud:
-#    nacos:
-#      server-addr: localhost:8848
-#      discovery:
-#        ip: 127.0.0.1
-#      config:
-#        namespace: 10086006
-#        file-extension: yaml
-#        extension-configs:
-#          - data-id: gateway.yaml
-#            group: dev
-#            refresh: true
-#
-#          - data-id: sentinel.yaml
-#            group: dev
-#            refresh: true
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: product_route
+          uri: lb://cloud-guli-product
+          predicates:
+            - Path=/admin/product/**
+          filters:
+            - RewritePath=/admin/(?<segment>.*), /$\{segment}
+
+        - id: admin_route
+          uri: lb://cloud-guli-fast
+          predicates:
+            - Path=/admin/**
+          filters:
+            - RewritePath=/admin/(?<segment>.*), /renren-fast/$\{segment}
+
+        #主页
+        - id: gulimall_host
+          uri: lb://cloud-guli-product
+          predicates:
+            - Host=gulimall.com,item.gulimall.com
+
+        - id: web_product
+          uri: lb://cloud-guli-product
+          predicates:
+            - Path=/web/product/**
+          filters:
+            - RewritePath=/web/product/(?<segment>.*), /$\{segment}
