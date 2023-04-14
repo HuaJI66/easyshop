@@ -1,9 +1,12 @@
 package com.pika.gstore.order.config;
 
+import com.pika.gstore.common.prooerties.DomainProperties;
 import com.pika.gstore.order.interceptor.LoginInterceptor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+import javax.annotation.Resource;
 
 /**
  * Desc:
@@ -13,10 +16,12 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  */
 @Configuration
 public class MyWebConfig implements WebMvcConfigurer {
+    @Resource
+    private DomainProperties domainProperties;
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new LoginInterceptor())
+        registry.addInterceptor(new LoginInterceptor(domainProperties))
                 .addPathPatterns("/**")
                 .excludePathPatterns("/order/order/status**")
                 .excludePathPatterns("/paid/notify**");

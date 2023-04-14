@@ -89,7 +89,8 @@ services:
     environment:
       - STORE_MODE=db
       # 以SEATA_IP作为host注册seata server(docker下不要写localhost/127.0.0.1/seata等容器内部网络ip,可填填写网关地址)
-      - SEATA_IP=host.docker.internal
+      #      - SEATA_IP=host.docker.internal
+      - SEATA_IP=192.168.10.1
       - SEATA_PORT=8091
     networks:
       server:

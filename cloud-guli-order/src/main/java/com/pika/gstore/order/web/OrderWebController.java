@@ -1,10 +1,10 @@
 package com.pika.gstore.order.web;
 
-import com.pika.gstore.common.constant.DomainConstant;
+import com.pika.gstore.common.prooerties.DomainProperties;
 import com.pika.gstore.order.service.OrderService;
+import com.pika.gstore.order.vo.OrderConfirmVo;
 import com.pika.gstore.order.vo.OrderSubmitRepVo;
 import com.pika.gstore.order.vo.OrderSubmitVo;
-import com.pika.gstore.order.vo.OrderConfirmVo;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,6 +25,8 @@ import java.util.concurrent.ExecutionException;
 public class OrderWebController {
     @Resource
     private OrderService orderService;
+    @Resource
+    private DomainProperties domainProperties;
 
     @PostMapping("orderSubmit")
     public String orderSubmit(OrderSubmitVo vo, RedirectAttributes attributes, Model model) {
@@ -37,7 +39,7 @@ public class OrderWebController {
         } catch (Exception e) {
             attributes.addFlashAttribute("errors", Collections.singletonMap("msg", "订单创建失败: " + e.getMessage()));
         }
-        return "redirect:" + DomainConstant.ORDER_DOMAIN + "toTrade";
+        return "redirect:" + domainProperties.getOrder() + "toTrade";
     }
 
 

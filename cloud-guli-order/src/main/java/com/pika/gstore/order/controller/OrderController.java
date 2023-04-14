@@ -1,7 +1,7 @@
 package com.pika.gstore.order.controller;
 
-import com.pika.gstore.common.constant.DomainConstant;
 import com.pika.gstore.common.exception.BaseException;
+import com.pika.gstore.common.prooerties.DomainProperties;
 import com.pika.gstore.common.utils.PageUtils;
 import com.pika.gstore.common.utils.R;
 import com.pika.gstore.order.entity.OrderEntity;
@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 
+import javax.annotation.Resource;
 import java.util.Arrays;
 import java.util.Map;
 
@@ -28,11 +29,13 @@ import java.util.Map;
 public class OrderController {
     @Autowired
     private OrderService orderService;
+    @Resource
+    private DomainProperties domainProperties;
 
     @GetMapping("/status")
     public R getOrderStatus(@RequestParam("orderSn") String orderSn) {
         OrderEntity order = orderService.getOrderByOrderSn(orderSn);
-        return order != null ? R.ok().setData(order) : R.error(BaseException.ORDER_NOT_EXISTS_EXCEPTION.getCode(),BaseException.ORDER_NOT_EXISTS_EXCEPTION.getMsg());
+        return order != null ? R.ok().setData(order) : R.error(BaseException.ORDER_NOT_EXISTS_EXCEPTION.getCode(), BaseException.ORDER_NOT_EXISTS_EXCEPTION.getMsg());
     }
 
     /**
@@ -104,7 +107,7 @@ public class OrderController {
             log.info("删除订单" + orderSn + " :" + result);
         } catch (Exception ignore) {
         }
-        redirectView.setUrl(DomainConstant.MEMBER_DOMAIN + "/memberOrder.html");
+        redirectView.setUrl(domainProperties.getMember() + "/memberOrder.html");
         return redirectView;
     }
 }

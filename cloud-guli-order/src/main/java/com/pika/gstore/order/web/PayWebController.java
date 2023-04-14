@@ -1,7 +1,7 @@
 package com.pika.gstore.order.web;
 
-import com.pika.gstore.common.constant.DomainConstant;
 import com.pika.gstore.common.exception.BaseException;
+import com.pika.gstore.common.prooerties.DomainProperties;
 import com.pika.gstore.common.utils.R;
 import com.pika.gstore.order.exception.OrderException;
 import com.pika.gstore.order.feign.ThirdFeignService;
@@ -30,6 +30,8 @@ public class PayWebController {
     private OrderService orderService;
     @Resource
     private ThirdFeignService thirdFeignService;
+    @Resource
+    private DomainProperties domainProperties;
 
     @GetMapping(value = "/payOrder", produces = {MediaType.TEXT_HTML_VALUE})
     @ResponseBody
@@ -37,7 +39,7 @@ public class PayWebController {
                            HttpServletResponse response) throws IOException {
         log.warn("支付方式:{}", payType);
         try {
-            Object payVo = orderService.getPayVo(orderSn,payType);
+            Object payVo = orderService.getPayVo(orderSn, payType);
             R r = thirdFeignService.payOrder(payVo, payType);
             if (r.getCode() == 0) {
                 return (String) r.getData();
@@ -45,9 +47,9 @@ public class PayWebController {
         } catch (OrderException orderException) {
             response.setStatus(HttpServletResponse.SC_MOVED_PERMANENTLY);
             if (orderException.getCode() == BaseException.ORDER_STATUS_CANCEL_EXCEPTION.getCode()) {
-                response.sendRedirect(DomainConstant.ORDER_DOMAIN + "toTrade");
+                response.sendRedirect(domainProperties.getOrder() + "toTrade");
             } else if (orderException.getCode() == BaseException.ORDER_STATUS_PAID_EXCEPTION.getCode()) {
-                response.sendRedirect(DomainConstant.MEMBER_DOMAIN + "memberOrder.html");
+                response.sendRedirect(domainProperties.getMember() + "memberOrder.html");
             }
         } catch (Exception ignored) {
         }

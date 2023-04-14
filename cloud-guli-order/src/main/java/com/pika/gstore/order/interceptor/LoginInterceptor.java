@@ -1,7 +1,7 @@
 package com.pika.gstore.order.interceptor;
 
 import com.pika.gstore.common.constant.AuthConstant;
-import com.pika.gstore.common.constant.DomainConstant;
+import com.pika.gstore.common.prooerties.DomainProperties;
 import com.pika.gstore.common.to.MemberInfoTo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.StringUtils;
@@ -23,6 +23,11 @@ import java.util.Collections;
 @Slf4j
 public class LoginInterceptor implements HandlerInterceptor {
     public static ThreadLocal<MemberInfoTo> threadLocal = new ThreadLocal<>();
+    private DomainProperties domainProperties;
+
+    public LoginInterceptor(DomainProperties domainProperties) {
+        this.domainProperties = domainProperties;
+    }
 
     /**
      * 获取用户登录信息
@@ -45,9 +50,9 @@ public class LoginInterceptor implements HandlerInterceptor {
             } else {
                 queryString = "?" + queryString.trim();
             }
-            String redirectUrl = "login.html?redirect_url=" + DomainConstant.ORDER_DOMAIN + request.getRequestURI() + queryString;
+            String redirectUrl = "login.html?redirect_url=" + domainProperties.getOrder() + request.getRequestURI() + queryString;
             session.setAttribute("errors", Collections.singletonMap("msg", "请登录后再查看订单"));
-            response.sendRedirect( DomainConstant.AUTH_DOMAIN + redirectUrl);
+            response.sendRedirect(domainProperties.getAuth() + redirectUrl);
             return false;
         }
     }

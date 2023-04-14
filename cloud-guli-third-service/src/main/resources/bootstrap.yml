@@ -31,6 +31,10 @@ spring:
             group: dev
             refresh: true
 
+          - data-id: domain.yaml
+            group: dev
+            refresh: true
+
           - data-id: unionpay.properties
             group: dev
             refresh: true

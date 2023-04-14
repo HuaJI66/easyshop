@@ -1,6 +1,8 @@
 package com.pika.gstore.order.config;
 
 import com.pika.gstore.common.constant.AuthConstant;
+import com.pika.gstore.common.prooerties.DomainProperties;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import org.springframework.context.annotation.Bean;
@@ -14,19 +16,25 @@ import org.springframework.session.data.redis.config.annotation.web.http.EnableR
 import org.springframework.session.web.http.CookieSerializer;
 import org.springframework.session.web.http.DefaultCookieSerializer;
 
+import javax.annotation.Resource;
+
 /**
  * @author pi'ka'chu
  */
 @EnableRedisHttpSession
+@Slf4j
 public class SpringSessionConfig {
-	@Bean
-	public CookieSerializer cookieSerializer(){
-		DefaultCookieSerializer serializer = new DefaultCookieSerializer();
-		serializer.setCookieName(AuthConstant.AUTH_COOKIE_NAME);
-		//子域共享session
-		serializer.setDomainName("gulimall.com");
-		return serializer;
-	}
+    @Resource
+    private DomainProperties domainProperties;
+
+    @Bean
+    public CookieSerializer cookieSerializer() {
+        DefaultCookieSerializer serializer = new DefaultCookieSerializer();
+        serializer.setCookieName(AuthConstant.AUTH_COOKIE_NAME);
+        //子域共享session
+        serializer.setDomainName(domainProperties.getBase());
+        return serializer;
+    }
 
     @Bean
     public RedisSerializer<Object> springSessionDefaultRedisSerializer() {

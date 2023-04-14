@@ -2,29 +2,50 @@ spring:
   cloud:
     gateway:
       routes:
-        - id: product_route
-          uri: lb://cloud-guli-product
-          predicates:
-            - Path=/admin/product/**
-          filters:
-            - RewritePath=/admin/(?<segment>.*), /$\{segment}
-
-        - id: admin_route
-          uri: lb://cloud-guli-fast
-          predicates:
-            - Path=/admin/**
-          filters:
-            - RewritePath=/admin/(?<segment>.*), /renren-fast/$\{segment}
-
         #主页
-        - id: gulimall_host
+        - id: pika_host
           uri: lb://cloud-guli-product
           predicates:
-            - Host=gulimall.com,item.gulimall.com
+            - Header=MyHost, (item.)*pikapikachu.tk
 
-        - id: web_product
-          uri: lb://cloud-guli-product
+        #搜索页
+        - id: search_pika_host
+          uri: lb://cloud-guli-search
           predicates:
-            - Path=/web/product/**
-          filters:
-            - RewritePath=/web/product/(?<segment>.*), /$\{segment}
+            - Header=MyHost,search.pikapikachu.tk
+
+        #登录,注册页
+        - id: auth_pika_host
+          uri: lb://cloud-guli-auth
+          predicates:
+            - Header=MyHost,auth.pikapikachu.tk
+
+        #购物车
+        - id: cart_pika_host
+          uri: lb://cloud-guli-cart
+          predicates:
+            - Header=MyHost,cart.pikapikachu.tk
+
+        #订单
+        - id: order_pika_host
+          uri: lb://cloud-guli-order
+          predicates:
+            - Header=MyHost,order.pikapikachu.tk
+
+        #会员订单
+        - id: member_pika_host
+          uri: lb://cloud-guli-member
+          predicates:
+            - Header=MyHost,member.pikapikachu.tk
+
+        #秒杀
+        - id: seckill_pika_host
+          uri: lb://cloud-guli-seckill
+          predicates:
+            - Header=MyHost,seckill.pikapikachu.tk
+
+        #第三方服务
+        - id: third_pika_host
+          uri: lb://cloud-guli-third-service
+          predicates:
+            - Header=MyHost,third.pikapikachu.tk

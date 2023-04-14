@@ -4,6 +4,7 @@ import cn.hutool.core.util.IdUtil;
 import com.pika.gstore.cart.to.UserInfoTo;
 import com.pika.gstore.common.constant.AuthConstant;
 import com.pika.gstore.common.constant.CartConstant;
+import com.pika.gstore.common.prooerties.DomainProperties;
 import com.pika.gstore.common.to.MemberInfoTo;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -12,7 +13,6 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Arrays;
-import java.util.Optional;
 
 /**
  * Desc:
@@ -22,6 +22,11 @@ import java.util.Optional;
  */
 public class LoginInterceptor implements HandlerInterceptor {
     public static ThreadLocal<UserInfoTo> threadLocal = new ThreadLocal<>();
+    private DomainProperties domainProperties;
+
+    public LoginInterceptor(DomainProperties domainProperties) {
+        this.domainProperties = domainProperties;
+    }
 
     /**
      * 获取用户登录信息
@@ -65,7 +70,7 @@ public class LoginInterceptor implements HandlerInterceptor {
         if (cookies != null) {
             boolean hasUserKey = Arrays.stream(cookies).noneMatch(item -> item.getName().equals(CartConstant.CART_COOKIE_NAME));
             if (hasUserKey) {
-                cookie.setDomain("gulimall.com");
+                cookie.setDomain(domainProperties.getBase());
                 cookie.setMaxAge(CartConstant.CART_COOKIE_MAX_AGE);
                 response.addCookie(cookie);
             }

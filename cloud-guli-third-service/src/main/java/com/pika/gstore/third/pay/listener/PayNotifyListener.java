@@ -1,7 +1,7 @@
 package com.pika.gstore.third.pay.listener;
 
-import com.pika.gstore.common.constant.DomainConstant;
 import com.pika.gstore.common.enums.PayType;
+import com.pika.gstore.common.prooerties.DomainProperties;
 import com.pika.gstore.common.to.pay.PayAsyncVo;
 import com.pika.gstore.third.pay.service.PayService;
 import com.pika.gstore.third.pay.service.SimplePayFactory;
@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -21,6 +22,9 @@ import javax.servlet.http.HttpServletRequest;
 @Slf4j
 @Controller
 public class PayNotifyListener {
+    @Resource
+    private DomainProperties domainProperties;
+
     /**
      * 支付宝Web支付成功异步回调地址,需要应用可公网访问
      * 验签成功后，按照支付结果异步通知中的描述，对支付结果中的业务内容进行二次校验，
@@ -48,6 +52,6 @@ public class PayNotifyListener {
      */
     @RequestMapping(value = "/paid/notify/frontRcvResponse/unionpay")
     public String frontRcvResponse() {
-        return "redirect:" + DomainConstant.MEMBER_DOMAIN + "memberOrder.html";
+        return "redirect:" + domainProperties.getMember() + "memberOrder.html";
     }
 }

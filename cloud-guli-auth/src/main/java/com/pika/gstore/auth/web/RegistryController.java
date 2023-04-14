@@ -1,14 +1,12 @@
 package com.pika.gstore.auth.web;
 
-import cn.hutool.core.lang.TypeReference;
 import cn.hutool.core.util.IdUtil;
 import com.pika.gstore.auth.feign.MemberFeignService;
 import com.pika.gstore.auth.feign.ThirdFeignService;
 import com.pika.gstore.auth.vo.UserRegistryReqVo;
 import com.pika.gstore.common.constant.AuthConstant;
 import com.pika.gstore.common.exception.BaseException;
-import com.pika.gstore.common.to.MemberInfoTo;
-import com.pika.gstore.common.to.UserLoginTo;
+import com.pika.gstore.common.prooerties.DomainProperties;
 import com.pika.gstore.common.utils.R;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -26,7 +24,6 @@ import javax.annotation.Resource;
 import javax.validation.Valid;
 import java.time.Duration;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
@@ -46,6 +43,8 @@ public class RegistryController {
     private StringRedisTemplate stringRedisTemplate;
     @Resource
     private MemberFeignService memberFeignService;
+    @Resource
+    private DomainProperties domainProperties;
 
     @GetMapping("sms/send")
     @ResponseBody
@@ -83,13 +82,13 @@ public class RegistryController {
             //仅可取出一次的数据
             // TODO: 2023/1/10 分布式session
             redirectAttributes.addFlashAttribute("errors", map);
-            return "redirect:http://auth.gulimall.com/reg.html";
+            return "redirect:" + domainProperties.getAuth() + "reg.html";
         } else {
             //校验验证码
             String code = stringRedisTemplate.opsForValue().get(AuthConstant.SMS_CACHE_CAPTCHA_PREFIX + reqVo.getPhone());
             if (StringUtils.isEmpty(code)) {
                 redirectAttributes.addFlashAttribute("errors", Collections.singletonMap("code", "验证码已过期"));
-                return "redirect:http://auth.gulimall.com/reg.html";
+                return "redirect:" + domainProperties.getAuth() + "reg.html";
             } else {
                 if (code.equals(reqVo.getCode())) {
                     //删除缓存验证码
@@ -97,14 +96,14 @@ public class RegistryController {
                     //远程调用
                     R r = memberFeignService.userRegistry(reqVo);
                     if (r.getCode() == 0) {
-                        return "redirect:http://auth.gulimall.com/login.html";
+                        return "redirect:" + domainProperties.getAuth() + "login.html";
                     } else {
                         redirectAttributes.addFlashAttribute("errors", Collections.singletonMap("msg", r.getMsg()));
-                        return "redirect:http://auth.gulimall.com/reg.html";
+                        return "redirect:" + domainProperties.getAuth() + "reg.html";
                     }
                 } else {
                     redirectAttributes.addFlashAttribute("errors", Collections.singletonMap("code", "验证码错误"));
-                    return "redirect:http://auth.gulimall.com/reg.html";
+                    return "redirect:" + domainProperties.getAuth() + "reg.html";
                 }
             }
         }

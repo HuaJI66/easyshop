@@ -35,6 +35,10 @@ spring:
           - data-id: rabbitmq.yaml
             group: dev
             refresh: true
+
+          - data-id: domain.yaml
+            group: dev
+            refresh: true
   session:
     store-type: redis
     timeout: 30m

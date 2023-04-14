@@ -1,8 +1,11 @@
 package com.pika.gstore.auth.config;
 
 import com.pika.gstore.common.filter.AuthFilter;
+import com.pika.gstore.common.prooerties.DomainProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import javax.annotation.Resource;
 
 /**
  * Desc:
@@ -12,8 +15,11 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class MyWebConfig {
+    @Resource
+    private DomainProperties domainProperties;
+
     @Bean
-    public AuthFilter authFilter(){
-        return new AuthFilter();
+    public AuthFilter authFilter() {
+        return new AuthFilter(domainProperties.getAuthServiceUrl(), domainProperties.getGatewayUrl(), domainProperties.getAuth());
     }
 }

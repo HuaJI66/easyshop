@@ -1,10 +1,11 @@
-package com.pika.gstore.auth.service;
+package com.pika.gstore.auth.service.impl;
 
 import com.pika.gstore.auth.feign.GiteeFeignService;
+import com.pika.gstore.auth.service.Oauth2Service;
 import com.pika.gstore.auth.vo.GiteeAccessTokenRepVo;
 import com.pika.gstore.auth.vo.GiteeAccessTokenReqVo;
 import com.pika.gstore.auth.vo.GiteeEmailVo;
-import com.pika.gstore.common.constant.DomainConstant;
+import com.pika.gstore.common.prooerties.DomainProperties;
 import com.pika.gstore.common.to.GiteeUserInfoTo;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -20,11 +21,12 @@ import java.util.List;
 public class GiteeLoginServiceImpl implements Oauth2Service {
     @Resource
     private GiteeFeignService giteeFeignService;
-
     /**
      * 默认授权成功后的回调地址
      */
-    public static final String DEFAULT_REDIRECT_URL = DomainConstant.AUTH_DOMAIN + "oauth/gitee/success";
+    public static final String DEFAULT_REDIRECT_URL = "oauth/gitee/success";
+    @Resource
+    private DomainProperties domainProperties;
 
     /**
      * gitee跳转授权 url前缀
@@ -35,10 +37,9 @@ public class GiteeLoginServiceImpl implements Oauth2Service {
     @Value("${auth.gitee.client-secret}")
     public String giteeClientSecret;
 
-
     @Override
     public String getAuthUrl() {
-        return getGiteeAuthUrl(DEFAULT_REDIRECT_URL);
+        return getGiteeAuthUrl(domainProperties.getAuth() + DEFAULT_REDIRECT_URL);
     }
 
     /**
@@ -57,7 +58,7 @@ public class GiteeLoginServiceImpl implements Oauth2Service {
 
     @Override
     public GiteeAccessTokenRepVo getAccessToken(String code) {
-        return getAccessToken(code, DEFAULT_REDIRECT_URL);
+        return getAccessToken(code, domainProperties.getAuth() + DEFAULT_REDIRECT_URL);
     }
 
     public GiteeAccessTokenRepVo getAccessToken(String code, String redirectUrl) {

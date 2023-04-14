@@ -19,6 +19,16 @@ import java.util.Set;
  */
 @Slf4j
 public class AuthFilter implements Filter {
+    private String authServiceUrl;
+    private String gatewayUrl;
+    private String authDomain;
+
+    public AuthFilter(String authServiceUrl, String gatewayUrl, String authDomain) {
+        this.authServiceUrl = authServiceUrl;
+        this.gatewayUrl = gatewayUrl;
+        this.authDomain = authDomain;
+    }
+
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
     }
@@ -27,9 +37,10 @@ public class AuthFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         Set<String> exclude = new HashSet<>();
         exclude.add(".*/login");
-        exclude.add("^http://127.0.0.1:10000/.*");
+        //认证服务
+        exclude.add(authServiceUrl);
         //网关
-        exclude.add("http://127.0.0.1:5000/");
+        exclude.add(gatewayUrl);
         HttpSession session = ((HttpServletRequest) request).getSession();
         StringBuffer requestURL = ((HttpServletRequest) request).getRequestURL();
         String url = requestURL.toString().trim();
@@ -41,7 +52,7 @@ public class AuthFilter implements Filter {
             log.warn("拦截请求:{}", url);
             //非登录请求 ==>是否已登录?
             if (session.getAttribute(AuthConstant.SESSION_LOGIN_USER) == null) {
-                ((HttpServletResponse) response).sendRedirect(AuthConstant.AUTH_URL);
+                ((HttpServletResponse) response).sendRedirect(authDomain + "login.html");
             } else {
                 chain.doFilter(request, response);
             }

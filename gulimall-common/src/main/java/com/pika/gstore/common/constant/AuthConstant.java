@@ -26,6 +26,5 @@ public class AuthConstant {
      * 登录用户存放在session中的key
      */
     public static final String SESSION_LOGIN_USER = "login_user";
-    public static final String AUTH_URL = "http://auth.gulimall.com/login.html";
     public static final String AUTH_COOKIE_NAME = "PIKACHU_COOKIE";
 }
