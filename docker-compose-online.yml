@@ -1,0 +1,164 @@
+version: "3"
+# 定义服务
+services:
+  # 为project定义服务
+  redis:
+    # 服务的镜像名称或镜像ID。如果镜像在本地不存在，Compose将会尝试拉取镜像
+    image: redis/redis-stack-server:latest
+    # 配置端口 - "宿主机端口:容器暴露端口"
+    ports:
+      - "6379:6379"
+    # 配置容器连接的网络，引用顶级 networks 下的条目(就是最下面配置的networks(一级目录))
+    networks:
+      - gulimall_server
+    # 挂载
+    volumes:
+      - "/opt/docker/redis/redis-stack/redis-stack.conf:/opt/redis-stack/etc/redis-stack.conf"
+      - "/opt/docker/redis/redis-stack/data:/data"
+    # 容器总是重新启动
+    restart: always
+    # 指定一个自定义容器名称，而不是生成的默认名称。
+    container_name: redis
+    # 使用该参数，container内的root拥有真正的root权限。
+    privileged: true
+
+  mysql:
+    image: mysql:latest
+    ports:
+      - "3306:3306"
+      - "33060:33060"
+    # 添加环境变量
+    environment:
+      MYSQL_ROOT_PASSWORD: "root"
+    volumes:
+      - "/opt/docker/mysql/master/data:/var/lib/mysql"
+      - "/opt/docker/mysql/master/conf:/etc/mysql/conf.d"
+      - "/opt/docker/mysql/master/log:/var/log/mysql"
+      - "/etc/localtime:/etc/localtime"
+    networks:
+      - gulimall_server
+    restart: always
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --default-authentication-plugin=mysql_native_password
+    container_name: mysql
+    privileged: true
+
+  nacos:
+    image: nacos/nacos-server:v2.1.0
+    ports:
+      - "8848:8848"
+      - "9848:9848"
+      - "9555:9555"
+      - "9849:9849"
+    volumes:
+      - "/opt/docker/nacos/logs:/home/nacos/logs"
+    environment:
+      PREFER_HOST_MODE: ip
+      NACOS_APPLICATION_PORT: 8848
+      MODE: standalone
+      SPRING_DATASOURCE_PLATFORM: mysql
+      MYSQL_SERVICE_HOST: mysql
+      MYSQL_SERVICE_DB_NAME: nacos_config
+      MYSQL_SERVICE_PORT: 3306
+      MYSQL_SERVICE_USER: root
+      MYSQL_SERVICE_PASSWORD: root
+      MYSQL_SERVICE_DB_PARAM: characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true&useSSL=false&allowPublicKeyRetrieval=true
+    networks:
+      - gulimall_server
+    privileged: true
+    restart: always
+    container_name: nacos
+    depends_on:
+      - mysql
+  seata:
+    image: seataio/seata-server:1.6.1
+    ports:
+      - "8091:8091"
+      - "7091:7091"
+    volumes:
+      - "/usr/share/zoneinfo/Asia/Shanghai:/etc/localtime"        #设置系统时区
+      - "/usr/share/zoneinfo/Asia/Shanghai:/etc/timezone"  #设置时区
+      - "/opt/docker/seata/conf:/seata-server/resources"
+    environment:
+      - STORE_MODE=db
+      # 以SEATA_IP作为host注册seata server(docker下不要写localhost/127.0.0.1/seata等容器内部网络ip,可填填写网关地址)
+      - SEATA_IP=host.docker.internal
+      - SEATA_PORT=8091
+    networks:
+      - gulimall_server
+    privileged: true
+    restart: always
+    container_name: seata
+    depends_on:
+      - nacos
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+  es:
+    image: elasticsearch:7.4.2
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    volumes:
+      - "/opt/docker/es/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml"
+      - "/opt/docker/es/data:/usr/share/elasticsearch/data"
+      - "/opt/docker/es/plugins:/usr/share/elasticsearch/plugins"
+    environment:
+      discovery.type: "single-node"
+      ES_JAVA_OPTS: "-Xms256m -Xmx512m"
+    networks:
+      - gulimall_server
+    privileged: true
+    restart: always
+    container_name: es
+    depends_on:
+      - nginx
+  kibana:
+    image: kibana:7.4.2
+    ports:
+      - "5601:5601"
+    environment:
+      ELASTICSEARCH_HOSTS: "http://es:9200"
+    networks:
+      - gulimall_server
+    privileged: true
+    restart: always
+    container_name: kibana
+    depends_on:
+      - es
+  rabbitmq:
+    image: rabbitmq:3.8-management
+    ports:
+      - "5671:5671"
+      - "5672:5672"
+      - "4369:4369"
+      - "25672:25672"
+      - "15671:15671"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: "guest"
+      RABBITMQ_DEFAULT_PASS: "guest"
+    networks:
+      - gulimall_server
+    privileged: true
+    restart: always
+    container_name: rabbitmq
+  nginx:
+    image: nginx:latest
+    ports:
+      - "80:80"
+    volumes:
+      - "/opt/docker/nginx/conf/nginx.conf:/etc/nginx/nginx.conf"
+      - "/opt/docker/nginx/html:/etc/nginx/html"
+      - "/opt/docker/nginx/logs:/etc/nginx/logs/"
+      - "/opt/docker/nginx/conf/conf.d:/etc/nginx/conf.d"
+      - "/opt/docker/nginx:/opt/docker/nginx"
+    networks:
+      - gulimall_server
+    privileged: true
+    restart: always
+    container_name: nginx
+    #在container内使用host.docker.internal:PORT来访问宿主机服务
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+networks:
+  gulimall_server:
+    external: true

@@ -9,7 +9,7 @@ import java.util.List;
  * @author pi'ka'chu
  */
 public interface SeckillService {
-    void uploadL3DProuct();
+    void uploadFuture3DaySeckillSession();
 
     List<SeckillSkuRedisTo> getCurrSeckillSkus();
 

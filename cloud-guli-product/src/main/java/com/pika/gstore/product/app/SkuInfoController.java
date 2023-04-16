@@ -1,18 +1,17 @@
 package com.pika.gstore.product.app;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.pika.gstore.common.utils.PageUtils;
+import com.pika.gstore.common.utils.R;
+import com.pika.gstore.product.entity.SkuInfoEntity;
+import com.pika.gstore.product.service.SkuInfoService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
 import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
-import com.pika.gstore.product.entity.SkuInfoEntity;
-import com.pika.gstore.product.service.SkuInfoService;
-import com.pika.gstore.common.utils.PageUtils;
-import com.pika.gstore.common.utils.R;
 
 
 /**
@@ -57,7 +56,7 @@ public class SkuInfoController {
     public R info(@PathVariable("skuId") Long skuId) {
         SkuInfoEntity skuInfo = skuInfoService.getById(skuId);
 
-        return R.ok().put("skuInfo", skuInfo);
+        return skuInfo == null ? R.error("未找到该skuInfo:" + skuId) : R.ok().put("skuInfo", skuInfo);
     }
 
     /**

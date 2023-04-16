@@ -18,6 +18,6 @@ public interface SmsSeckillSessionService extends IService<SmsSeckillSessionEnti
 
     PageUtils queryPage(Map<String, Object> params);
 
-    List<SmsSeckillSessionEntity> get3LDS();
+    List<SmsSeckillSessionEntity> getFuture3DaySeckillSession();
 }
 

@@ -1,6 +1,5 @@
 server:
   port: 5000
-#数据源
 spring:
   session:
     store-type: redis

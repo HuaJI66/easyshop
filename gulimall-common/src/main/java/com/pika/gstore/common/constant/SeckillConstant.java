@@ -1,4 +1,4 @@
-package com.pika.gstore.seckill.service;
+package com.pika.gstore.common.constant;
 
 import lombok.Data;
 
@@ -45,4 +45,8 @@ public class SeckillConstant {
     public static final long SECKILL_SKU_EXPIRE = 5;
     public static final long SECKILL_SKU_STOCK_EXPIRE = 5;
     public static final Long SECKILL_WAIT_TIME = 200L;
+    /**
+     * 提前上架未来 XX 天参与秒杀的会场
+     */
+    public static final int UPLOAD_SESSION_FUTURE_DAY = 3;
 }

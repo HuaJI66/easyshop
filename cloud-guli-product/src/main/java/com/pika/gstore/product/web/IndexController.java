@@ -49,10 +49,14 @@ public class IndexController {
             if (r.getCode() == 0) {
                 List<SeckillSkuRedisTo> skuRedisTos = r.getData(new TypeReference<List<SeckillSkuRedisTo>>() {
                 });
+                log.warn("skuRedisTos.size() :{} ", skuRedisTos.size());
+                for (SeckillSkuRedisTo redisTo : skuRedisTos) {
+                    log.warn("当前参与秒杀的商品:{}", redisTo);
+                }
                 model.addAttribute("seckill_skus", skuRedisTos);
             }
         } catch (Exception e) {
-            log.info("获取当前秒杀商品信息失败:" + e.getMessage());
+            log.error("获取当前秒杀商品信息失败:" + e.getMessage());
         }
         //查询所有一级分类
         List<CategoryEntity> categoryEntities = categoryService.getFirstLevel();

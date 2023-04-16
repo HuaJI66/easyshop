@@ -7,5 +7,5 @@ import org.springframework.web.bind.annotation.GetMapping;
 @FeignClient("cloud-guli-yhq")
 public interface CouponFeignService {
     @GetMapping("/coupon/seckillsession/get3lds")
-    R get3LDS();
+    R getFuture3DaySeckillSession();
 }

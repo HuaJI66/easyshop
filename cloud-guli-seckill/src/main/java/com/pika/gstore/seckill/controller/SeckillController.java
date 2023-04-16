@@ -3,6 +3,7 @@ package com.pika.gstore.seckill.controller;
 import com.pika.gstore.common.utils.R;
 import com.pika.gstore.seckill.service.SeckillService;
 import com.pika.gstore.seckill.to.SeckillSkuRedisTo;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,6 +20,7 @@ import java.util.List;
  * @since 2023/2/3 0:04
  */
 @RestController
+@Slf4j
 public class SeckillController {
     @Resource
     private SeckillService seckillService;
@@ -26,6 +28,7 @@ public class SeckillController {
     @GetMapping("getCurrSkus")
     public R getCurrSeckillSkus() {
         List<SeckillSkuRedisTo> redisToList = seckillService.getCurrSeckillSkus();
+        log.warn("当前参与秒杀的商品:{}", redisToList);
         return R.ok().setData(redisToList);
     }
 
@@ -41,7 +44,7 @@ public class SeckillController {
     @GetMapping("doSeckill")
     public ModelAndView doSeckill(@RequestParam("skuId") String skuId, @RequestParam("sessionId") String sessionId,
                                   @RequestParam("code") String code, @RequestParam("num") Integer num) {
-        String orderSn= seckillService.doSeckill(skuId, sessionId, code, num);
+        String orderSn = seckillService.doSeckill(skuId, sessionId, code, num);
         ModelAndView modelAndView = new ModelAndView("success");
         modelAndView.addObject("orderSn", orderSn);
         return modelAndView;

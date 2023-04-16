@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.pika.gstore.common.constant.SeckillConstant;
 import com.pika.gstore.common.utils.PageUtils;
 import com.pika.gstore.common.utils.Query;
 import com.pika.gstore.coupon.dao.SmsSeckillSessionDao;
@@ -14,10 +15,6 @@ import com.pika.gstore.coupon.service.SmsSeckillSkuRelationService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
 
@@ -38,15 +35,8 @@ public class SmsSeckillSessionServiceImpl extends ServiceImpl<SmsSeckillSessionD
     }
 
     @Override
-    public List<SmsSeckillSessionEntity> get3LDS() {
-        LocalDate now = LocalDate.now();
-        LocalDateTime startTime = LocalDateTime.of(now, LocalTime.MIN);
-        LocalDateTime endTime = LocalDateTime.of(now.plusDays(2), LocalTime.MAX);
-        String start = startTime.format(DateTimeFormatter.ofPattern("yyyy:MM:dd HH:mm:ss"));
-        String end = endTime.format(DateTimeFormatter.ofPattern("yyyy:MM:dd HH:mm:ss"));
-        List<SmsSeckillSessionEntity> list = list(new LambdaQueryWrapper<SmsSeckillSessionEntity>()
-                .between(SmsSeckillSessionEntity::getStartTime, start, end)
-        );
+    public List<SmsSeckillSessionEntity> getFuture3DaySeckillSession() {
+        List<SmsSeckillSessionEntity> list = baseMapper.getFuture3DaySeckillSession(SeckillConstant.UPLOAD_SESSION_FUTURE_DAY);
         if (list != null && list.size() > 0) {
             list.forEach(item -> {
                 List<SmsSeckillSkuRelationEntity> entities = seckillSkuRelationService.list(new LambdaQueryWrapper<SmsSeckillSkuRelationEntity>().eq(SmsSeckillSkuRelationEntity::getPromotionSessionId, item.getId()));

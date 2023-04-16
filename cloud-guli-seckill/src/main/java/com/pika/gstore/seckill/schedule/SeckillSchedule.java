@@ -1,6 +1,6 @@
 package com.pika.gstore.seckill.schedule;
 
-import com.pika.gstore.seckill.service.SeckillConstant;
+import com.pika.gstore.common.constant.SeckillConstant;
 import com.pika.gstore.seckill.service.SeckillService;
 import lombok.extern.slf4j.Slf4j;
 import org.redisson.api.RLock;
@@ -30,13 +30,13 @@ public class SeckillSchedule {
      * 每天晚上3点,,上架最近3天要秒杀的商品
      */
     @Async
-    @Scheduled(cron = "0 0 3 * * ?")
-    public void uploadL3DProuct() {
+    @Scheduled(cron = "0 0 */12 * * ?")
+    public void uploadFuture3DaySeckillSession() {
         RLock lock = redissonClient.getLock(SeckillConstant.SECKILL_UPLOAD_LOCK);
         lock.lock(10, TimeUnit.MINUTES);
         try {
             log.info("执行上架任务");
-            seckillService.uploadL3DProuct();
+            seckillService.uploadFuture3DaySeckillSession();
         } finally {
             lock.unlock();
         }

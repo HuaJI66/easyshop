@@ -542,7 +542,7 @@ base_url=${MAIN_DOMAIN+#httpServletRequest.requestURI+(#httpServletRequest.getQu
             <div class="swiper-wrapper">
                 <div class="swiper-slide">
                     <!-- 动态拼装秒杀商品信息 -->
-                    <ul id="seckillSkuContent" th:if="${seckill_skus!=null}">
+                    <ul id="seckillSkuContent" th:if="${seckill_skus!=null&&seckill_skus.size()>0}">
                         <li th:each="item:${seckill_skus}">
                             <a th:href="${ITEM_DOMAIN+item.skuId+'.html'}">
                                 <img style="width: 130px; height: 130px" th:src="${item.skuInfoTo.skuDefaultImg}"/>

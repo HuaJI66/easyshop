@@ -6,6 +6,7 @@ import cn.hutool.json.JSONUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.nacos.common.utils.DateFormatUtils;
 import com.pika.gstore.common.constant.MqConstant;
+import com.pika.gstore.common.constant.SeckillConstant;
 import com.pika.gstore.common.to.MemberInfoTo;
 import com.pika.gstore.common.to.SkuInfoTo;
 import com.pika.gstore.common.to.es.SeckillOrderTo;
@@ -13,10 +14,10 @@ import com.pika.gstore.common.utils.R;
 import com.pika.gstore.seckill.feign.CouponFeignService;
 import com.pika.gstore.seckill.feign.ProductFeignService;
 import com.pika.gstore.seckill.interceptor.LoginInterceptor;
-import com.pika.gstore.seckill.service.SeckillConstant;
 import com.pika.gstore.seckill.service.SeckillService;
 import com.pika.gstore.seckill.to.SeckillSkuRedisTo;
 import com.pika.gstore.seckill.vo.SeckillSessionVo;
+import lombok.extern.slf4j.Slf4j;
 import org.redisson.api.RSemaphore;
 import org.redisson.api.RedissonClient;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -42,6 +43,7 @@ import java.util.concurrent.TimeUnit;
  * @since 2023/2/1 23:15
  */
 @Service
+@Slf4j
 public class SeckillServiceImpl implements SeckillService {
     @Resource
     private CouponFeignService couponFeignService;
@@ -56,8 +58,8 @@ public class SeckillServiceImpl implements SeckillService {
 
     @Override
     // TODO: 2023/2/2 幂等性接口
-    public void uploadL3DProuct() {
-        R r = couponFeignService.get3LDS();
+    public void uploadFuture3DaySeckillSession() {
+        R r = couponFeignService.getFuture3DaySeckillSession();
         if (r.getCode() == 0) {
             List<SeckillSessionVo> sessionVos = r.getData(new TypeReference<List<SeckillSessionVo>>() {
             });
@@ -73,14 +75,17 @@ public class SeckillServiceImpl implements SeckillService {
     public List<SeckillSkuRedisTo> getCurrSeckillSkus() {
         ArrayList<SeckillSkuRedisTo> result = new ArrayList<>();
         long now = System.currentTimeMillis();
-        String patten = DateFormatUtils.format(new Date(), SeckillConstant.SECKILL_DATEFORMAT);
-        Set<String> keys = stringRedisTemplate.keys(SeckillConstant.SESSION_CACHE_PREFIX + patten + "*");
+//        String patten = DateFormatUtils.format(new Date(), SeckillConstant.SECKILL_DATEFORMAT);
+//        Set<String> keys = stringRedisTemplate.keys(SeckillConstant.SESSION_CACHE_PREFIX + patten + "*");
+        Set<String> keys = stringRedisTemplate.keys(SeckillConstant.SESSION_CACHE_PREFIX + "*");
+        log.warn("keys:{}", keys);
         if (keys != null && !keys.isEmpty()) {
             keys.forEach(key -> {
                 //seckill:sessions:2023-02-03:1675354200000-1677513600000
                 String[] split = key.substring(key.lastIndexOf(':') + 1).split("-");
                 long start = Long.parseLong(split[0]);
                 long end = Long.parseLong(split[1]);
+                log.warn("now:{},start:{},end:{}", now, start, end);
                 if (now >= start && now <= end) {
                     String sessionId = stringRedisTemplate.opsForValue().get(key);
                     List<Object> redisToStr = stringRedisTemplate.opsForHash().values(SeckillConstant.SESSION_SKUS_CACHE_PREFIX + sessionId);

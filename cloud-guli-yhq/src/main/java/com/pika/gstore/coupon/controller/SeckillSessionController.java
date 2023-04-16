@@ -29,8 +29,8 @@ public class SeckillSessionController {
      * 过去未来3天秒杀商品
      */
     @GetMapping("get3lds")
-    public R get3LDS() {
-        List<SmsSeckillSessionEntity> list = smsSeckillSessionService.get3LDS();
+    public R getFuture3DaySeckillSession() {
+        List<SmsSeckillSessionEntity> list = smsSeckillSessionService.getFuture3DaySeckillSession();
         return R.ok().setData(list);
     }
 
