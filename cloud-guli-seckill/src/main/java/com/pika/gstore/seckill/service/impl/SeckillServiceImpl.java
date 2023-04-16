@@ -29,7 +29,6 @@ import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
 import java.time.Duration;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -75,8 +74,6 @@ public class SeckillServiceImpl implements SeckillService {
     public List<SeckillSkuRedisTo> getCurrSeckillSkus() {
         ArrayList<SeckillSkuRedisTo> result = new ArrayList<>();
         long now = System.currentTimeMillis();
-//        String patten = DateFormatUtils.format(new Date(), SeckillConstant.SECKILL_DATEFORMAT);
-//        Set<String> keys = stringRedisTemplate.keys(SeckillConstant.SESSION_CACHE_PREFIX + patten + "*");
         Set<String> keys = stringRedisTemplate.keys(SeckillConstant.SESSION_CACHE_PREFIX + "*");
         log.warn("keys:{}", keys);
         if (keys != null && !keys.isEmpty()) {
@@ -101,20 +98,15 @@ public class SeckillServiceImpl implements SeckillService {
     }
 
     /**
-     * 获取当前sku的秒杀信息(秒杀预告,今天至未来7天内)
+     * 获取当前sku的秒杀信息(是否参与秒杀活动)
      */
     @Override
     public List<SeckillSkuRedisTo> getSkuSeckillInfo(String skuId) {
         //seckill:sessions:2023-02-03:1675354200000-1677513600000
         List<SeckillSkuRedisTo> collect = new ArrayList<>();
-        LocalDate date = LocalDate.now();
-        ArrayList<String> keys = new ArrayList<>(8);
-        keys.add(SeckillConstant.SESSION_CACHE_PREFIX + date);
         ArrayList<String> sessionIds = new ArrayList<>();
-        for (int i = 1; i <= 7; i++) {
-            keys.add(SeckillConstant.SESSION_CACHE_PREFIX + date.plusDays(i));
-        }
-        //1. 获取当前时间以后的会场
+        //1. 获取当前生效的会场
+        Set<String> keys = stringRedisTemplate.keys(SeckillConstant.SESSION_CACHE_PREFIX + "*");
         for (String item : keys) {
             Set<String> set = stringRedisTemplate.keys(item + "*");
             if (set != null && set.size() > 0) {
@@ -146,7 +138,8 @@ public class SeckillServiceImpl implements SeckillService {
             long start = startTime.getTime();
             long end = item.getEndTime().getTime();
             String key = SeckillConstant.SESSION_CACHE_PREFIX + DateFormatUtils.format(startTime, SeckillConstant.SECKILL_DATEFORMAT) + ":" + start + "-" + end;
-            stringRedisTemplate.opsForValue().setIfAbsent(key, item.getId().toString(), Duration.ofDays(SeckillConstant.SECKILL_SESSION_EXPIRE));
+            // 设置秒杀会场过期时间为秒杀持续时间
+            stringRedisTemplate.opsForValue().setIfAbsent(key, item.getId().toString(), Duration.ofMillis(end - start));
         });
     }
 

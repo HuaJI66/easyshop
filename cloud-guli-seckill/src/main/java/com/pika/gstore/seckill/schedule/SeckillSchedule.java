@@ -30,7 +30,7 @@ public class SeckillSchedule {
      * 每天晚上3点,,上架最近3天要秒杀的商品
      */
     @Async
-    @Scheduled(cron = "0 0 */12 * * ?")
+    @Scheduled(cron = "0 * * * * ?")
     public void uploadFuture3DaySeckillSession() {
         RLock lock = redissonClient.getLock(SeckillConstant.SECKILL_UPLOAD_LOCK);
         lock.lock(10, TimeUnit.MINUTES);

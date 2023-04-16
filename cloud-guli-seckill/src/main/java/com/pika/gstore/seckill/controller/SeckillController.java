@@ -1,6 +1,7 @@
 package com.pika.gstore.seckill.controller;
 
 import com.pika.gstore.common.utils.R;
+import com.pika.gstore.seckill.schedule.SeckillSchedule;
 import com.pika.gstore.seckill.service.SeckillService;
 import com.pika.gstore.seckill.to.SeckillSkuRedisTo;
 import lombok.extern.slf4j.Slf4j;
@@ -24,6 +25,14 @@ import java.util.List;
 public class SeckillController {
     @Resource
     private SeckillService seckillService;
+    @Resource
+    private SeckillSchedule seckillSchedule;
+
+    @GetMapping("upload")
+    public R upload() {
+        seckillSchedule.uploadFuture3DaySeckillSession();
+        return R.ok();
+    }
 
     @GetMapping("getCurrSkus")
     public R getCurrSeckillSkus() {
