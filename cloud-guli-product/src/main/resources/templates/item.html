@@ -736,7 +736,7 @@
                         <li>商城价</li>
                         <li>
                             <span>￥</span>
-                            <span th:text="${#numbers.formatDecimal(item.info.price,4,2)}">4499.00</span>
+                            <span th:text="${#numbers.formatDecimal(item.info.price,1,2)}">4499.00</span>
                         </li>
                         <li style="color: red" th:if="${item.skuRedisTo!=null&&item.skuRedisTo.size()>0}"
                             th:with="seckillInfo=${item.skuRedisTo.get(0)}">
