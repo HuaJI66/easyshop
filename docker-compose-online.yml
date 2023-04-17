@@ -43,7 +43,7 @@ services:
     privileged: true
 
   nacos:
-    image: nacos/nacos-server:v2.1.0
+    image: nacos/nacos-server:v2.2.2
     ports:
       - "8848:8848"
       - "9848:9848"
@@ -52,6 +52,10 @@ services:
     volumes:
       - "/opt/docker/nacos/logs:/home/nacos/logs"
     environment:
+      NACOS_AUTH_ENABLE: true
+      NACOS_AUTH_TOKEN: SecretKeypikachupikachupikachupikachu
+      NACOS_AUTH_IDENTITY_KEY: pikachu
+      NACOS_AUTH_IDENTITY_VALUE: pikachu
       PREFER_HOST_MODE: ip
       NACOS_APPLICATION_PORT: 8848
       MODE: standalone
@@ -144,7 +148,7 @@ services:
   nginx:
     image: nginx:latest
     ports:
-      - "80:80"
+      - "90:443"
     volumes:
       - "/opt/docker/nginx/conf/nginx.conf:/etc/nginx/nginx.conf"
       - "/opt/docker/nginx/html:/etc/nginx/html"

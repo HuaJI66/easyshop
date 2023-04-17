@@ -8,9 +8,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * 返回数据
+ * 通用返回数据
+ * <p>注意，此类继承了HashMap，在进行Json序列化时，会使用 MapSerializer，
+ * 该序列化器仅遍历序列化entrySet的Entry实体，并不会将Map结构中的成员字段进行序列化
+ * </p>
  *
- * @author Mark sunlightcs@gmail.com
+ * @author pikachu
  */
 public class R extends HashMap<String, Object> {
     private static final long serialVersionUID = 1L;
@@ -30,7 +33,8 @@ public class R extends HashMap<String, Object> {
         String jsonStr = JSONUtil.toJsonStr(data);
         return JSONUtil.toBean(jsonStr, typeReference, false);
     }
-    public String getMsg(){
+
+    public String getMsg() {
         return (String) this.get("msg");
     }
 
