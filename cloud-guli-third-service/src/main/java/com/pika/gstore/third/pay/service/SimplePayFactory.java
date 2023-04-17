@@ -22,6 +22,9 @@ public class SimplePayFactory {
     private WebUnionPayImpl webUnionPay;
     private static final PayService[] PAY_SERVICES = new PayService[PayType.values().length];
 
+    /**
+     * 属性注入完成后，为PAY_SERVICES赋值
+     */
     @PostConstruct
     public void init() {
         PAY_SERVICES[PayType.ALI_WEB.ordinal()] = webAliPayService;

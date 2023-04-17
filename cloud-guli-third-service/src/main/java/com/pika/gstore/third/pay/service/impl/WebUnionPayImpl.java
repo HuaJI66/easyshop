@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
@@ -31,7 +30,7 @@ public class WebUnionPayImpl extends AbstractPayAdapter {
 
     @Override
     public Object doPay(Object... objects) {
-        return unionPayTemplate.doPay((LinkedHashMap<String, String>) objects[0]);
+        return unionPayTemplate.doPay((Map<String, String>) objects[0]);
     }
 
     @Override

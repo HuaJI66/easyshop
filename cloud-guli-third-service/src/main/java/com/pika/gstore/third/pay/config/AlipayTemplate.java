@@ -13,7 +13,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
 import java.util.HashMap;
-import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * @author pi'ka'chu
@@ -67,7 +67,7 @@ public class AlipayTemplate {
      *
      * @return 会收到支付宝的响应，响应的是一个页面，只要浏览器显示这个页面，就会自动来到支付宝的收银台页面
      */
-    public String pay(LinkedHashMap<String, String> vo) throws AlipayApiException {
+    public String pay(Map<String, String> vo) throws AlipayApiException {
         System.out.println("app_id = " + appId);
         //1、根据支付宝的配置生成一个支付客户端
         AlipayClient alipayClient = new DefaultAlipayClient(gatewayUrl, appId, merchantPrivateKey, "json", charset, alipayPublicKey, signType);

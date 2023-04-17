@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -22,11 +23,13 @@ public class AuthFilter implements Filter {
     private String authServiceUrl;
     private String gatewayUrl;
     private String authDomain;
+    private String otherUrl;
 
-    public AuthFilter(String authServiceUrl, String gatewayUrl, String authDomain) {
+    public AuthFilter(String authServiceUrl, String gatewayUrl, String otherUrl, String authDomain) {
         this.authServiceUrl = authServiceUrl;
         this.gatewayUrl = gatewayUrl;
         this.authDomain = authDomain;
+        this.otherUrl = otherUrl;
     }
 
     @Override
@@ -41,6 +44,10 @@ public class AuthFilter implements Filter {
         exclude.add(authServiceUrl);
         //网关
         exclude.add(gatewayUrl);
+        String[] otherPassUrl = otherUrl.split(",");
+        if (otherPassUrl.length > 0) {
+            exclude.addAll(Arrays.asList(otherPassUrl));
+        }
         HttpSession session = ((HttpServletRequest) request).getSession();
         StringBuffer requestURL = ((HttpServletRequest) request).getRequestURL();
         String url = requestURL.toString().trim();

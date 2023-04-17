@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.RequestParam;
  */
 @FeignClient("cloud-guli-third-service")
 public interface ThirdFeignService {
+    /**
+     * 让SpringMVC自动将Object序列化为Json串，接收时封装为LinkListHashMap
+     */
     @PostMapping(value = "/payOrder")
     R payOrder(@RequestBody Object payVo, @RequestParam("payType") Integer payType);
 }

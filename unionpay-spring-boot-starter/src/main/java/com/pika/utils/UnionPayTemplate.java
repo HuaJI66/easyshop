@@ -15,7 +15,6 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
@@ -49,7 +48,7 @@ public class UnionPayTemplate {
      * @param payVo {@link UnionPayVo}
      * @return {@link String} form表单,可直接跳转支付页面
      */
-    public String doPay(LinkedHashMap<String, String> payVo) {
+    public String doPay(Map<String, String> payVo) {
         Map<String, String> requestData = new HashMap<String, String>(payVo);
         //	1、获取参数
         /***商户接入参数***/

@@ -25,14 +25,6 @@ public class DomainProperties {
     private String order;
     private String member;
     private String seckill;
-    /**
-     * 认证服务端口,用于登录过滤器放行，如: http://127.0.0.1:10000/
-     */
-    private String authServiceUrl = "http://127.0.0.1:10000/";
-    /**
-     * 网关服务端口，用于登录过滤器放行,如: http://127.0.0.1:5000/
-     */
-    private String gatewayUrl = "http://127.0.0.1:5000/";
     private String redirectUrl = "redirect_url";
 
     @PostConstruct
@@ -46,7 +38,5 @@ public class DomainProperties {
         log.warn("orderDomain:{}", order);
         log.warn("memberDomain:{}", member);
         log.warn("seckillDomain:{}", seckill);
-        log.warn("authServiceUrl:{}", authServiceUrl);
-        log.warn("gatewayUrl:{}", gatewayUrl);
     }
 }

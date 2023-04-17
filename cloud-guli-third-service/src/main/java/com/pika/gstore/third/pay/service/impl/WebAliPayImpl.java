@@ -14,7 +14,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
@@ -59,7 +58,7 @@ public class WebAliPayImpl extends AbstractPayAdapter {
     @Override
     public String doPay(Object... objects) {
         try {
-            return alipayTemplate.pay((LinkedHashMap<String, String>) objects[0]);
+            return alipayTemplate.pay((Map<String, String>) objects[0]);
         } catch (AlipayApiException e) {
             throw new RuntimeException(e);
         }
