@@ -41,9 +41,6 @@ public class SeckillConstant {
      * 执行定时任务锁
      */
     public static final String SECKILL_UPLOAD_LOCK = "seckill:upload:lock";
-    public static final long SECKILL_SESSION_EXPIRE = 5;
-    public static final long SECKILL_SKU_EXPIRE = 5;
-    public static final long SECKILL_SKU_STOCK_EXPIRE = 5;
     public static final Long SECKILL_WAIT_TIME = 200L;
     /**
      * 提前上架未来 XX 天参与秒杀的会场

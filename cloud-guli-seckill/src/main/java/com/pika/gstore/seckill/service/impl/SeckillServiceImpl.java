@@ -146,7 +146,8 @@ public class SeckillServiceImpl implements SeckillService {
     private void saveSessionSkuInfos(List<SeckillSessionVo> sessionVos) {
         sessionVos.stream().filter(item -> item.getEndTime().getTime() > System.currentTimeMillis()).forEach(item -> {
             BoundHashOperations<String, Object, Object> ops = stringRedisTemplate.boundHashOps(SeckillConstant.SESSION_SKUS_CACHE_PREFIX + item.getId());
-            ops.expire(SeckillConstant.SECKILL_SKU_EXPIRE, TimeUnit.DAYS);
+            long expire = item.getEndTime().getTime() - item.getStartTime().getTime();
+            ops.expire(expire, TimeUnit.MILLISECONDS);
             item.getRelationEntities().forEach(vo -> {
                 String uuid = IdUtil.fastSimpleUUID();
                 //当前场次无该商品
