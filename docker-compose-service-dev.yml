@@ -133,6 +133,7 @@ services:
     image: anapsix/alpine-java:8_server-jre_unlimited
     volumes:
       - "/opt/docker/gulimall/jar:/opt/jar"
+      # 银联证书
       - "/opt/docker/gulimall/certs:/certs"
     networks:
       - gulimall_server
