@@ -31,7 +31,7 @@ public class GiteeLoginServiceImpl implements Oauth2Service {
     /**
      * gitee跳转授权 url前缀
      */
-    public static final String GITEE_AUTH__BASE_URL = "https://gitee.com/oauth/authorize?client_id=";
+    public static final String GITEE_AUTH_URL = "https://gitee.com/oauth/authorize?client_id=";
     @Value("${auth.gitee.client-id}")
     public String giteeClientId;
     @Value("${auth.gitee.client-secret}")
@@ -51,7 +51,7 @@ public class GiteeLoginServiceImpl implements Oauth2Service {
      * @param redirectUri 回调地址
      */
     public String getGiteeAuthUrl(String redirectUri) {
-        return GITEE_AUTH__BASE_URL + giteeClientId
+        return GITEE_AUTH_URL + giteeClientId
                 + "&redirect_uri=" + redirectUri
                 + "&response_type=code";
     }

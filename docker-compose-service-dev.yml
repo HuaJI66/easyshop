@@ -1,3 +1,4 @@
+# 线上微服务部署,本文件及所有服务jar包放在目录: /opt/docker/gulimall/jar
 version: "3"
 services:
   cloud-guli-auth:
@@ -11,7 +12,7 @@ services:
       - "10000:10000"
     # 设置时区
     #    command: apk add tzdata && cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && echo "Asia/Shanghai" > /etc/timezone && apk del tzdata
-    entrypoint: java -jar -Dfile.encoding=utf-8 -Xms256m -Xmx500m -Dspring.cloud.nacos.server-addr=nacos:8848 -Dspring.cloud.nacos.username=nacos -Dspring.cloud.nacos.password=pikachu   -Dspring.cloud.nacos.discovery.ip=cloud-guli-auth /opt/jar/cloud-guli-auth-0.0.1-SNAPSHOT.jar
+    entrypoint: java -jar -Dfile.encoding=utf-8 -Xms256m -Xmx500m -Dspring.cloud.nacos.server-addr=nacos:8848 -Dspring.cloud.nacos.username=nacos -Dspring.cloud.nacos.password=nacos -Dspring.cloud.nacos.discovery.ip=cloud-guli-auth /opt/jar/cloud-guli-auth-0.0.1-SNAPSHOT.jar
     privileged: true
     extra_hosts:
       - "host.docker.internal:host-gateway"
@@ -25,7 +26,7 @@ services:
       - gulimall_server
     ports:
       - "9900:9900"
-    entrypoint: java -jar -Dfile.encoding=utf-8 -Xms256m -Xmx500m -Dspring.cloud.nacos.server-addr=nacos:8848 -Dspring.cloud.nacos.username=nacos -Dspring.cloud.nacos.password=pikachu   -Dspring.cloud.nacos.discovery.ip=cloud-guli-cart /opt/jar/cloud-guli-cart-0.0.1-SNAPSHOT.jar
+    entrypoint: java -jar -Dfile.encoding=utf-8 -Xms256m -Xmx500m -Dspring.cloud.nacos.server-addr=nacos:8848 -Dspring.cloud.nacos.username=nacos -Dspring.cloud.nacos.password=nacos  -Dspring.cloud.nacos.discovery.ip=cloud-guli-cart /opt/jar/cloud-guli-cart-0.0.1-SNAPSHOT.jar
     privileged: true
     extra_hosts:
       - "host.docker.internal:host-gateway"
@@ -39,7 +40,7 @@ services:
   #      - gulimall_server
   #    ports:
   #      - "8080:8080"
-  #    entrypoint: java -jar -Dfile.encoding=utf-8 -Xms256m -Xmx500m -Dspring.application.name=cloud-guli-fast -Dspring.cloud.nacos.server-addr=nacos:8848 -Dspring.cloud.nacos.username=nacos -Dspring.cloud.nacos.password=pikachu   -Dspring.cloud.nacos.discovery.ip=cloud-guli-fast  /opt/jar/cloud-guli-fast-0.0.1-SNAPSHOT.jar
+  #    entrypoint: java -jar -Dfile.encoding=utf-8 -Xms256m -Xmx500m -Dspring.application.name=cloud-guli-fast -Dspring.cloud.nacos.server-addr=nacos:8848 -Dspring.cloud.nacos.username=nacos -Dspring.cloud.nacos.password=nacos  -Dspring.cloud.nacos.discovery.ip=cloud-guli-fast  /opt/jar/cloud-guli-fast-0.0.1-SNAPSHOT.jar
   #    privileged: true
   #    extra_hosts:
   #      - "host.docker.internal:host-gateway"
@@ -53,7 +54,7 @@ services:
       - gulimall_server
     ports:
       - "6000:6000"
-    entrypoint: java -jar -Dfile.encoding=utf-8 -Xms256m -Xmx500m -Dspring.cloud.nacos.server-addr=nacos:8848 -Dspring.cloud.nacos.username=nacos -Dspring.cloud.nacos.password=pikachu   -Dspring.cloud.nacos.discovery.ip=cloud-guli-gateway  /opt/jar/cloud-guli-gateway-0.0.1-SNAPSHOT.jar
+    entrypoint: java -jar -Dfile.encoding=utf-8 -Xms256m -Xmx500m -Dspring.cloud.nacos.server-addr=nacos:8848 -Dspring.cloud.nacos.username=nacos -Dspring.cloud.nacos.password=nacos  -Dspring.cloud.nacos.discovery.ip=cloud-guli-gateway  /opt/jar/cloud-guli-gateway-0.0.1-SNAPSHOT.jar
     privileged: true
     extra_hosts:
       - "host.docker.internal:host-gateway"
@@ -67,7 +68,7 @@ services:
       - gulimall_server
     ports:
       - "2000:2000"
-    entrypoint: java -jar -Dfile.encoding=utf-8 -Xms256m -Xmx500m -Dspring.cloud.nacos.server-addr=nacos:8848 -Dspring.cloud.nacos.username=nacos -Dspring.cloud.nacos.password=pikachu   -Dspring.cloud.nacos.discovery.ip=cloud-guli-member  /opt/jar/cloud-guli-member-0.0.1-SNAPSHOT.jar
+    entrypoint: java -jar -Dfile.encoding=utf-8 -Xms256m -Xmx500m -Dspring.cloud.nacos.server-addr=nacos:8848 -Dspring.cloud.nacos.username=nacos -Dspring.cloud.nacos.password=nacos  -Dspring.cloud.nacos.discovery.ip=cloud-guli-member  /opt/jar/cloud-guli-member-0.0.1-SNAPSHOT.jar
     privileged: true
     extra_hosts:
       - "host.docker.internal:host-gateway"
@@ -81,7 +82,7 @@ services:
       - gulimall_server
     ports:
       - "4010:4010"
-    entrypoint: java -jar -Dfile.encoding=utf-8 -Xms256m -Xmx500m -Dspring.cloud.nacos.server-addr=nacos:8848 -Dspring.cloud.nacos.username=nacos -Dspring.cloud.nacos.password=pikachu   -Dspring.cloud.nacos.discovery.ip=cloud-guli-order  /opt/jar/cloud-guli-order-0.0.1-SNAPSHOT.jar
+    entrypoint: java -jar -Dfile.encoding=utf-8 -Xms256m -Xmx500m -Dspring.cloud.nacos.server-addr=nacos:8848 -Dspring.cloud.nacos.username=nacos -Dspring.cloud.nacos.password=nacos  -Dspring.cloud.nacos.discovery.ip=cloud-guli-order  /opt/jar/cloud-guli-order-0.0.1-SNAPSHOT.jar
     privileged: true
     extra_hosts:
       - "host.docker.internal:host-gateway"
@@ -95,7 +96,7 @@ services:
       - gulimall_server
     ports:
       - "5000:5000"
-    entrypoint: java -jar -Dfile.encoding=utf-8 -Xms256m -Xmx500m -Dspring.cloud.nacos.server-addr=nacos:8848 -Dspring.cloud.nacos.username=nacos -Dspring.cloud.nacos.password=pikachu   -Dspring.cloud.nacos.discovery.ip=cloud-guli-product  /opt/jar/cloud-guli-product-0.0.1-SNAPSHOT.jar
+    entrypoint: java -jar -Dfile.encoding=utf-8 -Xms256m -Xmx500m -Dspring.cloud.nacos.server-addr=nacos:8848 -Dspring.cloud.nacos.username=nacos -Dspring.cloud.nacos.password=nacos  -Dspring.cloud.nacos.discovery.ip=cloud-guli-product  /opt/jar/cloud-guli-product-0.0.1-SNAPSHOT.jar
     privileged: true
     extra_hosts:
       - "host.docker.internal:host-gateway"
@@ -109,7 +110,7 @@ services:
       - gulimall_server
     ports:
       - "9000:9000"
-    entrypoint: java -jar -Delasticsearch.host=es -Dfile.encoding=utf-8 -Xms256m -Xmx500m -Dspring.cloud.nacos.server-addr=nacos:8848 -Dspring.cloud.nacos.username=nacos -Dspring.cloud.nacos.password=pikachu   -Dspring.cloud.nacos.discovery.ip=cloud-guli-search  /opt/jar/cloud-guli-search-0.0.1-SNAPSHOT.jar
+    entrypoint: java -jar -Delasticsearch.host=es -Dfile.encoding=utf-8 -Xms256m -Xmx500m -Dspring.cloud.nacos.server-addr=nacos:8848 -Dspring.cloud.nacos.username=nacos -Dspring.cloud.nacos.password=nacos  -Dspring.cloud.nacos.discovery.ip=cloud-guli-search  /opt/jar/cloud-guli-search-0.0.1-SNAPSHOT.jar
     privileged: true
     extra_hosts:
       - "host.docker.internal:host-gateway"
@@ -123,7 +124,7 @@ services:
       - gulimall_server
     ports:
       - "8030:8030"
-    entrypoint: java -jar -Delasticsearch.host=es -Dfile.encoding=utf-8 -Xms256m -Xmx500m -Dspring.cloud.nacos.server-addr=nacos:8848 -Dspring.cloud.nacos.username=nacos -Dspring.cloud.nacos.password=pikachu   -Dspring.cloud.nacos.discovery.ip=cloud-guli-seckill  /opt/jar/cloud-guli-seckill-0.0.1-SNAPSHOT.jar
+    entrypoint: java -jar -Delasticsearch.host=es -Dfile.encoding=utf-8 -Xms256m -Xmx500m -Dspring.cloud.nacos.server-addr=nacos:8848 -Dspring.cloud.nacos.username=nacos -Dspring.cloud.nacos.password=nacos  -Dspring.cloud.nacos.discovery.ip=cloud-guli-seckill  /opt/jar/cloud-guli-seckill-0.0.1-SNAPSHOT.jar
     privileged: true
     extra_hosts:
       - "host.docker.internal:host-gateway"
@@ -137,7 +138,7 @@ services:
       - gulimall_server
     ports:
       - "7000:7000"
-    entrypoint: java -jar -Delasticsearch.host=es -Dfile.encoding=utf-8 -Xms256m -Xmx500m -Dspring.cloud.nacos.server-addr=nacos:8848 -Dspring.cloud.nacos.username=nacos -Dspring.cloud.nacos.password=pikachu   -Dspring.cloud.nacos.discovery.ip=cloud-guli-third-service  /opt/jar/cloud-guli-third-service-0.0.1-SNAPSHOT.jar
+    entrypoint: java -jar -Delasticsearch.host=es -Dfile.encoding=utf-8 -Xms256m -Xmx500m -Dspring.cloud.nacos.server-addr=nacos:8848 -Dspring.cloud.nacos.username=nacos -Dspring.cloud.nacos.password=nacos  -Dspring.cloud.nacos.discovery.ip=cloud-guli-third-service  /opt/jar/cloud-guli-third-service-0.0.1-SNAPSHOT.jar
     privileged: true
     extra_hosts:
       - "host.docker.internal:host-gateway"
@@ -151,7 +152,7 @@ services:
       - gulimall_server
     ports:
       - "8001:8001"
-    entrypoint: java -jar -Dfile.encoding=utf-8 -Xms256m -Xmx500m -Dserver.port=8001 -Dspring.cloud.nacos.server-addr=nacos:8848 -Dspring.cloud.nacos.username=nacos -Dspring.cloud.nacos.password=pikachu   -Dspring.cloud.nacos.discovery.ip=cloud-guli-ware  /opt/jar/cloud-guli-ware-0.0.1-SNAPSHOT.jar
+    entrypoint: java -jar -Dfile.encoding=utf-8 -Xms256m -Xmx500m -Dserver.port=8001 -Dspring.cloud.nacos.server-addr=nacos:8848 -Dspring.cloud.nacos.username=nacos -Dspring.cloud.nacos.password=nacos  -Dspring.cloud.nacos.discovery.ip=cloud-guli-ware  /opt/jar/cloud-guli-ware-0.0.1-SNAPSHOT.jar
     privileged: true
     extra_hosts:
       - "host.docker.internal:host-gateway"
@@ -165,7 +166,7 @@ services:
       - gulimall_server
     ports:
       - "3000:3000"
-    entrypoint: java -jar -Dfile.encoding=utf-8 -Xms256m -Xmx500m -Dspring.cloud.nacos.server-addr=nacos:8848 -Dspring.cloud.nacos.username=nacos -Dspring.cloud.nacos.password=pikachu   -Dspring.cloud.nacos.discovery.ip=cloud-guli-yhq  /opt/jar/cloud-guli-yhq-0.0.1-SNAPSHOT.jar
+    entrypoint: java -jar -Dfile.encoding=utf-8 -Xms256m -Xmx500m -Dspring.cloud.nacos.server-addr=nacos:8848 -Dspring.cloud.nacos.username=nacos -Dspring.cloud.nacos.password=nacos  -Dspring.cloud.nacos.discovery.ip=cloud-guli-yhq  /opt/jar/cloud-guli-yhq-0.0.1-SNAPSHOT.jar
     privileged: true
     extra_hosts:
       - "host.docker.internal:host-gateway"

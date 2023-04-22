@@ -1,25 +1,17 @@
+# 线上部署中间件环境
 version: "3"
-# 定义服务
 services:
-  # 为project定义服务
   redis:
-    # 服务的镜像名称或镜像ID。如果镜像在本地不存在，Compose将会尝试拉取镜像
     image: redis/redis-stack-server:latest
-    # 配置端口 - "宿主机端口:容器暴露端口"
     ports:
       - "6379:6379"
-    # 配置容器连接的网络，引用顶级 networks 下的条目(就是最下面配置的networks(一级目录))
     networks:
       - gulimall_server
-    # 挂载
     volumes:
       - "/opt/docker/redis/redis-stack/redis-stack.conf:/opt/redis-stack/etc/redis-stack.conf"
       - "/opt/docker/redis/redis-stack/data:/data"
-    # 容器总是重新启动
     restart: always
-    # 指定一个自定义容器名称，而不是生成的默认名称。
     container_name: redis
-    # 使用该参数，container内的root拥有真正的root权限。
     privileged: true
 
   mysql:
@@ -27,8 +19,7 @@ services:
     ports:
       - "3306:3306"
       - "33060:33060"
-    # 添加环境变量
-    environment:
+      # 添加环境变量
       MYSQL_ROOT_PASSWORD: "root"
     volumes:
       - "/opt/docker/mysql/master/data:/var/lib/mysql"
