@@ -25,6 +25,7 @@ public class DomainProperties {
     private String order;
     private String member;
     private String seckill;
+    private String ware;
     private String redirectUrl = "redirect_url";
 
     @PostConstruct
@@ -38,5 +39,6 @@ public class DomainProperties {
         log.warn("orderDomain:{}", order);
         log.warn("memberDomain:{}", member);
         log.warn("seckillDomain:{}", seckill);
+        log.warn("wareDomain:{}", ware);
     }
 }
