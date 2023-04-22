@@ -27,7 +27,7 @@ base_url=${CART_DOMAIN+#httpServletRequest.requestURI
 
             </ul>
             <ul class="header-right">
-                <li><a th:href="AUTH_DOMAIN+'login.html?redirect_url='+${base_url}"
+                <li><a th:href="${AUTH_DOMAIN+'login.html?redirect_url='+base_url}"
                        th:text="'你好，'+${loginUser!=null?loginUser.username:'请登录'}"></a></li>
                 <li th:if="${loginUser==null}"><a th:href="${AUTH_DOMAIN}+'reg.html'">免费注册</a></li>
                 <li class="spacer"></li>
@@ -234,7 +234,7 @@ base_url=${CART_DOMAIN+#httpServletRequest.requestURI
 
 </div>
 </body>
-<script charset="utf-8" src="https://mall-pika.oss-cn-guangzhou.aliyuncs.com/html/static/cart//js/index.js"></script>
+<script charset="utf-8" src="https://mall-pika.oss-cn-guangzhou.aliyuncs.com/html/static/cart/js/index.js"></script>
 <script type="text/javascript">
     function toTrade() {
         window.location.href = '[[${ORDER_DOMAIN}]]' + "toTrade";

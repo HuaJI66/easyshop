@@ -1,2 +1,3 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  com.pika.gstore.common.config.DomainAutoConfiguration
+  com.pika.gstore.common.config.DomainAutoConfiguration,\
+  com.pika.gstore.common.config.ViewResolverAutoConfiguration

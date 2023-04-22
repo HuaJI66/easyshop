@@ -21,9 +21,9 @@ import java.util.Map;
 @Configuration
 @Slf4j
 @Order
-@ConditionalOnClass(ThymeleafViewResolver.class)
 @AutoConfigureAfter(value = {DomainAutoConfiguration.class, ThymeleafAutoConfiguration.class})
-public class ViewResolverConfig implements ApplicationContextAware {
+@ConditionalOnClass(ThymeleafViewResolver.class)
+public class ViewResolverAutoConfiguration implements ApplicationContextAware {
     @Override
     public void setApplicationContext(ApplicationContext context) throws BeansException {
         ThymeleafViewResolver thymeleafViewResolver = context.getBean(ThymeleafViewResolver.class);
