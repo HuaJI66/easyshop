@@ -6,7 +6,7 @@ gulimall 项目致力于打造一个完整的电商系统，采用现阶段流�
 
 注：跟练项目，代码实现与教程有差异，仅供参考。
 
-[个人笔记](./笔记/zero.md)
+[项目笔记](./笔记/zero.md)
 
 ### 开源代码与组件使用情况说明
 
@@ -85,7 +85,7 @@ gulimall
 | renren-generator   | 人人开源项目的代码生成器 | https://gitee.com/renrenio/renren-generator                                                                                                |
 | Elasticsearch      | 搜索引擎         | [https://github.com/elastic/elasticsearch](https://gitee.com/link?target=https%3A%2F%2Fgithub.com%2Felastic%2Felasticsearch)               |
 | RabbitMQ           | 消息队列         | [https://www.rabbitmq.com](https://gitee.com/link?target=https%3A%2F%2Fwww.rabbitmq.com)                                                   |
-| Springsession      | 分布式缓存        | [https://projects.spring.io/spring-session](https://gitee.com/link?target=https%3A%2F%2Fprojects.spring.io%2Fspring-session)               |
+| SpringSession      | 分布式缓存        | [https://projects.spring.io/spring-session](https://gitee.com/link?target=https%3A%2F%2Fprojects.spring.io%2Fspring-session)               |
 | Redisson           | 分布式锁         | [https://github.com/redisson/redisson](https://gitee.com/link?target=https%3A%2F%2Fgithub.com%2Fredisson%2Fredisson)                       |
 | Docker             | 应用容器引擎       | [https://www.docker.com](https://gitee.com/link?target=https%3A%2F%2Fwww.docker.com)                                                       |
 | OSS                | 对象云存储        | [https://github.com/aliyun/aliyun-oss-java-sdk](https://gitee.com/link?target=https%3A%2F%2Fgithub.com%2Faliyun%2Faliyun-oss-java-sdk)     |
@@ -96,8 +96,8 @@ gulimall
 |-----------|--------|--------------------------------------------------------------------------------------------|
 | Vue       | 前端框架   | [https://vuejs.org](https://gitee.com/link?target=https%3A%2F%2Fvuejs.org)                 |
 | Element   | 前端UI框架 | [https://element.eleme.io](https://gitee.com/link?target=https%3A%2F%2Felement.eleme.io)   |
-| thymeleaf | 模板引擎   | [https://www.thymeleaf.org](https://gitee.com/link?target=https%3A%2F%2Fwww.thymeleaf.org) |
-| node.js   | 服务端的js | [https://nodejs.org/en](https://gitee.com/link?target=https%3A%2F%2Fnodejs.org%2Fen)       |
+| Thymeleaf | 模板引擎   | [https://www.thymeleaf.org](https://gitee.com/link?target=https%3A%2F%2Fwww.thymeleaf.org) |
+| Node.js   | 服务端的js | [https://nodejs.org/en](https://gitee.com/link?target=https%3A%2F%2Fnodejs.org%2Fen)       |
 
 ### 架构图
 
