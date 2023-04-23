@@ -2,7 +2,7 @@ version: "3"
 services:
   cloud-guli-auth:
     container_name: cloud-guli-auth
-    image: anapsix/alpine-java:8_server-jre_unlimited
+    image: alpine-java8
     volumes:
       - "/opt/docker/gulimall/jar:/opt/jar"
     networks:
@@ -18,7 +18,7 @@ services:
 
   cloud-guli-cart:
     container_name: cloud-guli-cart
-    image: anapsix/alpine-java:8_server-jre_unlimited
+    image: alpine-java8
     volumes:
       - "/opt/docker/gulimall/jar:/opt/jar"
     networks:
@@ -32,7 +32,7 @@ services:
 
   #  cloud-guli-fast:
   #    container_name: cloud-guli-fast
-  #    image: anapsix/alpine-java:8_server-jre_unlimited
+  #    image: alpine-java8
   #    volumes:
   #      - "/opt/docker/gulimall/jar:/opt/jar"
   #    networks:
@@ -46,7 +46,7 @@ services:
 
   cloud-guli-gateway:
     container_name: cloud-guli-gateway
-    image: anapsix/alpine-java:8_server-jre_unlimited
+    image: alpine-java8
     volumes:
       - "/opt/docker/gulimall/jar:/opt/jar"
     networks:
@@ -60,7 +60,7 @@ services:
 
   cloud-guli-member:
     container_name: cloud-guli-member
-    image: anapsix/alpine-java:8_server-jre_unlimited
+    image: alpine-java8
     volumes:
       - "/opt/docker/gulimall/jar:/opt/jar"
     networks:
@@ -74,7 +74,7 @@ services:
 
   cloud-guli-order:
     container_name: cloud-guli-order
-    image: anapsix/alpine-java:8_server-jre_unlimited
+    image: alpine-java8
     volumes:
       - "/opt/docker/gulimall/jar:/opt/jar"
     networks:
@@ -88,7 +88,7 @@ services:
 
   cloud-guli-product:
     container_name: cloud-guli-product
-    image: anapsix/alpine-java:8_server-jre_unlimited
+    image: alpine-java8
     volumes:
       - "/opt/docker/gulimall/jar:/opt/jar"
     networks:
@@ -102,7 +102,7 @@ services:
 
   cloud-guli-search:
     container_name: cloud-guli-search
-    image: anapsix/alpine-java:8_server-jre_unlimited
+    image: alpine-java8
     volumes:
       - "/opt/docker/gulimall/jar:/opt/jar"
     networks:
@@ -116,7 +116,7 @@ services:
 
   cloud-guli-seckill:
     container_name: cloud-guli-seckill
-    image: anapsix/alpine-java:8_server-jre_unlimited
+    image: alpine-java8
     volumes:
       - "/opt/docker/gulimall/jar:/opt/jar"
     networks:
@@ -130,7 +130,7 @@ services:
 
   cloud-guli-third-service:
     container_name: cloud-guli-third-service
-    image: anapsix/alpine-java:8_server-jre_unlimited
+    image: alpine-java8
     volumes:
       - "/opt/docker/gulimall/jar:/opt/jar"
       # 银联证书
@@ -146,7 +146,7 @@ services:
 
   cloud-guli-ware:
     container_name: cloud-guli-ware
-    image: anapsix/alpine-java:8_server-jre_unlimited
+    image: alpine-java8
     volumes:
       - "/opt/docker/gulimall/jar:/opt/jar"
     networks:
@@ -160,7 +160,7 @@ services:
 
   cloud-guli-yhq:
     container_name: cloud-guli-yhq
-    image: anapsix/alpine-java:8_server-jre_unlimited
+    image: alpine-java8
     volumes:
       - "/opt/docker/gulimall/jar:/opt/jar"
     networks:
