@@ -9,8 +9,6 @@ services:
       - "gulimall_server"
     ports:
       - "10000:10000"
-    # 设置时区
-    #    command: apk add tzdata && cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && echo "Asia/Shanghai" > /etc/timezone && apk del tzdata
     entrypoint: java -jar -Dfile.encoding=utf-8 -Xms256m -Xmx500m -Dspring.cloud.nacos.server-addr=nacos:8848 -Dspring.cloud.nacos.username=nacos -Dspring.cloud.nacos.password=nacos -Dspring.cloud.nacos.discovery.ip=cloud-guli-auth /opt/jar/cloud-guli-auth-0.0.1-SNAPSHOT.jar
     privileged: true
     extra_hosts:
@@ -30,19 +28,19 @@ services:
     extra_hosts:
       - "host.docker.internal:host-gateway"
 
-  #  cloud-guli-fast:
-  #    container_name: cloud-guli-fast
-  #    image: alpine-java8
-  #    volumes:
-  #      - "/opt/docker/gulimall/jar:/opt/jar"
-  #    networks:
-  #      - gulimall_server
-  #    ports:
-  #      - "8080:8080"
-  #    entrypoint: java -jar -Dfile.encoding=utf-8 -Xms256m -Xmx500m -Dspring.application.name=cloud-guli-fast -Dspring.cloud.nacos.server-addr=nacos:8848 -Dspring.cloud.nacos.username=nacos -Dspring.cloud.nacos.password=nacos  -Dspring.cloud.nacos.discovery.ip=cloud-guli-fast  /opt/jar/cloud-guli-fast-0.0.1-SNAPSHOT.jar
-  #    privileged: true
-  #    extra_hosts:
-  #      - "host.docker.internal:host-gateway"
+  cloud-guli-fast:
+    container_name: cloud-guli-fast
+    image: alpine-java8
+    volumes:
+      - "/opt/docker/gulimall/jar:/opt/jar"
+    networks:
+      - gulimall_server
+    ports:
+      - "8080:8080"
+    entrypoint: java -jar -Dfile.encoding=utf-8 -Xms256m -Xmx500m -Dspring.application.name=cloud-guli-fast -Dspring.cloud.nacos.server-addr=nacos:8848 -Dspring.cloud.nacos.username=nacos -Dspring.cloud.nacos.password=nacos  -Dspring.cloud.nacos.discovery.ip=cloud-guli-fast  /opt/jar/cloud-guli-fast-0.0.1-SNAPSHOT.jar
+    privileged: true
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
 
   cloud-guli-gateway:
     container_name: cloud-guli-gateway
