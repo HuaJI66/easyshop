@@ -3,6 +3,7 @@ package com.pika.gstore.third.pay.service.impl;
 import cn.hutool.json.JSONUtil;
 import com.pika.gstore.common.constant.MqConstant;
 import com.pika.gstore.common.to.PaymentInfoTo;
+import com.pika.gstore.third.pay.service.AbstractPayAdapter;
 import com.pika.utils.UnionPayTemplate;
 import com.unionpay.acp.sdk.SDKConstants;
 import lombok.extern.slf4j.Slf4j;

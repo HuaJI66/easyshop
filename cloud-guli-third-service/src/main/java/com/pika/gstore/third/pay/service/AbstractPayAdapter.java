@@ -1,6 +1,4 @@
-package com.pika.gstore.third.pay.service.impl;
-
-import com.pika.gstore.third.pay.service.PayService;
+package com.pika.gstore.third.pay.service;
 
 /**
  * Desc:接口适配器模式 (缺省类适配器模式)

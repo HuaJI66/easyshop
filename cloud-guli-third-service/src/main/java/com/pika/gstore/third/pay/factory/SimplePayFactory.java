@@ -1,6 +1,7 @@
-package com.pika.gstore.third.pay.service;
+package com.pika.gstore.third.pay.factory;
 
 import com.pika.gstore.common.enums.PayType;
+import com.pika.gstore.third.pay.service.PayService;
 import com.pika.gstore.third.pay.service.impl.WebAliPayImpl;
 import com.pika.gstore.third.pay.service.impl.WebUnionPayImpl;
 import org.springframework.stereotype.Service;

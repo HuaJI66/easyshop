@@ -1,8 +1,8 @@
 package com.pika.gstore.third.pay.controller;
 
 import com.pika.gstore.common.utils.R;
+import com.pika.gstore.third.pay.factory.SimplePayFactory;
 import com.pika.gstore.third.pay.service.PayService;
-import com.pika.gstore.third.pay.service.SimplePayFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

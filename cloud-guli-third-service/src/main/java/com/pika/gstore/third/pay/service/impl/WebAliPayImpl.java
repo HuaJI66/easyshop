@@ -7,6 +7,7 @@ import com.pika.gstore.common.to.PaymentInfoTo;
 import com.pika.gstore.common.to.pay.PayAsyncVo;
 import com.pika.gstore.third.pay.config.AlipayTemplate;
 import com.pika.gstore.third.pay.enums.AlipayStatusEnum;
+import com.pika.gstore.third.pay.service.AbstractPayAdapter;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Service;
 
