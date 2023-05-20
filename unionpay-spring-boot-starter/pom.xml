@@ -6,7 +6,6 @@
         <groupId>com.pika</groupId>
         <artifactId>gulimall</artifactId>
         <version>0.0.1-SNAPSHOT</version>
-        <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.pika.unionpay</groupId>
     <artifactId>unionpay-spring-boot-starter</artifactId>

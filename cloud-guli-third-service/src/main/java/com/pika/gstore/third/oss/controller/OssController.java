@@ -5,6 +5,7 @@ import com.aliyun.oss.common.utils.BinaryUtil;
 import com.aliyun.oss.model.MatchMode;
 import com.aliyun.oss.model.PolicyConditions;
 import com.pika.gstore.common.utils.R;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,6 +25,7 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("oss")
+@Slf4j
 public class OssController {
     @Resource
     private OSSClient ossClient;
@@ -68,7 +70,7 @@ public class OssController {
 
         } catch (Exception e) {
             // Assert.fail(e.getMessage());
-            System.out.println(e.getMessage());
+            log.error(e.getMessage());
         }
         return R.ok().put("data", respMap);
     }

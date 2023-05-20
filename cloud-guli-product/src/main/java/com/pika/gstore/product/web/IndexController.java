@@ -88,8 +88,9 @@ public class IndexController {
         return "world";
     }
 
-    /*
-    读写锁测试
+
+    /**
+     * 读写锁测试
      */
     @ResponseBody
     @GetMapping("write")

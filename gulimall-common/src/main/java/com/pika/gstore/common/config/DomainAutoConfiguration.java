@@ -1,6 +1,7 @@
 package com.pika.gstore.common.config;
 
 import com.pika.gstore.common.prooerties.DomainProperties;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
@@ -15,6 +16,7 @@ import org.springframework.context.annotation.Configuration;
  * @since 2023/4/13 12:55
  */
 @ConditionalOnProperty(prefix = "domain", name = "enable")
+@ConditionalOnMissingBean(DomainProperties.class)
 @EnableConfigurationProperties(DomainProperties.class)
 @Configuration
 public class DomainAutoConfiguration {

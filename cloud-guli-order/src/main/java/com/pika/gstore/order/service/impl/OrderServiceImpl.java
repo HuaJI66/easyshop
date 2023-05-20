@@ -35,7 +35,6 @@ import com.pika.gstore.order.feign.WareFeignService;
 import com.pika.gstore.order.interceptor.LoginInterceptor;
 import com.pika.gstore.order.service.OrderItemService;
 import com.pika.gstore.order.service.OrderService;
-import com.pika.gstore.order.service.PaymentInfoService;
 import com.pika.gstore.order.to.OrderCreateTo;
 import com.pika.gstore.order.vo.*;
 import lombok.extern.slf4j.Slf4j;
@@ -64,6 +63,9 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.util.stream.Collectors;
 
 
+/**
+ * @author pi'ka'chu
+ */
 @Service("orderService")
 @Slf4j
 public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> implements OrderService {
@@ -83,8 +85,6 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
     private OrderItemService orderItemService;
     @Resource
     private RabbitTemplate rabbitTemplate;
-    @Resource
-    private PaymentInfoService paymentInfoService;
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
@@ -132,7 +132,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
         //3. 优惠信息(用户积分)
         confirmVo.setIntegration(memberInfoTo.getIntegration() == null ? 0 : memberInfoTo.getIntegration());
 
-        // TODO: 2023/1/22 防止重复令牌
+        //4. 幂等性保证：防止重复令牌 + 数据库 OrderSn 唯一索引
         String token = IdUtil.fastSimpleUUID();
         confirmVo.setOrderToken(token);
         stringRedisTemplate.opsForValue().set(OrderConstant.ORDER_NUMBER_KEY + memberInfoTo.getId().toString(), token,
@@ -178,7 +178,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
                     repVo.setOrder(order.getOrder());
                     //4.扣减积分(模拟)
 //                    int x = 10 / 0;
-                    // TODO: 2023/1/30 订单创建成功,发送消息
+                    //5. 订单创建成功,发送消息
                     OrderTo to = new OrderTo();
                     BeanUtils.copyProperties(order.getOrder(), to);
                     rabbitTemplate.convertAndSend(MqConstant.ORDER_EVENT_EXCHANGE, MqConstant.ORDER_CREATE_KEY, to);
@@ -251,12 +251,11 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
         IPage<OrderEntity> page = page(new Query<OrderEntity>().getPage(params),
                 new LambdaQueryWrapper<OrderEntity>().eq(OrderEntity::getMemberId, memberInfoTo.getId()).orderByDesc(OrderEntity::getId)
         );
-        List<OrderEntity> collect = page.getRecords().stream().peek(item -> {
-            item.setItems(orderItemService.list(new LambdaQueryWrapper<OrderItemEntity>()
-                    .eq(OrderItemEntity::getOrderSn, item.getOrderSn())
-                    .orderByDesc(OrderItemEntity::getId)
-            ));
-        }).collect(Collectors.toList());
+        List<OrderEntity> collect = page.getRecords().stream().peek(item -> item.setItems(orderItemService.list(
+                new LambdaQueryWrapper<OrderItemEntity>()
+                        .eq(OrderItemEntity::getOrderSn, item.getOrderSn())
+                        .orderByDesc(OrderItemEntity::getId)
+        ))).collect(Collectors.toList());
         page.setRecords(collect);
         return new PageUtils(page);
     }

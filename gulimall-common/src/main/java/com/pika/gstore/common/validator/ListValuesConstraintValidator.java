@@ -7,6 +7,7 @@ import java.util.Set;
 
 /**
  * Desc:    自定义校验器
+ * <p>限制列出范围内的数字</p>
  *
  * @author pikachu
  * @since 2022/11/28 9:27
