@@ -2,9 +2,7 @@
 
 ### 前言
 
-gulimall 项目致力于打造一个完整的电商系统，采用现阶段流行技术来实现，采用前后端分离继续编写。
-
-注：跟练项目，代码实现与教程有差异，仅供参考。
+easyshop 项目致力于打造一个完整的电商系统，采用现阶段流行技术来实现，采用前后端分离继续编写。
 
 [项目笔记](./笔记/zero.md)
 
@@ -27,7 +25,7 @@ gulimall 项目致力于打造一个完整的电商系统，采用现阶段流�
 
 ### 项目介绍
 
-gulimall 项目是一套电商项目，包括前台商城系统以及后台管理系统，基于 SpringCloud + SpringCloudAlibaba + MyBatis-Plus实现，采用
+easyshop 项目是一套电商项目，包括前台商城系统以及后台管理系统，基于 SpringCloud + SpringCloudAlibaba + MyBatis-Plus实现，采用
 Docker 容器化部署。前台商城系统包括：用户登录、注册、商品搜索、商品详情、购物车、下订单流程、秒杀活动等模块。后台管理系统包括：系统管理、商品系统、优惠营销、库存系统、订单系统、用户系统、内容管理等七大模块。
 
 ### 项目演示
@@ -54,7 +52,7 @@ Docker 容器化部署。前台商城系统包括：用户登录、注册、商�
 ### 组织结构
 
 ```
-gulimall
+easyshop
 ├── cloud-guli-auth -- 认证中心（社交登录、OAuth2.0、单点登录）
 ├── cloud-guli-cart -- 购物车服务
 ├── cloud-guli-fast -- 后台管理
@@ -67,7 +65,7 @@ gulimall
 ├── cloud-guli-third-service -- 第三方服务
 ├── cloud-guli-ware -- 仓储服务
 ├── cloud-guli-yhq -- 优惠卷服务
-├── gulimall-common -- 工具类及通用代码
+├── easyshop-common -- 工具类及通用代码
 ├── renren-generator -- 人人开源项目的代码生成器
 ├── unionpay-spring-boot-starter -- 整合银联支付场景启动器
 ```
@@ -149,17 +147,17 @@ gulimall
 - 修改本机的host文件，映射域名端口(WSL环境与主机会共用端口)
 
 ```
-#gulimall
-localhost gulimall.com
-localhost search.gulimall.com
-localhost member.gulimall.com
-localhost ware.gulimall.com
-localhost item.gulimall.com
-localhost auth.gulimall.com
-localhost cart.gulimall.com
-localhost order.gulimall.com
-localhost seckill.gulimall.com
-localhost third.gulimall.com
+#easyshop
+localhost easyshop.com
+localhost search.easyshop.com
+localhost member.easyshop.com
+localhost ware.easyshop.com
+localhost item.easyshop.com
+localhost auth.easyshop.com
+localhost cart.easyshop.com
+localhost order.easyshop.com
+localhost seckill.easyshop.com
+localhost third.easyshop.com
 以上端口换成自己Linux的ip地址
 ```
 
@@ -167,10 +165,10 @@ localhost third.gulimall.com
 
 ```
 1、在nginx.conf中添加负载均衡的配置    
-	upstream gulimall{
+	upstream easyshop{
 		server host.docker.internal:6000;
 	}
-2、在conf.d目录下创建default.conf,gulimall.conf
+2、在conf.d目录下创建default.conf,easyshop.conf
    在default.conf中添加如下配置(转发支付宝支付回调)
 server {
     listen       80;
@@ -180,8 +178,8 @@ server {
     access_log  logs/pass.access.log  main;
 	
     location ^~ /paid/notify {
-		proxy_pass http://gulimall;
-		proxy_set_header Host third.gulimall.com;
+		proxy_pass http://easyshop;
+		proxy_set_header Host third.easyshop.com;
     }
 	
 	location / {
@@ -190,17 +188,17 @@ server {
      }
 }
 
-   在gulimall.conf中添加如下配置
+   在easyshop.conf中添加如下配置
 server {
     listen       80;
-    server_name  gulimall.com *.gulimall.com;
+    server_name  easyshop.com *.easyshop.com;
 
     charset utf-8;
 
-    access_log  logs/gulimall.access.log  main;
+    access_log  logs/easyshop.access.log  main;
 	
     location / {
-		proxy_pass http://gulimall;
+		proxy_pass http://easyshop;
 		proxy_set_header Host $host;
     }
 	
@@ -212,5 +210,5 @@ server {
 ```
 
 - 克隆前端项目 `renren-fast-vue` 以 `npm run dev` 方式去运行
-- 克隆整个后端项目 `gulimall` ，并导入 IDEA 中完成编译
+- 克隆整个后端项目 `easyshop` ，并导入 IDEA 中完成编译
 - 运行docker-compose up (可选)
